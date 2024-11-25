@@ -23,7 +23,7 @@ function Map() {
     return () => map.remove();
   }, []);
 
-  return <div ref={mapContainerRef} style={{ width: '900px', height: '800px' }} />;
+  return <div ref={mapContainerRef} className='w-[900px] h-[800px] rounded-lg overflow-hidden' />;
 }
 
 export default Map;
