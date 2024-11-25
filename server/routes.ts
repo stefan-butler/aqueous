@@ -1,6 +1,7 @@
 import express, {Request, Response} from 'express'
 import {loginUser, signupUser} from './controllers/userController';
 
+
 const router = express.Router();
 
 //login route 

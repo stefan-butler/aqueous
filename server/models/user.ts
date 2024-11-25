@@ -13,7 +13,7 @@ const userSchema: Schema = new Schema <IUser> ({
   firstName: {type: String, required: true},
   lastName: {type: String, required: true},
   email: {type: String, required: true, unique: true},
-  password: {type: String, required: true, unique: true},
+  password: {type: String, required: true},
   responder: {type: Boolean, default: false},
   responderType: {type: String, required: false}
 });
