@@ -15,7 +15,13 @@ app.use(express.json())
 app.use( router)
 
 connectDB().then(() => {
-  app.listen(port, () => {
+  app.listen(port, async () => {
     console.log(`Example app listening on port ${port}`)
+    try {
+      await fetchAndStoreFloodData();  // Fetch and store the flood data after the server starts
+      console.log('Flood data successfully fetched and stored!');
+    } catch (error) {
+      console.error('Error during flood data fetching and storing:', error);
+    }
   });
 });
