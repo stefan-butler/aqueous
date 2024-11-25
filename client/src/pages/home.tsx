@@ -1,7 +1,14 @@
+import Map from "../components/map";
 
 function Home () {
   return (
-    <h1>HOME PAGE</h1>
+    <div className="bg-dark h-screen">
+      <div className="ml-8">
+        <Map />
+
+      </div>
+
+    </div>
   )
 }
 
