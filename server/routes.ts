@@ -1,9 +1,12 @@
 import express, {Request, Response} from 'express'
+import {loginUser, signupUser} from './controllers/userController';
 
 const router = express.Router();
 
-router.get('/', (req : Request, res: Response) => {
-  res.send('Hello world!')
-})
+//login route 
+router.post('/login', loginUser)
+
+//signup route 
+router.post('/signup', signupUser)
 
 export default router;
