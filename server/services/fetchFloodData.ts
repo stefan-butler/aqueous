@@ -7,18 +7,19 @@ export const fetchAndStoreFloodData = async () => {
     const data = response.data.items;
     for (const item of data) {
       const id = item["@id"];
-      const severity = item.severity || 4;
+      const severityLevel = item.severityLevel || 4;
       const message = item.message || "No message";
-      const floodArea = item.floodAreaId
+      const floodAreaId = item.floodAreaID
 
-      const floodWarning = new FloodWarning({
-        polygon_id: id,
-        severity: severity,
-        message: message,
-        floodArea: floodArea,
-      });
-
-      await floodWarning.save();
+      await FloodWarning.findOneAndUpdate(
+        { id: id},
+        {
+          severityLevel: severityLevel,
+          message: message,
+          floodAreaId,
+        },
+        { upsert: true, new: true}
+      );
     }
     console.log('Flood data successfully fetched and stored!');
   } catch (error) {
