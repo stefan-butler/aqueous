@@ -1,7 +1,8 @@
+import IncidentForm from "../components/incidentForm";
 
 function Report () {
   return (
-    <h1>REPORT</h1>
+    <IncidentForm/>
   )
 }
 
