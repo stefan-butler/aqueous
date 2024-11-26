@@ -3,7 +3,7 @@ import User from '../models/user';
 import bcrypt from 'bcrypt'
 import validator from 'validator'
 import jwt from 'jsonwebtoken'
-import { userInfo } from 'os';
+
 
 
 const createToken = (id:string) => {
@@ -66,7 +66,7 @@ const signupUser = async (req: Request, res: Response) => {
     const newUser = await User.create({firstName: user.firstName, lastName: user.lastName, email: user.email, password: hash, responder: user.responder, responderType: user.responderType})
 
     //create a token
-    const token = createToken(user._id);
+    const token = createToken(newUser._id);
 
     res.status(200).json({message: 'New user signedup', newUser, token})
   } catch (error) {
