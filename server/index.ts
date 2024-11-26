@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express from 'express'
 import cors from 'cors'
 import router from './routes';
@@ -5,7 +8,7 @@ import { connectDB } from './database';
 import { fetchAndStoreFloodData } from './services/fetchFloodData';
 
 const app = express();
-const port: number = 3000; 
+const port: number = Number(process.env.PORT) || 3000;
 
 //middleware
 app.use(cors())
@@ -13,6 +16,9 @@ app.use(express.json())
 
 //use routes 
 app.use( router)
+
+
+dotenv.config();
 
 connectDB().then(() => {
   app.listen(port, async () => {
