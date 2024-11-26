@@ -38,15 +38,35 @@ export const register = (
   lastName: string,
   email: string,
   password: string,
-  isResponder: boolean
+  isResponder: boolean,
+  responderType: string
 ) => async (dispatch: AppDispatch): Promise<void> => {
   dispatch(loginStart()); // Reuse loading state
   try {
-    await axios.post(baseUrl + '/auth/signup', { firstName, lastName, email, password, isResponder });
-    // auto log in after registration?
-    const response = await axios.post(baseUrl + '/auth/login', { email, password });
-    const { user, token, isResponder: responderFlag } = response.data;
-    dispatch(loginSuccess({ user, token, isResponder: responderFlag }));
+    await axios.post(`${baseUrl}/auth/signup`, {
+      firstName,
+      lastName,
+      email,
+      password,
+      isResponder,
+      responderType,
+    });
+
+    console.log('User registered:', { firstName, lastName, email });
+
+    // auto login on signup 
+    const response = await axios.post<LoginResponse>(`${baseUrl}/auth/login`, { email, password });
+    console.log('Login response:', response.data);
+
+    const { validUser, token } = response.data;
+    const user: User = {
+      id: validUser._id,
+      firstName: validUser.firstName,
+      lastName: validUser.lastName,
+      email: validUser.email,
+    };
+
+    dispatch(loginSuccess({ user, token, isResponder: validUser.responder }));
     localStorage.setItem('token', token);
   } catch (error: unknown) {
     let errorMessage = 'Registration failed';
@@ -54,6 +74,7 @@ export const register = (
       errorMessage = error.response.data?.message || errorMessage;
     }
     dispatch(registrationFailure(errorMessage));
+    console.error('Error during registration:', errorMessage);
     throw new Error(errorMessage);
   }
 };

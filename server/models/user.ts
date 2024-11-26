@@ -6,7 +6,7 @@ firstName: string;
 lastName: string;
 email: string;
 password: string;
-responder: boolean;
+isResponder: boolean;
 responderType?: string;
 }
 
@@ -15,7 +15,7 @@ const userSchema: Schema = new Schema <IUser> ({
   lastName: {type: String, required: true},
   email: {type: String, required: true, unique: true},
   password: {type: String, required: true, unique: true},
-  responder: {type: Boolean, default: false},
+  isResponder: {type: Boolean, default: false},
   responderType: {type: String, required: false}
 });
 

@@ -10,6 +10,7 @@ export interface AuthState {
   user: User | null;
   token: string | null;
   isResponder: boolean;
+  responderType?: string | null;
   loading: boolean;
   error: string | null;
 }

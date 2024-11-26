@@ -33,7 +33,6 @@ const loginUser =async (req: Request , res: Response) => {
     const token = createToken(validUser._id);
 
     res.status(200).json({message: 'Login Successful', validUser, token})
-    console.log(res)
   } catch (error) {
     console.error('Error login user:', error);
     res.status(500).json({message: `Internal server issue ${error}`})
@@ -64,7 +63,8 @@ const signupUser = async (req: Request, res: Response) => {
     }
 
     const hash = await bcrypt.hash(password, 10);
-    const newUser = await User.create({firstName: user.firstName, lastName: user.lastName, email: user.email, password: hash, responder: user.responder, responderType: user.responderType})
+    const newUser = await User.create({firstName: user.firstName, lastName: user.lastName, email: user.email, password: hash, isResponder: user.isResponder, responderType: user.responderType})
+    console.log(newUser)
 
     //create a token
     const token = createToken(newUser._id);

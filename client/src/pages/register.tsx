@@ -19,7 +19,7 @@ function Register() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await dispatch(register(firstName, lastName, email, password, isResponder)); 
+      await dispatch(register(firstName, lastName, email, password, isResponder, responderType)); 
       navigate('/'); // Redirect to home on success?
     } catch (error: unknown) {
       if (error instanceof Error) {
