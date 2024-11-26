@@ -1,5 +1,6 @@
 import { AppDispatch } from '../store';
 import { loginStart, loginSuccess, loginFailure, logout, registrationFailure } from '../slices/authSlice';
+import { LoginResponse, User } from '../../types/auth-types';
 import axios from 'axios';
 
 const baseUrl = 'http://localhost:3000';
@@ -8,9 +9,18 @@ const baseUrl = 'http://localhost:3000';
 export const login = (email: string, password: string) => async (dispatch: AppDispatch): Promise<void> => {
   dispatch(loginStart());
   try {
-    const response = await axios.post(baseUrl + '/auth/login', { email, password });
-    const { user, token, isResponder: responderFlag } = response.data;
-    dispatch(loginSuccess({ user, token, isResponder: responderFlag }));
+    const response = await axios.post<LoginResponse>(`${baseUrl}/auth/login`, { email, password });
+    console.log(response.data);
+
+    const { validUser, token } = response.data;
+    const user: User = {
+      id: validUser._id,
+      firstName: validUser.firstName,
+      lastName: validUser.lastName,
+      email: validUser.email,
+    };
+
+    dispatch(loginSuccess({ user, token, isResponder: validUser.responder }));
     localStorage.setItem('token', token);
   } catch (error: unknown) {
     let errorMessage = 'Login failed';
@@ -18,6 +28,7 @@ export const login = (email: string, password: string) => async (dispatch: AppDi
       errorMessage = error.response.data?.message || errorMessage;
     }
     dispatch(loginFailure(errorMessage));
+    throw new Error(errorMessage);
   }
 };
 

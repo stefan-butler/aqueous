@@ -33,6 +33,7 @@ const loginUser =async (req: Request , res: Response) => {
     const token = createToken(validUser._id);
 
     res.status(200).json({message: 'Login Successful', validUser, token})
+    console.log(res)
   } catch (error) {
     console.error('Error login user:', error);
     res.status(500).json({message: `Internal server issue ${error}`})
