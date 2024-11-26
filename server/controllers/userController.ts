@@ -5,7 +5,7 @@ import validator from 'validator'
 import jwt from 'jsonwebtoken'
 import { userInfo } from 'os';
 
-// at the secret at your env variables file!!!! 
+
 const createToken = (id:string) => {
   return jwt.sign({_id:id}, process.env.SECRET!, {expiresIn: '2d'})
 }
