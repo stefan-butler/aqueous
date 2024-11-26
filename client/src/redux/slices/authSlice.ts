@@ -12,7 +12,8 @@ interface AuthState {
 // user type - maybe move to types file??
 interface User {
   id: string;
-  username: string;
+  firstName: string;
+  lastName: string;
   email: string;
 }
 
