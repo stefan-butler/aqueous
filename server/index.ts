@@ -9,7 +9,7 @@ import { fetchAndStoreFloodData } from './services/fetchFloodData';
 import warningRoutes from './routes/warningRoutes';
 
 const app = express();
-const port: number = Number(process.env.PORT) || 3000;
+const port: number = 3000;
 
 //middleware
 app.use(cors())

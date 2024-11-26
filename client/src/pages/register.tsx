@@ -20,7 +20,7 @@ function Register() {
     e.preventDefault();
     try {
       await dispatch(register(firstName, lastName, email, password, isResponder)); 
-      navigate('/home'); // Redirect to home on success?
+      navigate('/'); // Redirect to home on success?
     } catch (error: unknown) {
       if (error instanceof Error) {
         setError(error.message || 'Registration failed');
