@@ -4,8 +4,8 @@ import requireAuth from './middleware/requireAuth';
 
 const router = express.Router();
 
-//use the requireAuth function before you access the routes
-router.use(requireAuth)
+//use the requireAuth for the API routes you wish to protect ('path', requireAuth, controllerFuntion)
+
 
 //login route 
 router.post('/login', loginUser)

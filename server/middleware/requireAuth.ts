@@ -2,12 +2,15 @@ import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken'
 import User from '../models/user';
 
+export interface ExtendedRequest extends Request {
+  user?: { _id: string };
+}
 
 interface JwtPayloadWithId {
   _id: string;
 }
 
-const requireAuth = async (req: Request, res: Response, next: NextFunction) : Promise<void> => {
+const requireAuth = async (req: ExtendedRequest, res: Response, next: NextFunction) : Promise<void> => {
 
   //verify authentication 
   const {authorization} = req.headers
@@ -32,7 +35,7 @@ const requireAuth = async (req: Request, res: Response, next: NextFunction) : Pr
       return;
     }
 
-    req.user = {_id: user._id}
+    req.user = user
     next() // the next function will have access to the req.user
   } catch (error) {
     console.log(error)
