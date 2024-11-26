@@ -3,6 +3,7 @@ import cors from 'cors'
 import router from './routes';
 import { connectDB } from './database';
 import { fetchAndStoreFloodData } from './services/fetchFloodData';
+import warningRoutes from './routes/warningRoutes';
 
 const app = express();
 const port: number = 3000; 
@@ -13,6 +14,7 @@ app.use(express.json())
 
 //use routes 
 app.use( router)
+app.use("/api", warningRoutes);
 
 connectDB().then(() => {
   app.listen(port, async () => {
