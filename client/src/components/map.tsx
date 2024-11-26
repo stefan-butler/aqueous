@@ -103,7 +103,39 @@ function Map() {
       })
       .catch(error => console.error('Error fetching geojson data: ', error));
       
-    })
+    });
+
+    map.on('click', 'active-warnings-layer', (e) => {
+      if (!e.features || e.features.length === 0) {
+        return; // No features found at the clicked point
+      }
+      
+      const feature = e.features[0];
+    
+      if (feature.geometry.type === 'Point') {
+        const coordinates = feature.geometry.coordinates as [number, number];
+        
+        if (feature.properties) {
+          const severityLevel = feature.properties.severityLevel;
+          const message = feature.properties.message;
+    
+          new mapboxgl.Popup()
+            .setLngLat(coordinates)
+            .setHTML(`
+              <div>
+                <h3>Area Code: ${feature.properties.title}</h3>
+                <p><strong>Severity Level:</strong> ${severityLevel}</p>
+                <p><strong>Message:</strong> ${message}</p>
+              </div>
+            `)
+            .addTo(map);
+        } else {
+          console.warn('Feature properties are missing: ', feature);
+        } 
+      } else {
+        console.warn('Clicked feature is not a point: ', feature);
+      }
+    });
 
     // Cleanup on component unmount
     return () => map.remove();
