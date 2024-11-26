@@ -1,11 +1,12 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { logoutUser } from '../redux/actions/authActions';
 import { Link, useNavigate } from 'react-router';
+import { useAppDispatch } from '../redux/hooks';
 
 function Navbar () {
   const { user } = useSelector((state: RootState) => state.auth);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   function handleLogout () {
@@ -42,7 +43,7 @@ function Navbar () {
           </button>
           :
           <button
-            className="bg-light text-dark p-2 rounded-lg shadow-emerald-50 "
+            className="bg-gray-200 text-dark p-2 rounded-lg shadow-emerald-50 "
             onClick={handleLogin}
           >
             LOG IN

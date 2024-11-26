@@ -7,8 +7,8 @@ export const login = (email: string, password: string) => async (dispatch: AppDi
   dispatch(loginStart());
   try {
     const response = await axios.post('/api/auth/login', { email, password });
-    const { user, token } = response.data;
-    dispatch(loginSuccess({ user, token }));
+    const { user, token, isResponder: responderFlag } = response.data;
+    dispatch(loginSuccess({ user, token, isResponder: responderFlag }));
     localStorage.setItem('token', token);
   } catch (error: unknown) {
     let errorMessage = 'Login failed';
@@ -24,15 +24,16 @@ export const register = (
   firstName: string,
   lastName: string,
   email: string,
-  password: string
+  password: string,
+  isResponder: boolean
 ) => async (dispatch: AppDispatch): Promise<void> => {
   dispatch(loginStart()); // Reuse loading state
   try {
-    await axios.post('/api/auth/register', { firstName, lastName, email, password });
+    await axios.post('/signup', { firstName, lastName, email, password, isResponder });
     // auto log in after registration?
     const response = await axios.post('/api/auth/login', { email, password });
-    const { user, token } = response.data;
-    dispatch(loginSuccess({ user, token }));
+    const { user, token, isResponder: responderFlag } = response.data;
+    dispatch(loginSuccess({ user, token, isResponder: responderFlag }));
     localStorage.setItem('token', token);
   } catch (error: unknown) {
     let errorMessage = 'Registration failed';
