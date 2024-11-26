@@ -1,29 +1,9 @@
 import { AppDispatch } from '../store';
 import { loginStart, loginSuccess, loginFailure, logout, registrationFailure } from '../slices/authSlice';
+import { LoginResponse, User } from '../../types/auth-types';
 import axios from 'axios';
 
 const baseUrl = 'http://localhost:3000';
-
-interface ValidUser {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  responder: boolean;
-  responderType?: string; 
-}
-
-interface LoginResponse {
-  validUser: ValidUser;
-  token: string;
-}
-
-interface User {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-}
 
 // Login action
 export const login = (email: string, password: string) => async (dispatch: AppDispatch): Promise<void> => {
