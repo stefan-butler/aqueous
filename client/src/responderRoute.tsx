@@ -1,8 +1,7 @@
-import React from 'react';
 import { Navigate, Outlet } from 'react-router';
 import { useAppSelector } from './redux/hooks';
 
-const ResponderRoute: React.FC = () => {
+function ResponderRoute () {
   const { user, isResponder } = useAppSelector((state) => state.auth);
 
   if (!user) {

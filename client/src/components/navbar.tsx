@@ -1,11 +1,10 @@
-import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { logoutUser } from '../redux/actions/authActions';
 import { Link, useNavigate } from 'react-router';
-import { useAppDispatch } from '../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
 
 function Navbar () {
-  const { user } = useSelector((state: RootState) => state.auth);
+  const { user, isResponder } = useAppSelector((state: RootState) => state.auth);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -24,12 +23,16 @@ function Navbar () {
         <li className="mx-4">
           <Link to="/">HOME</Link>
         </li>
+        {!isResponder &&
          <li className="mx-4">
          <Link to="/report">REPORT</Link>
        </li> 
+        }
+        {isResponder &&
         <li className="mx-4">
         <Link to="/incidents">INCIDENTS</Link>
       </li>
+        }
         <li className="mx-4">
           <Link to="/chat">CHAT</Link>
         </li>
