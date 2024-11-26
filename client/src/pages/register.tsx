@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { register } from '../redux/actions/authActions';
 import { useNavigate } from 'react-router';
+import { useAppDispatch } from '../redux/hooks';
 
 function Register() {
   const [firstName, setFirstName] = useState('');
@@ -9,15 +9,17 @@ function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [isResponder, setIsResponder] = useState(false); 
+  const [responderType, setResponderType] = useState(''); 
   const [error, setError] = useState<string | null>(null);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await dispatch(register(username, email, password) as any); // Dispatch registration
+      await dispatch(register(firstName, lastName, email, password, isResponder)); 
       navigate('/home'); // Redirect to home on success?
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -31,7 +33,7 @@ function Register() {
   return (
     <div>
       <h1>Register</h1>
-      {error && <p className="error">{error}</p>}
+      {error && <p>{error}</p>}
       <form onSubmit={handleSubmit} >
         <div>
           <label htmlFor="firstname">First Name:</label>
@@ -83,6 +85,50 @@ function Register() {
             required
           />
         </div>
+        <div>
+          <label>Are you signing up as a responder?</label>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="responder"
+                value="yes"
+                checked={isResponder === true}
+                onChange={() => setIsResponder(true)}
+              />
+              Yes
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="responder"
+                value="no"
+                checked={isResponder === false}
+                onChange={() => setIsResponder(false)}
+              />
+              No
+            </label>
+          </div>
+        </div>
+        {isResponder && (
+          <div>
+            <label htmlFor="responderType">Responder Type:</label>
+            <select
+              id="responderType"
+              value={responderType}
+              onChange={(e) => setResponderType(e.target.value)}
+              required
+            >
+              <option value="" disabled>
+                Select your type
+              </option>
+              <option value="Police">Police</option>
+              <option value="Fire">Fire</option>
+              <option value="Ambulance">Ambulance</option>
+              <option value="Search and Rescue">Search and Rescue</option>
+            </select>
+          </div>
+        )}
         <button type="submit">Register</button>
       </form>
     </div>
