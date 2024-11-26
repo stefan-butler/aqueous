@@ -7,7 +7,7 @@ import { userInfo } from 'os';
 
 
 const createToken = (id:string) => {
-  return jwt.sign({_id:id}, process.env.SECRET!, {expiresIn: '2d'})
+  return jwt.sign({_id:id}, "ghfgfhdfjfgfhfbsbkidsfrehrthrt", {expiresIn: '2d'})
 }
 
 //login user

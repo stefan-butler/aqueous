@@ -15,7 +15,7 @@ function Login () {
     e.preventDefault();
     try {
       await dispatch(login(email, password));
-      navigate('/home');
+      navigate('/');
     } catch (error: unknown) {
       if (error instanceof Error) {
         setError(error.message || 'Login failed');

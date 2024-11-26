@@ -7,20 +7,13 @@ export const fetchAndStoreFloodLocation = async () => {
     const data = response.data.items;
 
     for (const item of data) {
-      const id = item["@id"];
-      const description = item.description;
-      const fwdCode = item.fwdCode;
+      const title = item.fwdCode;
       const latitude = item.lat;
       const longitude = item.long;
 
-      const geoJSON = {
-          type: "Point",
-          coordinates: [longitude, latitude]
-      };
-
       await FloodLocation.findOneAndUpdate(
-        { id },
-        { id, description, fwdCode, location: geoJSON},
+        { title },
+        { title, latitude, longitude},
         { upsert: true, new: true }
       );
     }
