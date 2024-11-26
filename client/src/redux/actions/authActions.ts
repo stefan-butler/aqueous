@@ -2,11 +2,13 @@ import { AppDispatch } from '../store';
 import { loginStart, loginSuccess, loginFailure, logout, registrationFailure } from '../slices/authSlice';
 import axios from 'axios';
 
+const baseUrl = 'http://localhost:3000';
+
 // Login action
 export const login = (email: string, password: string) => async (dispatch: AppDispatch): Promise<void> => {
   dispatch(loginStart());
   try {
-    const response = await axios.post('/api/auth/login', { email, password });
+    const response = await axios.post(baseUrl + '/auth/login', { email, password });
     const { user, token, isResponder: responderFlag } = response.data;
     dispatch(loginSuccess({ user, token, isResponder: responderFlag }));
     localStorage.setItem('token', token);
@@ -29,9 +31,9 @@ export const register = (
 ) => async (dispatch: AppDispatch): Promise<void> => {
   dispatch(loginStart()); // Reuse loading state
   try {
-    await axios.post('/signup', { firstName, lastName, email, password, isResponder });
+    await axios.post(baseUrl + '/auth/signup', { firstName, lastName, email, password, isResponder });
     // auto log in after registration?
-    const response = await axios.post('/api/auth/login', { email, password });
+    const response = await axios.post(baseUrl + '/auth/login', { email, password });
     const { user, token, isResponder: responderFlag } = response.data;
     dispatch(loginSuccess({ user, token, isResponder: responderFlag }));
     localStorage.setItem('token', token);

@@ -8,7 +8,7 @@ import { connectDB } from './database';
 import { fetchAndStoreFloodData } from './services/fetchFloodData';
 
 const app = express();
-const port: number = Number(process.env.PORT) || 3000;
+const port: number = 3000;
 
 //middleware
 app.use(cors())
