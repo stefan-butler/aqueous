@@ -1,23 +1,21 @@
 import { useState } from "react"
+import { Incident } from "../types/incident-types";
+import { createIncident } from "../redux/slices/incidentSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState, AppDispatch } from "../redux/store";
 
+//I have focused entirely on the functionality for the moment
 function IncidentForm () {
-  interface Incident {
-    title: string;
-    incidentDate: string;
-    location: string; //we migth need to change this - depnding on how we will extract the location
-    severity: string;
-    floodType: string;
-    injuries: string; // maybe boolean
-    urgency: string;
-    name: string;
-    phone: string;
-    email:string;
-    additionalComments: string;
-  }
+
+  const dispatch = useDispatch<AppDispatch>();
+
   const [incident, setIncident] = useState<Incident>({
     title:'',
     incidentDate:'',
-    location:'',
+    location: {
+      longitude: undefined,
+      latitude: undefined, 
+    },
     severity:'',
     floodType: '',
     injuries: '',
@@ -25,7 +23,8 @@ function IncidentForm () {
     name:'',
     phone:'',
     email:'',
-    additionalComments: ''
+    additionalComments: '',
+    user_id: ''
   })
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -36,17 +35,62 @@ function IncidentForm () {
     })
   }
 
+  const handleLocationChange =  (event: React.ChangeEvent<HTMLInputElement>) => {
+    const {name, value} = event.target;
+
+    if (name === 'longitude') {
+      setIncident({...incident,
+        location: {
+          ...incident.location,
+          [name] : parseFloat(value),
+      }})
+    } else {
+      setIncident({...incident,
+        location: {
+          ...incident.location,
+          [name] : parseFloat(value)
+        }
+      })
+    }
+  }
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    dispatch(createIncident(incident))
+
+    setIncident({
+      title:'',
+      incidentDate:'',
+      location: {
+        longitude: undefined,
+        latitude: undefined, 
+      },
+      severity:'',
+      floodType: '',
+      injuries: '',
+      urgency:'',
+      name:'',
+      phone:'',
+      email:'',
+      additionalComments: '',
+      user_id: ''
+    })
+  }
+
   return (
-    <form className="flex flex-col">
+    <form className="flex flex-col" onSubmit={handleSubmit}>
       <label htmlFor='title' >Incident Title::</label>
       <input type='text' name="title" id="title" placeholder="Incident Title" value={incident.title} onChange={handleChange}/>
 
       <label htmlFor='incidentDate'>Date & Time of Incident:</label>
       <input type="datetime-local" name="incidentDate" id="incidentDate" value={incident.incidentDate} onChange={handleChange}/>
 
-      <label htmlFor="location">Location</label>
-      <input type="text" name="location" id="location" placeholder="Location" value={incident.location} onChange={handleChange}/>
+      <label htmlFor="longitude">Longitude:</label>
+      <input type="text" name="longitude" id="longitude" placeholder="Longitude" value={incident.location.longitude} onChange={handleLocationChange}/>
 
+      <label htmlFor="latitude">Latitude:</label>
+      <input type="text" name="latitude" id="latitude" placeholder="Latitude" value={incident.location.latitude} onChange={handleLocationChange}/>
+      
       <label htmlFor="severity">Severity of Flooding:</label>
       <select name="severity" id="severity" value={incident.severity} onChange={handleChange}>
         <option value='minor'>Minor</option>

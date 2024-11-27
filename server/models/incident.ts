@@ -4,8 +4,8 @@ interface IIncident extends Document {
   title: string;
   incidentDate: string;
   location: {
-    longitude: string,
-    latitude: string
+    longitude: number,
+    latitude: number
   }; //we migth need to change this - depnding on how we will extract the location
   severity: string;
   floodType: string;
