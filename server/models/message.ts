@@ -12,4 +12,4 @@ const MessageSchema = new Schema<IMessage>({
   text: { type: String, required: true }
 }, {timestamps: true});
 
-export default mongoose.model<IMessage>('message', MessageSchema);
+export default mongoose.model<IMessage>('Message', MessageSchema);
