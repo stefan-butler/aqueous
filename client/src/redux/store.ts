@@ -1,9 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './slices/authSlice';
+import mapLayerReducer from './slices/mapLayerSlice';
+import incidentReducer from './slices/incidentSlice';
+
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
+    mapLayers: mapLayerReducer,
+    incident: incidentReducer
   },
 });
 
