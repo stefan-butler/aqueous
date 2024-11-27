@@ -7,6 +7,7 @@ import router from './routes';
 import { connectDB } from './database';
 import { fetchAndStoreFloodData } from './services/fetchFloodData';
 import warningRoutes from './routes/warningRoutes';
+import chatRoutes from './routes/chatRoutes';
 
 const app = express();
 const port: number = 3000;
@@ -18,6 +19,7 @@ app.use(express.json())
 //use routes 
 app.use( router)
 app.use("/api", warningRoutes);
+app.use("/api/chat", chatRoutes);
 
 
 dotenv.config();
