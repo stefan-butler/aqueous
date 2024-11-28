@@ -8,14 +8,15 @@ function Chat () {
   const [chatId, setChatId] = useState('67483dc97daa00534b8f720c'); // use mock for building purposes 
   const [newMessage, setNewMessage] = useState('');
   const senderId = useAppSelector((state) => state.auth.user?.id);
+  const [isAuthorised, setIsAuthorised] = useState(false);
 
 
   async function fetchMessages(chatId: string) {
+    if (!chatId) return; // Ensure chatId exists
     try {
-      const messages = await axios(`http://localhost:3000/api/chat/${chatId}/messages`);
-      setMessages(messages.data);
-    }
-    catch (error) {
+      const response = await axios.get(`http://localhost:3000/api/chat/${chatId}/messages`);
+      setMessages(response.data);
+    } catch (error) {
       console.error('Error fetching messages:', error);
     }
   }
@@ -37,8 +38,26 @@ function Chat () {
   }
 
   useEffect(() => {
-    if(chatId) fetchMessages(chatId);
-  }, [chatId]);
+    async function initialiseChat() {
+      if (!chatId || !senderId) return; 
+      try {
+        // check authorisation 
+        const response = await axios.get(`http://localhost:3000/api/chat/${chatId}`);
+        const chat = response.data;
+  
+        if (chat.reporterId === senderId || chat.responderId === senderId) {
+          setIsAuthorised(true);
+          await fetchMessages(chatId); 
+        } else {
+          setIsAuthorised(false);
+          alert('You are not authorized to participate in this chat.');
+        }
+      } catch (error) {
+        console.error('Error initializing chat:', error);
+      }
+    }
+    initialiseChat();
+  }, [chatId, senderId]);
 
   return (
     <div className='bg-dark h-screen p-2'>
