@@ -155,7 +155,7 @@ function IncidentForm () {
         <select className="formElementInput"  name="urgency" id="urgency" value={incident.urgency} onChange={handleChange}>
           <option value=''>Please specicy incident's urgency:</option>
           <option value="Immediate">Immediate</option>
-          <option value="Within Hours">Within Hours</option>
+          <option value="Within Hours">Within 24 Hours</option>
           <option value="Low">Low</option>
         </select>
         </div>

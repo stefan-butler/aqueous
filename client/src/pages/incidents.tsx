@@ -24,7 +24,7 @@ const handleChatIconClick = (incidentId: string) => {
 
     <div className="incidentContainer">
       <div className="criticalSeverity">
-        <p>Critical Incidents</p>
+        <p id='criticaltitle'>Critical Incidents</p>
         <div className='criticalIncidents'>
           <div className="incident">
             {global.list
@@ -40,7 +40,7 @@ const handleChatIconClick = (incidentId: string) => {
               <div className="personDetails">
                 <p>{incident.name}</p>
                 <p>Contact deatils:{incident.phone} & {incident.email}</p>
-                <img onClick={() => handleChatIconClick(incident._id)} src="https://cdn-icons-png.flaticon.com/128/3621/3621438.png" alt="Venue icon" className="icon" />
+                <img onClick={() => handleChatIconClick(incident._id)} src="https://cdn-icons-png.flaticon.com/128/4096/4096208.png" alt="Venue icon" className="icon" />
               </div>
               </div>
             )
@@ -50,7 +50,7 @@ const handleChatIconClick = (incidentId: string) => {
       </div>
 
       <div className="moderateSeverity">
-        <p>Moderate Incidents</p>
+        <p id='moderateltitle'>Moderate Incidents</p>
         <div className='moderateIncidents'>
           <div className="incident">
             {global.list
@@ -66,7 +66,7 @@ const handleChatIconClick = (incidentId: string) => {
                 <div className="personDetails">
                   <p>{incident.name}</p>
                   <p>Contact deatils:{incident.phone} & {incident.email}</p>
-                  <img onClick={() => handleChatIconClick(incident._id)} src="https://cdn-icons-png.flaticon.com/128/3621/3621438.png" alt="Venue icon" className="icon" />
+                  <img onClick={() => handleChatIconClick(incident._id)} src="https://cdn-icons-png.flaticon.com/128/4096/4096208.png" alt="Venue icon" className="icon" />
                 </div>
                 </div>
               )
@@ -76,7 +76,7 @@ const handleChatIconClick = (incidentId: string) => {
       </div>
 
       <div className='minorSeverity'>
-        <p>Minor Incidents</p>
+        <p id='minortitle'>Minor Incidents</p>
         <div className='minorIncidents'>
           <div className="incident">
             {global.list
@@ -92,7 +92,7 @@ const handleChatIconClick = (incidentId: string) => {
                   <div className="personDetails">
                     <p>{incident.name}</p>
                     <p>Contact deatils:{incident.phone} & {incident.email}</p>
-                    <img onClick={() => handleChatIconClick(incident._id)} src="https://cdn-icons-png.flaticon.com/128/3621/3621438.png" alt="Venue icon" className="icon" />
+                    <img onClick={() => handleChatIconClick(incident._id)} src="https://cdn-icons-png.flaticon.com/128/4096/4096208.png" alt="Venue icon" className="icon" />
                   </div>
                   </div>
                 )

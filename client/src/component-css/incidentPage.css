@@ -11,20 +11,43 @@ body {
   background-color: rgb(41, 73, 49);
 }
 
-/* .incident {
-  border: thick;
-  border-style: dotted;
-  border-color: rgb(242, 132, 130);
+#criticaltitle {
+  font-size: 32px;
+  font-weight: bold;
+  color: rgb(255, 0, 0)
+}
+
+#moderateltitle {
+  font-size: 32px;
+  font-weight: bold;
+  color: rgb(255, 154, 0)
+}
+
+#minortitle {
+  font-size: 32px;
+  font-weight: bold;
+  color: rgb(255, 232, 8)
+}
+
+criticalInce
+
+.incident {
   display: flex;
-  gap: 40px;
-  background-color: rgb(245, 202, 195);
+  flex-direction: column;
+  gap: 8px;
+}
+
+.personDetails {
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
 .icon{
   border-radius: 50%;
-  height: 50px;
+  height: 30px;
 }
 
 .icon:hover {
   cursor: pointer;
-} */
+}
