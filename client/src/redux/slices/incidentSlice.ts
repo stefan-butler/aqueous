@@ -22,6 +22,7 @@ export const fetchGlobalIncidents = createAsyncThunk ('incidents/fetchGlobalInci
     const response = await axios.get('http://localhost:3000/get/incidents');
     return response.data.incidents
   } catch (error) {
+    console.error(error);
     return thunkAPI.rejectWithValue('Failed to fetch incidents');
   }
 })
@@ -46,6 +47,7 @@ export const createIncident = createAsyncThunk ('incidents/createIncident',
       )
       return response.data.newIncident
     } catch (error) {
+      console.error(error);
       return thunkApi.rejectWithValue('Failed to create incident')
     }
   }
