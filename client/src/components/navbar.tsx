@@ -35,6 +35,9 @@ function Navbar () {
       </li>
         }
         <li className="mx-4">
+          <Link to="/incidents">INCIDENTS</Link>
+        </li>
+        <li className="mx-4">
           <Link to="/chat">CHAT</Link>
         </li>
       </ul>

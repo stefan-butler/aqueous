@@ -1,0 +1,19 @@
+.incidentContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.incident {
+  display: flex;
+  gap: 40px;
+}
+
+.icon{
+  border-radius: 50%;
+  height: 50px;
+}
+
+.icon:hover {
+  cursor: pointer;
+}

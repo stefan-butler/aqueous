@@ -3,6 +3,7 @@ import { Incident } from "../types/incident-types";
 import { createIncident } from "../redux/slices/incidentSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../redux/store";
+import '../component-css/incidentForm.css'
 
 //I have focused entirely on the functionality for the moment
 function IncidentForm () {
@@ -26,6 +27,8 @@ function IncidentForm () {
     additionalComments: '',
     user_id: ''
   })
+
+  
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const {name , value} = event.target;
@@ -77,68 +80,110 @@ function IncidentForm () {
     })
   }
 
+  const isFormValid = () => {
+    const {title, incidentDate, location, severity, floodType, injuries, urgency, name, phone, email} = incident;
+    return (
+      title && incidentDate && location.longitude && location.latitude &&
+      severity && floodType && injuries && urgency && name && phone && email
+    );
+  }
+
   return (
-    <form className="flex flex-col" onSubmit={handleSubmit}>
-      <label htmlFor='title' >Incident Title::</label>
-      <input type='text' name="title" id="title" placeholder="Incident Title" value={incident.title} onChange={handleChange}/>
-
-      <label htmlFor='incidentDate'>Date & Time of Incident:</label>
-      <input type="datetime-local" name="incidentDate" id="incidentDate" value={incident.incidentDate} onChange={handleChange}/>
-
-      <label htmlFor="longitude">Longitude:</label>
-      <input type="text" name="longitude" id="longitude" placeholder="Longitude" value={incident.location.longitude} onChange={handleLocationChange}/>
-
-      <label htmlFor="latitude">Latitude:</label>
-      <input type="text" name="latitude" id="latitude" placeholder="Latitude" value={incident.location.latitude} onChange={handleLocationChange}/>
-      
-      <label htmlFor="severity">Severity of Flooding:</label>
-      <select name="severity" id="severity" value={incident.severity} onChange={handleChange}>
-        <option value='minor'>Minor</option>
-        <option value='moderate'>Moderate</option>
-        <option value='severe'>Severe</option>
-        <option value='critical'>Critical</option>
-      </select>
-
-      <label htmlFor="floodType">Type of Flood:</label>
-      <select name="floodType" id="floodType" value={incident.floodType} onChange={handleChange}>
-        <option value="riverFlood">River Flood</option>
-        <option value="urbanFlood">Urban Flood</option>
-        <option value="flashFlood">Flash Flood</option>
-        <option value="coastalFlood">Coastal Flood</option>
-        <option value="other">Other</option>
-      </select>
-
-      <label htmlFor="injuries">Injuries:</label>
-      <div>
-        <label htmlFor="injuriesYes">Yes</label>
-        <input type="radio" name="injuries" id="injuriesYes" value="Yes" checked={incident.injuries === "Yes"} onChange={handleChange}/>
-
-        <label htmlFor="injuriesNo">No</label>
-        <input type="radio" name="injuries" id="injuriesNo" value="No" checked={incident.injuries === "No"} onChange={handleChange}/>
+    <div className="formContainer">
+      <div id="formTitle">
+        <p>Report an Incident</p>
       </div>
 
-      <label htmlFor="urgency">Urgency Level:</label>
-      <select name="urgency" id="urgency" value={incident.urgency} onChange={handleChange}>
-        <option value="immediate">Immediate</option>
-        <option value="withinHours">Within Hours</option>
-        <option value="within24Hours">Immediate</option>
-        <option value="low">Low</option>
-      </select>
+      <div className="createIncident">
+      <form onSubmit={handleSubmit}>
+        <div className="formElement">
+          <label htmlFor='title' >Incident Title:</label>
+          <input className="formElementInput" type='text' name="title" id="title" placeholder="e.g., Flash Flood in Downtown" value={incident.title} onChange={handleChange}/>
+        </div>
 
-      <label htmlFor="name">Reporting Person's Name:</label>
-      <input type="text" name="name" id="name" value={incident.name} onChange={handleChange}/>
+        <div className="formElement">
+          <label htmlFor='incidentDate'>Date & Time of Incident:</label>
+          <input className="formElementInput"  type="datetime-local" name="incidentDate" id="incidentDate" value={incident.incidentDate} onChange={handleChange}/>
+        </div>
 
-      <label htmlFor="phone">Phone Number:</label>
-      <input type="tel" name="phone" id="phone" value={incident.phone} onChange={handleChange}/>
+        <div className="formElement">
+          <label htmlFor="longitude">Incident's Longitude:</label>
+          <input className="formElementInput"  type="number" name="longitude" id="longitude" placeholder="e.g., -0.1276" value={incident.location.longitude} onChange={handleLocationChange}/>
+        </div>
 
-      <label htmlFor="email">Email Address:</label>
-      <input type="email" name="email" id="email" value={incident.email} onChange={handleChange}/>
+        <div className="formElement">
+          <label htmlFor="latitude">Incident's Latitude:</label>
+          <input className="formElementInput"  type="number" name="latitude" id="latitude" placeholder="e.g., 51.5072" value={incident.location.latitude} onChange={handleLocationChange}/>
+        </div>
 
-      <label htmlFor="additionalComments">Additional Comments:</label>
-      <textarea name="additionalComments" id="additionalComments" value={incident.additionalComments} onChange={handleChange}></textarea>
+        <div className="formElement">
+          <label htmlFor="severity">Severity of Flooding:</label>
+          <select className="formElementInput"  name="severity" id="severity" value={incident.severity} onChange={handleChange}>
+            <option value=''>Specify incident's severity:</option>
+            <option value='minor'>Minor</option>
+            <option value='moderate'>Moderate</option>
+            <option value='severe'>Severe</option>
+            <option value='critical'>Critical</option>
+          </select>
+        </div>
 
-      <button type="submit">Submit Incident</button>
-    </form>
+        <div className="formElement">
+          <label htmlFor="floodType">Type of Flood:</label>
+          <select className="formElementInput"  name="floodType" id="floodType" value={incident.floodType} onChange={handleChange}>
+            <option value=''>Please specify incident's type:</option>
+            <option value="riverFlood">River Flood</option>
+            <option value="urbanFlood">Urban Flood</option>
+            <option value="flashFlood">Flash Flood</option>
+            <option value="coastalFlood">Coastal Flood</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div className="formElement">
+          <label htmlFor="injuries">Injuries:</label>
+          <div>
+            <label id='yes' htmlFor="injuriesYes">Yes</label>
+            <input className="formElementInput"  type="radio" name="injuries" id="injuriesYes" value="Yes" checked={incident.injuries === "Yes"} onChange={handleChange}/>
+
+            <label id='no' htmlFor="injuriesNo">No</label>
+            <input  className="formElementInput" type="radio" name="injuries" id="injuriesNo" value="No" checked={incident.injuries === "No"} onChange={handleChange}/>
+          </div>
+        </div>
+
+        <div className="formElement">
+        <label htmlFor="urgency">Urgency Level:</label>
+        <select className="formElementInput"  name="urgency" id="urgency" value={incident.urgency} onChange={handleChange}>
+          <option value=''>Please specicy incident's urgency:</option>
+          <option value="immediate">Immediate</option>
+          <option value="withinHours">Within Hours</option>
+          <option value="low">Low</option>
+        </select>
+        </div>
+
+        <div className="formElement">
+        <label htmlFor="name">Reporting Person's Name:</label>
+        <input className="formElementInput"  type="text" name="name" id="name" placeholder='e.g., John Smith' value={incident.name} onChange={handleChange}/>
+        </div>
+
+        <div className="formElement">
+        <label htmlFor="phone">Phone Number:</label>
+        <input  className="formElementInput" type="tel" name="phone" id="phone" placeholder='e.g., +44 7123 456789'value={incident.phone} onChange={handleChange}/>
+        </div>
+
+        <div className="formElement">
+        <label htmlFor="email">Email Address:</label>
+        <input  className="formElementInput" type="email" name="email" id="email" placeholder='e.g., example@domain.com'value={incident.email} onChange={handleChange}/>
+        </div>
+
+        <div className="formElement">
+        <label htmlFor="additionalComments">Additional Comments:</label>
+        <textarea className="formElementInput" name="additionalComments" id="additionalComments" placeholder='Provide any other relevant information...' value={incident.additionalComments} onChange={handleChange}></textarea>
+        </div>
+
+        <button type="submit" disabled={!isFormValid()}>Submit Incident</button>
+      </form>
+      </div>
+    </div>
   )
 }
 

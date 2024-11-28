@@ -10,6 +10,7 @@ export default {
         'dark' : '#1E2F23',
         'lighter' : '#607744',
         'light' : '#768948',
+        
       }
     },
   },
