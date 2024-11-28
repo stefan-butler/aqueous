@@ -17,25 +17,72 @@ function Incidents () {
   },[])
 
   const responderId = useSelector((state: RootState) => state.auth.user?.id);
-  const handleChatIconClick = async (incidentId: string, responderId: string | undefined ) => {
-    // Find the incident from global.list
-    const incident = global.list.find((item) => item.user_id === incidentId);
-    if (!incident) {
-      console.error('Incident not found');
-      return;
+  const handleChatIconClick = async (incidentId: string, responderId: string | undefined) => {
+    try {
+      // Find the incident from global.list
+      const incident = global.list.find((item) => item.user_id === incidentId);
+      if (!incident) {
+        console.error('Incident not found');
+        return;
+      }
+  
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.error('Authorization token is missing');
+        return;
+      }
+  
+      const reporterId = incident.user_id;
+      console.log(`reporterId: ${reporterId}`);
+  
+      // check if there is already a chat with this incident ID
+      const chatCheckResponse = await axios.get(
+        `http://localhost:3000/api/chat/check?incidentId=${incidentId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const existingChat = await chatCheckResponse.data;
+  
+      // if no existing chat, create one
+      if (!existingChat) {
+        console.log('No existing chat found, creating a new one.');
+        const createChatResponse = await axios.post(
+          'http://localhost:3000/api/chat/',
+          {
+            incidentId,
+            reporterId,
+            responderId,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const { _id: chatId } = await createChatResponse.data;
+        console.log('New chat created:', chatId);
+        navigate(`/chat?chatId=${chatId}`);
+        return;
+      }
+  
+      // if chat exists, check if responderId matches
+      console.log('Existing chat found:', existingChat);
+      if (existingChat.responderId === responderId) {
+        // open chat
+        console.log('Responder matches. Opening chat.');
+        navigate(`/chat?chatId=${existingChat._id}`);
+      } else {
+        // chat already has a different responder
+        console.error('Incident already has a responder');
+        alert('This incident already has a responder assigned.');
+      }
+    } catch (error) {
+      console.error('Error handling chat icon click:', error);
     }
-    // get responder and reporterId
-    const reporterId = incident.user_id;
-    // create new chat 
-    const response = await axios.post('/api/chat/', {
-      incidentId,
-      reporterId, 
-      responderId
-    });
-
-    const { _id: chatId } = response.data;
-    navigate(`/chat?chatId=${chatId}`)
-  }
+  };
 
   console.log(global)
   return (
