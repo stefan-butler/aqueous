@@ -20,8 +20,8 @@ export interface ValidUser {
   firstName: string;
   lastName: string;
   email: string;
-  responder: boolean;
-  responderType?: string; 
+  isResponder: boolean;
+  responderType: string; 
 }
 
 export interface LoginResponse {

@@ -19,9 +19,12 @@ export const login = (email: string, password: string) => async (dispatch: AppDi
       lastName: validUser.lastName,
       email: validUser.email,
     };
-
-    dispatch(loginSuccess({ user, token, isResponder: validUser.responder }));
+    
+    dispatch(loginSuccess({ user, token, isResponder: validUser.isResponder }));
     localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('isResponder', validUser.isResponder.toString())
+    localStorage.setItem('responderType', validUser.responderType.toString())
   } catch (error: unknown) {
     let errorMessage = 'Login failed';
     if (axios.isAxiosError(error) && error.response) {
@@ -66,8 +69,11 @@ export const register = (
       email: validUser.email,
     };
 
-    dispatch(loginSuccess({ user, token, isResponder: validUser.responder }));
+    dispatch(loginSuccess({ user, token, isResponder: validUser.isResponder }));
     localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('isResponder', validUser.isResponder.toString())
+    localStorage.setItem('responderType', validUser.responderType.toString())
   } catch (error: unknown) {
     let errorMessage = 'Registration failed';
     if (axios.isAxiosError(error) && error.response) {
@@ -83,5 +89,8 @@ export const register = (
 // Logout action
 export const logoutUser = () => (dispatch: AppDispatch) => {
   localStorage.removeItem('token');
+  localStorage.removeItem('isResponder')
+  localStorage.removeItem('responderType')
+  localStorage.removeItem('user')
   dispatch(logout());
 };

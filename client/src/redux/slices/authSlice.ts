@@ -1,13 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AuthState, User } from '../../types/auth-types';
 
+
+const token = localStorage.getItem('token')
+const isResponder = localStorage.getItem('isResponder')
+const responderType = localStorage.getItem('responderType')
+const userString = localStorage.getItem('user')
+const user = userString ? JSON.parse(userString) : null;
+
 // initial state 
 const initialState: AuthState = {
-  user: null,
-  token: null,
+  user: user || null,
+  token:  token || null,
   loading: false,
-  isResponder: false,
-  responderType: null,
+  isResponder: JSON.parse(isResponder) || false,
+  responderType: responderType || null,
   error: null,
 };
 
@@ -33,6 +40,8 @@ const authSlice = createSlice({
     logout(state) {
       state.user = null;
       state.token = null;
+      state.isResponder = false;
+      state.responderType = null;
     },
     registrationFailure(state, action: PayloadAction<string>) { 
       state.loading = false;
