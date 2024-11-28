@@ -98,27 +98,27 @@ function IncidentForm () {
       <form onSubmit={handleSubmit}>
         <div className="formElement">
           <label htmlFor='title' >Incident Title:</label>
-          <input type='text' name="title" id="title" placeholder="e.g., Flash Flood in Downtown" value={incident.title} onChange={handleChange}/>
+          <input className="formElementInput" type='text' name="title" id="title" placeholder="e.g., Flash Flood in Downtown" value={incident.title} onChange={handleChange}/>
         </div>
 
         <div className="formElement">
           <label htmlFor='incidentDate'>Date & Time of Incident:</label>
-          <input type="datetime-local" name="incidentDate" id="incidentDate" value={incident.incidentDate} onChange={handleChange}/>
+          <input className="formElementInput"  type="datetime-local" name="incidentDate" id="incidentDate" value={incident.incidentDate} onChange={handleChange}/>
         </div>
 
         <div className="formElement">
           <label htmlFor="longitude">Incident's Longitude:</label>
-          <input type="text" name="longitude" id="longitude" placeholder="e.g., -0.1276" value={incident.location.longitude} onChange={handleLocationChange}/>
+          <input className="formElementInput"  type="number" name="longitude" id="longitude" placeholder="e.g., -0.1276" value={incident.location.longitude} onChange={handleLocationChange}/>
         </div>
 
         <div className="formElement">
           <label htmlFor="latitude">Incident's Latitude:</label>
-          <input type="text" name="latitude" id="latitude" placeholder="e.g., 51.5072" value={incident.location.latitude} onChange={handleLocationChange}/>
+          <input className="formElementInput"  type="number" name="latitude" id="latitude" placeholder="e.g., 51.5072" value={incident.location.latitude} onChange={handleLocationChange}/>
         </div>
 
         <div className="formElement">
           <label htmlFor="severity">Severity of Flooding:</label>
-          <select name="severity" id="severity" value={incident.severity} onChange={handleChange}>
+          <select className="formElementInput"  name="severity" id="severity" value={incident.severity} onChange={handleChange}>
             <option value=''>Specify incident's severity:</option>
             <option value='minor'>Minor</option>
             <option value='moderate'>Moderate</option>
@@ -129,7 +129,7 @@ function IncidentForm () {
 
         <div className="formElement">
           <label htmlFor="floodType">Type of Flood:</label>
-          <select name="floodType" id="floodType" value={incident.floodType} onChange={handleChange}>
+          <select className="formElementInput"  name="floodType" id="floodType" value={incident.floodType} onChange={handleChange}>
             <option value=''>Please specify incident's type:</option>
             <option value="riverFlood">River Flood</option>
             <option value="urbanFlood">Urban Flood</option>
@@ -142,17 +142,17 @@ function IncidentForm () {
         <div className="formElement">
           <label htmlFor="injuries">Injuries:</label>
           <div>
-            <label htmlFor="injuriesYes">Yes</label>
-            <input type="radio" name="injuries" id="injuriesYes" value="Yes" checked={incident.injuries === "Yes"} onChange={handleChange}/>
+            <label id='yes' htmlFor="injuriesYes">Yes</label>
+            <input className="formElementInput"  type="radio" name="injuries" id="injuriesYes" value="Yes" checked={incident.injuries === "Yes"} onChange={handleChange}/>
 
-            <label htmlFor="injuriesNo">No</label>
-            <input type="radio" name="injuries" id="injuriesNo" value="No" checked={incident.injuries === "No"} onChange={handleChange}/>
+            <label id='no' htmlFor="injuriesNo">No</label>
+            <input  className="formElementInput" type="radio" name="injuries" id="injuriesNo" value="No" checked={incident.injuries === "No"} onChange={handleChange}/>
           </div>
         </div>
 
         <div className="formElement">
         <label htmlFor="urgency">Urgency Level:</label>
-        <select name="urgency" id="urgency" value={incident.urgency} onChange={handleChange}>
+        <select className="formElementInput"  name="urgency" id="urgency" value={incident.urgency} onChange={handleChange}>
           <option value=''>Please specicy incident's urgency:</option>
           <option value="immediate">Immediate</option>
           <option value="withinHours">Within Hours</option>
@@ -163,22 +163,22 @@ function IncidentForm () {
 
         <div className="formElement">
         <label htmlFor="name">Reporting Person's Name:</label>
-        <input type="text" name="name" id="name" placeholder='e.g., John Smith' value={incident.name} onChange={handleChange}/>
+        <input className="formElementInput"  type="text" name="name" id="name" placeholder='e.g., John Smith' value={incident.name} onChange={handleChange}/>
         </div>
 
         <div className="formElement">
         <label htmlFor="phone">Phone Number:</label>
-        <input type="tel" name="phone" id="phone" placeholder='e.g., +44 7123 456789'value={incident.phone} onChange={handleChange}/>
+        <input  className="formElementInput" type="tel" name="phone" id="phone" placeholder='e.g., +44 7123 456789'value={incident.phone} onChange={handleChange}/>
         </div>
 
         <div className="formElement">
         <label htmlFor="email">Email Address:</label>
-        <input type="email" name="email" id="email" placeholder='e.g., example@domain.com'value={incident.email} onChange={handleChange}/>
+        <input  className="formElementInput" type="email" name="email" id="email" placeholder='e.g., example@domain.com'value={incident.email} onChange={handleChange}/>
         </div>
 
         <div className="formElement">
         <label htmlFor="additionalComments">Additional Comments:</label>
-        <textarea name="additionalComments" id="additionalComments" placeholder='Provide any other relevant information...' value={incident.additionalComments} onChange={handleChange}></textarea>
+        <textarea className="formElementInput" name="additionalComments" id="additionalComments" placeholder='Provide any other relevant information...' value={incident.additionalComments} onChange={handleChange}></textarea>
         </div>
 
         <button type="submit" disabled={!isFormValid()}>Submit Incident</button>

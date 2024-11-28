@@ -1,11 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
 .formContainer {
   display: flex;
   flex-direction: column;
-  border-color: black;
-  border-width: thick;
   align-items: center;
   padding-top:16px;
   padding-bottom:16px;
+  background-color: rgb(41, 73, 49);
 }
 
 .createIncident form {
@@ -21,5 +23,73 @@
 .formElement {
   display: flex;
   flex-direction: column;
+  gap:4px;
+}
+
+.formElement label {
+  color: rgb(242, 132, 130);
+  font-size: roboto;
+  font-size: 20px;
+}
+
+input, select, textarea  {
+  background-color: rgb(245, 202, 195);
+  color: rgb(30, 47, 35);
+  border-radius: 5px;
+  font-family: roboto;
+  padding-left: 4px;
+}
+
+ /* textarea::placeholder {
+  color: rgb(30, 47, 35);
+}
+
+input::placeholder {
+  color: rgb(30, 47, 35);
+} */
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#formTitle {
+  color: rgb(242, 132, 130);
+  font-size: 36px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+}
+
+button {
+  border-radius: 5px;
+  background-color: rgb(245, 202, 195);
+  margin-left: 32px;
+  margin-right: 32px;
+  height: 40px;
+  font-family: roboto;
+  color: rgb(30, 47, 35);;
+}
+
+button:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
+button:not(:disabled):hover {
+  background-color: rgb(242, 132, 130); 
+  transform: scale(1.05);  
+  font-weight: bold;
+}
+
+button:active {
+  background-color: rgb(242, 132, 130); 
+  transform: scale(0.95); 
+  font-weight: bold;
+}
+
+#no {
+margin-left: 16px;
 }
 

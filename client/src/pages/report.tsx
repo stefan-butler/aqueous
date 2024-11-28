@@ -5,7 +5,6 @@ function Report () {
   return (
     <>
     <IncidentForm/>
-    <Incidents/>
     </>
 
   )
