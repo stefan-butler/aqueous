@@ -1,0 +1,25 @@
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  border-color: black;
+  border-width: thick;
+  align-items: center;
+  padding-top:16px;
+  padding-bottom:16px;
+}
+
+.createIncident form {
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+
+  padding-top: 16px;
+  padding-bottom: 16px;
+  gap: 12px;
+}
+
+.formElement {
+  display: flex;
+  flex-direction: column;
+}
+
