@@ -91,7 +91,7 @@ function IncidentForm () {
   return (
     <div className="formContainer">
       <div id="formTitle">
-        <p>Report an Incident</p>
+        <p><strong>Speak Up, Stay Safe:</strong> Report Flooding to Shield Your Community!</p>
       </div>
 
       <div className="createIncident">
@@ -134,7 +134,7 @@ function IncidentForm () {
             <option value="River Flood">River Flood</option>
             <option value="Urban Flood">Urban Flood</option>
             <option value="Flash Flood">Flash Flood</option>
-            <option value="CoastalFlood">Coastal Flood</option>
+            <option value="Coastal Flood">Coastal Flood</option>
             <option value="Other">Other</option>
           </select>
         </div>

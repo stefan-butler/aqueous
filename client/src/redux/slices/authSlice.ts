@@ -3,17 +3,17 @@ import { AuthState, User } from '../../types/auth-types';
 
 
 const token = localStorage.getItem('token')
-const isResponder = localStorage.getItem('isResponder')
+const isResponderString = localStorage.getItem('isResponder')
 const responderType = localStorage.getItem('responderType')
 const userString = localStorage.getItem('user')
 const user = userString ? JSON.parse(userString) : null;
-
+const isResponder = isResponderString ? JSON.parse(isResponderString) : null;
 // initial state 
 const initialState: AuthState = {
   user: user || null,
   token:  token || null,
   loading: false,
-  isResponder: JSON.parse(isResponder) || false,
+  isResponder: isResponder || false,
   responderType: responderType || null,
   error: null,
 };

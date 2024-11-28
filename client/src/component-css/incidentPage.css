@@ -1,12 +1,17 @@
 
+body {
+  background-color: rgb(41, 73, 49);
+}
+
 .incidentContainer {
+  padding-top: 40px;
   display: flex;
   flex-direction: column;
   gap: 32px;
   background-color: rgb(41, 73, 49);
 }
 
-.incident {
+/* .incident {
   border: thick;
   border-style: dotted;
   border-color: rgb(242, 132, 130);
@@ -22,4 +27,4 @@
 
 .icon:hover {
   cursor: pointer;
-}
+} */

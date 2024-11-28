@@ -23,28 +23,83 @@ const handleChatIconClick = (incidentId: string) => {
   return (
 
     <div className="incidentContainer">
-    {global.list.map((incident, index) => {
-      return (
-        <div className="incident" key={index}> 
-          <div className="incidentTitle">
-            <p>{incident.title}</p>
-          </div>
-          <div>
-            <p>{incident.floodType}</p>
-          </div>
-          <div>
-            <p>{incident.urgency}</p>
-          </div>
-          <div className='reportingPersonDetails'>
-            <p>{incident.name}: {incident.phone}  </p>
-            <p>{incident.phone}    {incident.email}</p>
-          </div>
-          <div className='chatIcon'>
+      <div className="criticalSeverity">
+        <p>Critical Incidents</p>
+        <div className='criticalIncidents'>
+          <div className="incident">
+            {global.list
+            .filter((incident) => incident.severity === 'Critical')
+            .map((incident, index) => (
+              <div className="incident" key={index}>
+              <div className="incidentTitle">
+                <p>{incident.title} - {incident.incidentDate}</p>
+              </div>
+              <div className='floodType'>
+                <p>Type: {incident.floodType}</p>
+              </div>
+              <div className="personDetails">
+                <p>{incident.name}</p>
+                <p>Contact deatils:{incident.phone} & {incident.email}</p>
                 <img onClick={() => handleChatIconClick(incident._id)} src="https://cdn-icons-png.flaticon.com/128/3621/3621438.png" alt="Venue icon" className="icon" />
+              </div>
+              </div>
+            )
+            )}
           </div>
         </div>
-      );
-    })}
+      </div>
+
+      <div className="moderateSeverity">
+        <p>Moderate Incidents</p>
+        <div className='moderateIncidents'>
+          <div className="incident">
+            {global.list
+              .filter((incident) => incident.severity === 'Moderate')
+              .map((incident, index) => (
+                <div className="incident" key={index}>
+                <div className="incidentTitle">
+                  <p>{incident.title} - {incident.incidentDate}</p>
+                </div>
+                <div className='floodType'>
+                  <p>Type: {incident.floodType}</p>
+                </div>
+                <div className="personDetails">
+                  <p>{incident.name}</p>
+                  <p>Contact deatils:{incident.phone} & {incident.email}</p>
+                  <img onClick={() => handleChatIconClick(incident._id)} src="https://cdn-icons-png.flaticon.com/128/3621/3621438.png" alt="Venue icon" className="icon" />
+                </div>
+                </div>
+              )
+              )}
+          </div>
+        </div>
+      </div>
+
+      <div className='minorSeverity'>
+        <p>Minor Incidents</p>
+        <div className='minorIncidents'>
+          <div className="incident">
+            {global.list
+                .filter((incident) => incident.severity === 'Minor')
+                .map((incident, index) => (
+                  <div className="incident" key={index}>
+                  <div className="incidentTitle">
+                    <p>{incident.title} - {incident.incidentDate}</p>
+                  </div>
+                  <div className='floodType'>
+                    <p>Type: {incident.floodType}</p>
+                  </div>
+                  <div className="personDetails">
+                    <p>{incident.name}</p>
+                    <p>Contact deatils:{incident.phone} & {incident.email}</p>
+                    <img onClick={() => handleChatIconClick(incident._id)} src="https://cdn-icons-png.flaticon.com/128/3621/3621438.png" alt="Venue icon" className="icon" />
+                  </div>
+                  </div>
+                )
+                )}
+          </div>
+        </div>
+      </div>
   </div>
     
   )

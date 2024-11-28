@@ -50,7 +50,6 @@ input[type="number"]::-webkit-outer-spin-button {
   color: rgb(242, 132, 130);
   font-size: 36px;
   font-family: 'Montserrat', sans-serif;
-  font-weight: bold;
 }
 
 button {
