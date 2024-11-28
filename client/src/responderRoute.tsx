@@ -8,7 +8,7 @@ function ResponderRoute () {
     return <Navigate to="/login" />;
   }
 
-  if (!isResponder) {
+  if (!user) {
     return <Navigate to="/unauthorized" />;
   }
 

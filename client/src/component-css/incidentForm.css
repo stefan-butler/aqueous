@@ -40,14 +40,6 @@ input, select, textarea  {
   padding-left: 4px;
 }
 
- /* textarea::placeholder {
-  color: rgb(30, 47, 35);
-}
-
-input::placeholder {
-  color: rgb(30, 47, 35);
-} */
-
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;

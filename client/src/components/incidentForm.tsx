@@ -156,7 +156,6 @@ function IncidentForm () {
           <option value=''>Please specicy incident's urgency:</option>
           <option value="immediate">Immediate</option>
           <option value="withinHours">Within Hours</option>
-          <option value="within24Hours">Immediate</option>
           <option value="low">Low</option>
         </select>
         </div>
