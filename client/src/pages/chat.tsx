@@ -7,7 +7,7 @@ function Chat () {
   const [messages, setMessages] = useState<[IMessage] | null>(null);
   const [chatId, setChatId] = useState('67483dc97daa00534b8f720c'); // use mock for building purposes 
   const [newMessage, setNewMessage] = useState('');
-  
+  const senderId = useAppSelector((state) => state.auth.user?.id);
 
 
   async function fetchMessages(chatId: string) {
@@ -25,11 +25,11 @@ function Chat () {
   
     try {
       const response = await axios.post(`http://localhost:3000/api/chat/${chatId}/messages`, {
-        senderId: '67464815c0f96739a99fd6e6', 
+        senderId, 
         text: newMessage,
       });
   
-      setMessages((prevMessages) => [...prevMessages, response.data]);
+      setMessages((prevMessages) => (prevMessages ? [...prevMessages, response.data] : [response.data]));
       setNewMessage(''); 
     } catch (error) {
       console.error('Error sending message:', error);
@@ -41,23 +41,29 @@ function Chat () {
   }, [chatId]);
 
   return (
-    <div className='bg-dark h-screen'>
-      <h1 className='text-gray-100'>CHAT</h1>
-      {messages ? messages.map((message: IMessage) => (
-        <div className='text-gray-100 p-2 bg-lighter w-[200px] my-2 rounded-sm shadow-neutral-100 mx-2' key={message._id}>{message.text}</div>
-      )):
-      <div>NO MESSAGES YET</div>
-      }
-      
-      <label htmlFor='message-input'></label>
-      <input 
-        type='text'
-        id='message-input'
-        placeholder='your message here...'
-        value={newMessage}
-        onChange={(e) => setNewMessage(e.target.value)}
-      />
-      <button onClick={handleSend}>SEND</button>
+    <div className='bg-dark h-screen p-2'>
+      <div className='bg-light m-auto w-[800px] h-[800px] p-4 rounded-lg shadow-2xl-neutral-100'>
+        <h1 className='text-gray-100'>CHAT</h1>
+        {messages ? messages.map((message: IMessage) => (
+          <div className='text-gray-100 p-2 bg-lighter w-[200px] my-2 rounded-sm shadow-neutral-100 mx-2' key={message._id}>{message.text}</div>
+        )):
+        <div>NO MESSAGES YET</div>
+        }
+        
+        <label htmlFor='message-input'></label>
+        <input 
+          type='text'
+          id='message-input'
+          placeholder='your message here...'
+          value={newMessage}
+          onChange={(e) => setNewMessage(e.target.value)}
+          className='m-2 p-2 w-[150px] bg-gray-100 rounded-sm'
+        />
+        <button 
+          onClick={handleSend}
+          className='bg-dark hover:bg-gray-100 p-2 text-gray-100 hover:text-dark rounded-sm'
+          >SEND</button>
+      </div>
     </div>
   )
 }
