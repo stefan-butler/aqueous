@@ -120,10 +120,10 @@ function IncidentForm () {
           <label htmlFor="severity">Severity of Flooding:</label>
           <select className="formElementInput"  name="severity" id="severity" value={incident.severity} onChange={handleChange}>
             <option value=''>Specify incident's severity:</option>
-            <option value='minor'>Minor</option>
-            <option value='moderate'>Moderate</option>
-            <option value='severe'>Severe</option>
-            <option value='critical'>Critical</option>
+            <option value='Minor'>Minor</option>
+            <option value='Moderate'>Moderate</option>
+            <option value='Severe'>Severe</option>
+            <option value='Critical'>Critical</option>
           </select>
         </div>
 
@@ -131,11 +131,11 @@ function IncidentForm () {
           <label htmlFor="floodType">Type of Flood:</label>
           <select className="formElementInput"  name="floodType" id="floodType" value={incident.floodType} onChange={handleChange}>
             <option value=''>Please specify incident's type:</option>
-            <option value="riverFlood">River Flood</option>
-            <option value="urbanFlood">Urban Flood</option>
-            <option value="flashFlood">Flash Flood</option>
-            <option value="coastalFlood">Coastal Flood</option>
-            <option value="other">Other</option>
+            <option value="River Flood">River Flood</option>
+            <option value="Urban Flood">Urban Flood</option>
+            <option value="Flash Flood">Flash Flood</option>
+            <option value="CoastalFlood">Coastal Flood</option>
+            <option value="Other">Other</option>
           </select>
         </div>
 
@@ -154,9 +154,9 @@ function IncidentForm () {
         <label htmlFor="urgency">Urgency Level:</label>
         <select className="formElementInput"  name="urgency" id="urgency" value={incident.urgency} onChange={handleChange}>
           <option value=''>Please specicy incident's urgency:</option>
-          <option value="immediate">Immediate</option>
-          <option value="withinHours">Within Hours</option>
-          <option value="low">Low</option>
+          <option value="Immediate">Immediate</option>
+          <option value="Within Hours">Within Hours</option>
+          <option value="Low">Low</option>
         </select>
         </div>
 

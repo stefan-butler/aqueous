@@ -1,12 +1,18 @@
+
 .incidentContainer {
   display: flex;
   flex-direction: column;
   gap: 32px;
+  background-color: rgb(41, 73, 49);
 }
 
 .incident {
+  border: thick;
+  border-style: dotted;
+  border-color: rgb(242, 132, 130);
   display: flex;
   gap: 40px;
+  background-color: rgb(245, 202, 195);
 }
 
 .icon{

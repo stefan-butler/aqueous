@@ -35,6 +35,10 @@ const handleChatIconClick = (incidentId: string) => {
           <div>
             <p>{incident.urgency}</p>
           </div>
+          <div className='reportingPersonDetails'>
+            <p>{incident.name}: {incident.phone}  </p>
+            <p>{incident.phone}    {incident.email}</p>
+          </div>
           <div className='chatIcon'>
                 <img onClick={() => handleChatIconClick(incident._id)} src="https://cdn-icons-png.flaticon.com/128/3621/3621438.png" alt="Venue icon" className="icon" />
           </div>
