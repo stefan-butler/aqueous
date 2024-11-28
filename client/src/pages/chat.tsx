@@ -5,54 +5,8 @@ import { useAppSelector } from '../redux/hooks';
 
 function Chat () {
   const [messages, setMessages] = useState<[IMessage] | null>(null);
-  const [chatId, setChatId] = useState('mock-chat-id'); // use mock for building purposes 
-  const [responderId] = useState('mock-responder-id'); // use mock for building purposes 
-  const [reporterId] = useState('mock-reporter-id');  // use mock for building purposes 
+  const [chatId, setChatId] = useState('67483dc97daa00534b8f720c'); // use mock for building purposes 
   const [newMessage, setNewMessage] = useState('');
-  // incidentId
-
-  const sampleMessages = [
-    {
-      _id: "637a15f1a3e744001234abcd",
-      chatId: "637a15f1a3e744001234abca",
-      senderId: "637a15f1a3e744001234abcb",
-      text: "Hey, how are you doing?",
-      createdAt: "2024-11-27T10:00:00.000Z",
-      updatedAt: "2024-11-27T10:00:00.000Z",
-    },
-    {
-      _id: "637a15f1a3e744001234abce",
-      chatId: "637a15f1a3e744001234abca",
-      senderId: "637a15f1a3e744001234abcd",
-      text: "I'm doing well, thanks! How about you?",
-      createdAt: "2024-11-27T10:01:00.000Z",
-      updatedAt: "2024-11-27T10:01:00.000Z",
-    },
-    {
-      _id: "637a15f1a3e744001234abcf",
-      chatId: "637a15f1a3e744001234abca",
-      senderId: "637a15f1a3e744001234abcb",
-      text: "Pretty good, just working on a project.",
-      createdAt: "2024-11-27T10:02:00.000Z",
-      updatedAt: "2024-11-27T10:02:00.000Z",
-    },
-    {
-      _id: "637a15f1a3e744001234abd0",
-      chatId: "637a15f1a3e744001234abcd",
-      senderId: "637a15f1a3e744001234abcd",
-      text: "Nice! Let me know if you need help.",
-      createdAt: "2024-11-27T10:03:00.000Z",
-      updatedAt: "2024-11-27T10:03:00.000Z",
-    },
-    {
-      _id: "637a15f1a3e744001234abd1",
-      chatId: "637a15f1a3e744001234abca",
-      senderId: "637a15f1a3e744001234abcb",
-      text: "Will do, thanks!",
-      createdAt: "2024-11-27T10:04:00.000Z",
-      updatedAt: "2024-11-27T10:04:00.000Z",
-    },
-  ];
   
 
 
@@ -71,7 +25,7 @@ function Chat () {
   
     try {
       const response = await axios.post(`http://localhost:3000/api/chat/${chatId}/messages`, {
-        senderId: 'mock-sender-id', // for building purposes
+        senderId: '67464815c0f96739a99fd6e6', 
         text: newMessage,
       });
   
@@ -87,11 +41,13 @@ function Chat () {
   }, [chatId]);
 
   return (
-    <div>
-      <h1>CHAT</h1>
-      {sampleMessages.map((message: IMessage) => (
-        <div key={message._id}>{message.text}</div>
-      ))}
+    <div className='bg-dark h-screen'>
+      <h1 className='text-gray-100'>CHAT</h1>
+      {messages ? messages.map((message: IMessage) => (
+        <div className='text-gray-100 p-2 bg-lighter w-[200px] my-2 rounded-sm shadow-neutral-100 mx-2' key={message._id}>{message.text}</div>
+      )):
+      <div>NO MESSAGES YET</div>
+      }
       
       <label htmlFor='message-input'></label>
       <input 
