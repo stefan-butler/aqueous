@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
 
 body {
   background-color: rgb(46, 64, 88);
@@ -7,46 +9,90 @@ body {
   padding-top: 40px;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 50px;
   background-color: rgb(46, 64, 88);
+  margin-bottom: 32px;
+  font-family: 'Montserrat', sans-serif;
 }
 
 #criticaltitle {
-  font-size: 32px;
+  font-size: 45px;
   font-weight: bold;
-  color: rgb(255, 0, 0)
+  color: white;
 }
 
 #moderateltitle {
-  font-size: 32px;
+  font-size: 45px;
   font-weight: bold;
-  color: rgb(255, 154, 0)
+  color: white;
 }
 
 #minortitle {
-  font-size: 32px;
+  font-size: 45px;
   font-weight: bold;
-  color: rgb(255, 232, 8)
+  color: white;
 }
-
-criticalInce
 
 .incident {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 24px;
+  display: flex;
+  width: 50%;
+  margin: 4px;
+}
+
+.incidentDetails {
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
 }
 
 .personDetails {
   display: flex;
-  gap: 8px;
   align-items: center;
+  gap:16px;
 }
 
-.icon{
-  height: 30px;
+.person {
+  display: flex;
+  flex-direction: column;
 }
 
-.icon:hover {
-  cursor: pointer;
+.icon {
+  height: 35px;
+}
+
+.criticalIncidents {
+  background-color: rgb(223, 229, 238) ;
+  width: 80%;
+  border-radius: 5px;
+  border: thin;
+  border-color: rgb(1, 12, 27);
+  border-style: solid;
+  min-height: 350px;
+}
+
+.moderateIncidents {
+  background-color: rgb(223, 229, 238) ;
+  width: 80%;
+  border-radius: 5px;
+  border: thin;
+  border-color: rgb(1, 12, 27);
+  border-style: solid;
+  min-height: 350px;
+}
+
+.minorIncidents {
+  background-color: rgb(223, 229, 238) ;
+  width: 80%;
+  border-radius: 5px;
+  border: thin;
+  border-color: rgb(1, 12, 27);
+  border-style: solid;
+  min-height: 350px;
+}
+
+.titleInc {
+  font-size:32px;
 }

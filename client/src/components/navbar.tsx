@@ -13,6 +13,7 @@ function Navbar () {
 
   function handleLogout () {
     dispatch(logoutUser());
+    navigate('/')
   };
 
   function handleLogin () {
@@ -31,9 +32,6 @@ function Navbar () {
         </div>
         <div className='navOption'>
           <Link to="/incidents">INCIDENTS</Link>
-        </div>
-        <div className='navOption'>
-          <Link to="/chat">CHAT</Link>
         </div>
       </div>
       <div className='login'>
