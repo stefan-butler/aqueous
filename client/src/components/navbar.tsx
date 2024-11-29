@@ -7,7 +7,7 @@ import Logo from './logo';
 
 function Navbar () {
   const { user, isResponder } = useAppSelector((state: RootState) => state.auth);
-  console.log(user);
+  // console.log(user);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
