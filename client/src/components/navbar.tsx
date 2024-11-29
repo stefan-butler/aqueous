@@ -2,10 +2,12 @@ import { RootState } from '../redux/store';
 import { logoutUser } from '../redux/actions/authActions';
 import { Link, useNavigate } from 'react-router';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import '../component-css/navBar.css'
+import Logo from './logo';
 
 function Navbar () {
   const { user, isResponder } = useAppSelector((state: RootState) => state.auth);
-  console.log(user);
+  // console.log(user);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -18,43 +20,38 @@ function Navbar () {
   }
 
   return (
-    <nav className="flex bg-dark text-gray-200 p-4 items-center justify-between">
-          <h1 className="text-xl font-bold mx-5">AQUEOUS</h1>
-      <ul className="flex mr-auto">
-        <li className="mx-4">
+    <nav className="navBarContainer">
+      <Logo/>
+      <div className="navigationOptions">
+        <div className='navOption'>
           <Link to="/">HOME</Link>
-        </li>
-        {!isResponder &&
-         <li className="mx-4">
-         <Link to="/report">REPORT</Link>
-       </li> 
-        }
-        {isResponder &&
-        <li className="mx-4">
-        <Link to="/incidents">INCIDENTS</Link>
-      </li>
-        }
-        <li className="mx-4">
+        </div>
+        <div className='navOption'>
+          <Link to="/report">REPORT</Link>
+        </div>
+        <div className='navOption'>
+          <Link to="/incidents">INCIDENTS</Link>
+        </div>
+        <div className='navOption'>
           <Link to="/chat">CHAT</Link>
-        </li>
-      </ul>
-        {user ?
+        </div>
+      </div>
+      <div className='login'>
+      {user ?
           <button
-            className="bg-light text-dark p-2 rounded-lg shadow-emerald-50 "
+            className='loginButton'
             onClick={handleLogout}
           >
             LOG OUT
           </button>
           :
-          <button
-            className="bg-gray-200 text-dark p-2 rounded-lg shadow-emerald-50 "
+          <button className='loginButton'
             onClick={handleLogin}
           >
             LOG IN
           </button>
-
-        
       }
+      </div>
     </nav>
   )
 }

@@ -1,6 +1,6 @@
 
 body {
-  background-color: rgb(41, 73, 49);
+  background-color: rgb(46, 64, 88);
 }
 
 .incidentContainer {
@@ -8,7 +8,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 32px;
-  background-color: rgb(41, 73, 49);
+  background-color: rgb(46, 64, 88);
 }
 
 #criticaltitle {
@@ -44,7 +44,6 @@ criticalInce
 }
 
 .icon{
-  border-radius: 50%;
   height: 30px;
 }
 

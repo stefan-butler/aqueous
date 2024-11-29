@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../redux/store";
 import { useNavigate } from "react-router";
+import axios from "axios";
 import '../component-css/incidentPage.css'
 
 function Incidents () {
@@ -15,9 +16,75 @@ function Incidents () {
     dispatch(fetchGlobalIncidents())
   },[])
 
-const handleChatIconClick = (incidentId: string) => {
-  navigate('/chat')
-}
+  const responderId = useSelector((state: RootState) => state.auth.user?.id);
+  const handleChatIconClick = async (incidentId: string, responderId: string | undefined) => {
+    try {
+
+      console.log('Alekos test', incidentId)
+      // Find the incident from global.list
+      const incident = global.list.find((item) => item._id === incidentId);
+      if (!incident) {
+        console.error('Incident not found');
+        return;
+      }
+  
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.error('Authorization token is missing');
+        return;
+      }
+  
+      const reporterId = incident.user_id;
+      console.log(`reporterId: ${reporterId}`);
+  
+      // check if there is already a chat with this incident ID
+      const chatCheckResponse = await axios.get(
+        `http://localhost:3000/api/chat/check?incidentId=${incidentId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const existingChat = await chatCheckResponse.data.chat
+      console.log(existingChat)
+      // if no existing chat, create one
+      if (!existingChat) {
+        console.log('No existing chat found, creating a new one.');
+        const createChatResponse = await axios.post(
+          'http://localhost:3000/api/chat/',
+          {
+            incidentId,
+            reporterId,
+            responderId,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const { _id: chatId } = await createChatResponse.data;
+        console.log('New chat created:', chatId);
+        navigate(`/chat?chatId=${chatId}`);
+        return;
+      }
+  
+      // if chat exists, check if responderId or reporterId matches
+      console.log('Existing chat found:', existingChat);
+      if ((existingChat.responderId === responderId) || (existingChat.reporterId === reporterId)) {
+        // open chat
+        console.log('Credentials match. Opening chat.');
+        navigate(`/chat?chatId=${existingChat._id}`);
+      } else {
+        // chat already has a different responder
+        console.error('Incident already has a responder');
+        alert('This incident already has a responder assigned.'); // replace this alert when the feature works 
+      }
+    } catch (error) {
+      console.error('Error handling chat icon click:', error);
+    }
+  };
 
   console.log(global)
   return (
@@ -40,7 +107,7 @@ const handleChatIconClick = (incidentId: string) => {
               <div className="personDetails">
                 <p>{incident.name}</p>
                 <p>Contact deatils:{incident.phone} & {incident.email}</p>
-                <img onClick={() => handleChatIconClick(incident._id)} src="https://cdn-icons-png.flaticon.com/128/4096/4096208.png" alt="Venue icon" className="icon" />
+                <img onClick={() => handleChatIconClick(incident._id, responderId)} src="https://cdn-icons-png.flaticon.com/128/566/566769.png" alt="Venue icon" className="icon" />
               </div>
               </div>
             )
@@ -66,7 +133,7 @@ const handleChatIconClick = (incidentId: string) => {
                 <div className="personDetails">
                   <p>{incident.name}</p>
                   <p>Contact deatils:{incident.phone} & {incident.email}</p>
-                  <img onClick={() => handleChatIconClick(incident._id)} src="https://cdn-icons-png.flaticon.com/128/4096/4096208.png" alt="Venue icon" className="icon" />
+                  <img onClick={() => handleChatIconClick(incident._id, responderId)} src="https://cdn-icons-png.flaticon.com/128/566/566769.png" alt="Venue icon" className="icon" />
                 </div>
                 </div>
               )
@@ -74,7 +141,6 @@ const handleChatIconClick = (incidentId: string) => {
           </div>
         </div>
       </div>
-
       <div className='minorSeverity'>
         <p id='minortitle'>Minor Incidents</p>
         <div className='minorIncidents'>
@@ -92,12 +158,15 @@ const handleChatIconClick = (incidentId: string) => {
                   <div className="personDetails">
                     <p>{incident.name}</p>
                     <p>Contact deatils:{incident.phone} & {incident.email}</p>
-                    <img onClick={() => handleChatIconClick(incident._id)} src="https://cdn-icons-png.flaticon.com/128/4096/4096208.png" alt="Venue icon" className="icon" />
+                    <img onClick={() => handleChatIconClick(incident._id, responderId)} src="https://cdn-icons-png.flaticon.com/128/566/566769.png" alt="Venue icon" className="icon" />
                   </div>
                   </div>
                 )
                 )}
           </div>
+          {/* <div className='chatIcon'>
+                <img onClick={() => handleChatIconClick(incident.user_id, responderId)} src="https://cdn-icons-png.flaticon.com/128/3621/3621438.png" alt="Venue icon" className="icon" />
+          </div>  */}
         </div>
       </div>
   </div>

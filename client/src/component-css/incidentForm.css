@@ -9,7 +9,7 @@
   align-items: center;
   padding-top:16px;
   padding-bottom:16px;
-  background-color: rgb(41, 73, 49);
+  background-color: rgb(46, 64, 88);
 }
 
 .createIncident form {
@@ -29,14 +29,14 @@
 }
 
 .formElement label {
-  color: rgb(242, 132, 130);
+  color: white;
   font-size: roboto;
   font-size: 20px;
 }
 
 input, select, textarea  {
-  background-color: rgb(245, 202, 195);
-  color: rgb(30, 47, 35);
+  background-color: rgb(227, 237, 240);
+  color: rgb(16, 27, 41);
   border-radius: 5px;
   font-family: roboto;
   padding-left: 4px;
@@ -49,37 +49,38 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 #formTitle {
-  color: rgb(242, 132, 130);
+  color: white;
   font-size: 36px;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Roboto';
 }
 
-button {
+.submitButton {
   border-radius: 5px;
-  background-color: rgb(245, 202, 195);
+  background-color: rgb(147, 172, 206);
   margin-left: 32px;
   margin-right: 32px;
   height: 40px;
   font-family: roboto;
-  color: rgb(30, 47, 35);;
+  color: rgb(30, 47, 35);
+  font-family: 'Montserrat', sans-serif;
 }
 
-button:disabled {
+.submitButton:disabled {
   background-color: #ccc;
   color: #666;
   cursor: not-allowed;
 }
 
-button:not(:disabled):hover {
-  background-color: rgb(242, 132, 130); 
+.submitButton:not(:disabled):hover {
+  background-color: rgb(67, 123, 202);
   transform: scale(1.05);  
-  font-weight: bold;
 }
 
-button:active {
-  background-color: rgb(242, 132, 130); 
+.submitButton:active {
+  background-color: rgb(67, 123, 202);
   transform: scale(0.95); 
   font-weight: bold;
+  color: rgb(0, 24, 69);
 }
 
 #no {
