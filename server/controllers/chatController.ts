@@ -74,7 +74,8 @@ const chatController = {
       }
   
       const chat = await Chat.findOne({ incidentId });
-      console.log('!!!!!!!!!!!!!!!!!!!!!!!!!', chat?.incidentId.toString())
+      console.log(chat)
+      
       if (!chat) {
         res.status(200).json({ message: 'No chat found for the given incident.', chat: null });
         return;

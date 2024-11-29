@@ -7,6 +7,7 @@ import router from './routes';
 import { connectDB } from './database';
 import { fetchAndStoreFloodData } from './services/fetchFloodData';
 import warningRoutes from './routes/warningRoutes';
+import incidentRoutes from './routes/incidentRoutes';
 import chatRoutes from './routes/chatRoutes';
 
 const app = express();
@@ -19,6 +20,7 @@ app.use(express.json())
 //use routes 
 app.use( router)
 app.use("/api", warningRoutes);
+app.use("/api/incidents", incidentRoutes);
 app.use("/api/chat", chatRoutes);
 
 

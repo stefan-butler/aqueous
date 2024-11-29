@@ -14,6 +14,7 @@ const initialState: MapLayersState = {
   layers: [
     { layerId: 'heatmap', visibility: true },
     { layerId: 'active-warnings', visibility: true },
+    { layerId: 'incidents', visibility: true },
   ],
 };
 
