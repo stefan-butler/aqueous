@@ -212,16 +212,75 @@ const Map = () => {
   }, []);
 
   return (
-    <div className="flex">
-      <div ref={mapContainerRef} className="w-[50%] h-[800px] rounded-lg overflow-hidden"></div>
+  <div className="flex">
+    {/* Left Section: Map */}
+    <div className="w-[50%] h-[800px] rounded-lg overflow-hidden">
+      <div ref={mapContainerRef} className="w-full h-full"></div>
+    </div>
 
+    {/* Right Section: Map Controls and Description */}
+    <div className="w-[50%] ml-4 ">
+      {/* Description Above MapUI */}
+      <div className="bg-gray-800 p-4 rounded-lg mb-4 shadow-lg text-center">
+        <h2 className="text-xl font-bold text-white mb-4">Welcome to Aqueous</h2>
+        <p className="text-white mb-4">
+          Our interactive map provides live flood warnings from the UK government's official flood warning API, giving you up-to-date information on affected areas. With a heatmap that visualizes flood impact and the ability to view user-reported incidents.
+        </p>
+        <p className="text-white mb-4">
+          Log in to report incidents in your area, or register as a responder to interact with incidents and assist those in need.
+        </p>
+        <h3 className="text-white text-lg font-semibold">Stay informed, stay prepared, and help protect those at risk.</h3>
+      </div>
+
+
+
+      {/* Map Controls */}
       {map && (
-        <div className="w-[50%] ml-4 bg-gray-800 p-4 rounded-lg shadow-lg self-start">
-          <h2 className="text-white text-lg font-bold mb-3">Map Controls</h2>
+        <div className="bg-gray-800 p-4 rounded-lg shadow-lg">
+        <h2 className="text-white text-lg font-bold mb-3 mt-4 text-center">Map Key</h2>
+        <h3 className="text-white font-bold mb-4">Flood Severity Levels</h3>
+        <div className="flex justify-center space-x-4">
+          {/* Severity Level 1 */}
+          <div className="flex items-center">
+            <div className="w-4 h-4 rounded-full bg-red-500 mr-2"></div>
+            <p className="text-white">Severe Flooding (Danger to Life)</p>
+          </div>
+          {/* Severity Level 2 */}
+          <div className="flex items-center">
+            <div className="w-4 h-4 rounded-full bg-orange-500 mr-2"></div>
+            <p className="text-white">Flooding is Expected (Immediate Action Required)</p>
+          </div>
+          {/* Severity Level 3 */}
+          <div className="flex items-center">
+            <div className="w-4 h-4 rounded-full bg-yellow-500 mr-2"></div>
+            <p className="text-white">Flooding is Possible (Be Prepared)</p>
+          </div>
+        </div>
+      
+        <h3 className="text-white font-bold mt-8 mb-4">User Incident Reports</h3>
+        <div className="flex space-x-4 mb-4">
+          {/* User Incident Marker */}
+          <div className="flex items-center">
+            <div className="w-6 h-6 bg-transparent rounded-full flex justify-center items-center mr-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="#39A6D6"
+                viewBox="0 0 16 16"
+              >
+                <circle cx="8" cy="8" r="6" />
+              </svg>
+            </div>
+            <p className="text-white">User Reported Incident</p>
+          </div>
+        </div>
+          <h2 className="text-white text-lg font-bold mb-3 mt-4 text-center">Map Controls</h2>
           <MapUI map={map} />
         </div>
       )}
     </div>
+  </div>
   );
 };
 

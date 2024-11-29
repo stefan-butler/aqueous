@@ -8,7 +8,7 @@ export default {
       colors: {
         'primary' : '#2e4058',
         'dark' : '#1f2937',
-        'lighter' : '#93acce',
+        'lighter' : '#001845',
         'light' : '#93acce',
         
       }

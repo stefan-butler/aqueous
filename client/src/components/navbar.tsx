@@ -32,9 +32,6 @@ function Navbar () {
         <div className='navOption'>
           <Link to="/incidents">INCIDENTS</Link>
         </div>
-        <div className='navOption'>
-          <Link to="/chat">CHAT</Link>
-        </div>
       </div>
       <div className='login'>
       {user ?
