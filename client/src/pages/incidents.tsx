@@ -105,7 +105,7 @@ function Incidents () {
               <div className="personDetails">
                 <p>{incident.name}</p>
                 <p>Contact deatils:{incident.phone} & {incident.email}</p>
-                <img onClick={() => handleChatIconClick(incident._id)} src="https://cdn-icons-png.flaticon.com/128/566/566769.png" alt="Venue icon" className="icon" />
+                <img onClick={() => handleChatIconClick(incident._id, responderId)} src="https://cdn-icons-png.flaticon.com/128/566/566769.png" alt="Venue icon" className="icon" />
               </div>
               </div>
             )
@@ -131,7 +131,7 @@ function Incidents () {
                 <div className="personDetails">
                   <p>{incident.name}</p>
                   <p>Contact deatils:{incident.phone} & {incident.email}</p>
-                  <img onClick={() => handleChatIconClick(incident._id)} src="https://cdn-icons-png.flaticon.com/128/566/566769.png" alt="Venue icon" className="icon" />
+                  <img onClick={() => handleChatIconClick(incident._id, responderId)} src="https://cdn-icons-png.flaticon.com/128/566/566769.png" alt="Venue icon" className="icon" />
                 </div>
                 </div>
               )
@@ -156,7 +156,7 @@ function Incidents () {
                   <div className="personDetails">
                     <p>{incident.name}</p>
                     <p>Contact deatils:{incident.phone} & {incident.email}</p>
-                    <img onClick={() => handleChatIconClick(incident._id)} src="https://cdn-icons-png.flaticon.com/128/566/566769.png" alt="Venue icon" className="icon" />
+                    <img onClick={() => handleChatIconClick(incident._id, responderId)} src="https://cdn-icons-png.flaticon.com/128/566/566769.png" alt="Venue icon" className="icon" />
                   </div>
                   </div>
                 )
@@ -164,7 +164,7 @@ function Incidents () {
           </div>
           <div className='chatIcon'>
                 <img onClick={() => handleChatIconClick(incident.user_id, responderId)} src="https://cdn-icons-png.flaticon.com/128/3621/3621438.png" alt="Venue icon" className="icon" />
-          </div> */}
+          </div> 
         </div>
       </div>
   </div>
