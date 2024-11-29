@@ -47,7 +47,8 @@ function Incidents () {
         }
       );
       const existingChat = await chatCheckResponse.data.chat
-      console.log(existingChat)
+ 
+
       // if no existing chat, create one
       if (!existingChat) {
         console.log('No existing chat found, creating a new one.');
