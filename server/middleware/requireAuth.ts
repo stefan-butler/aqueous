@@ -11,10 +11,10 @@ interface JwtPayloadWithId {
 }
 
 const requireAuth = async (req: ExtendedRequest, res: Response, next: NextFunction) : Promise<void> => {
-  console.log('debugging!!!!!', req.headers)
+  console.log('request headers: ', req.headers)
   //verify authentication 
   const {authorization} = req.headers
-  console.log('test', authorization)
+  console.log('authorisation:  ', authorization)
   if (!authorization) {
      res.status(401).json({message: 'Authorization token required'})
      return;
