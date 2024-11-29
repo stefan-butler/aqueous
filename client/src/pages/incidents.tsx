@@ -68,11 +68,11 @@ function Incidents () {
         return;
       }
   
-      // if chat exists, check if responderId matches
+      // if chat exists, check if responderId or reporterId matches
       console.log('Existing chat found:', existingChat);
-      if (existingChat.responderId === responderId) {
+      if ((existingChat.responderId === responderId) || (existingChat.reporterId === reporterId)) {
         // open chat
-        console.log('Responder matches. Opening chat.');
+        console.log('Credentials match. Opening chat.');
         navigate(`/chat?chatId=${existingChat._id}`);
       } else {
         // chat already has a different responder
