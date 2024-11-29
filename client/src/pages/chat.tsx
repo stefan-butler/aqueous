@@ -46,7 +46,7 @@ function Chat () {
         });
 
         const chat = response.data || {};
-        setMessages(chat.messages || []);
+        setMessages(chat || []);
 
         // if (chat.reporterId === senderId || chat.responderId === senderId) {
         //   setIsAuthorised(true);

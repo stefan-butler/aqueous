@@ -74,13 +74,13 @@ const chatController = {
       }
   
       const chat = await Chat.findOne({ incidentId });
-      
+      console.log('!!!!!!!!!!!!!!!!!!!!!!!!!', chat?.incidentId.toString())
       if (!chat) {
         res.status(200).json({ message: 'No chat found for the given incident.', chat: null });
         return;
       }
   
-      res.status(200).json(chat);
+      res.status(200).json({message: 'Chat exists', chat});
     } catch (error) {
       console.error('Error checking chat existence:', error);
       res.status(500).json({ message: (error as Error).message });

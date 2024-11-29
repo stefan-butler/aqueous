@@ -20,7 +20,7 @@ function Incidents () {
   const handleChatIconClick = async (incidentId: string, responderId: string | undefined) => {
     try {
 
-      console.log('Alekos test', incidentId)
+      
       // Find the incident from global.list
       const incident = global.list.find((item) => item._id === incidentId);
       if (!incident) {
@@ -47,7 +47,7 @@ function Incidents () {
         }
       );
       const existingChat = await chatCheckResponse.data.chat
-      console.log(existingChat)
+      console.log('TESTSTSTSTST', existingChat)
       // if no existing chat, create one
       if (!existingChat) {
         console.log('No existing chat found, creating a new one.');

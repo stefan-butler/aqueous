@@ -11,10 +11,10 @@ interface JwtPayloadWithId {
 }
 
 const requireAuth = async (req: ExtendedRequest, res: Response, next: NextFunction) : Promise<void> => {
-  console.log('request headers: ', req.headers)
+  // console.log('request headers: ', req.headers)
   //verify authentication 
   const {authorization} = req.headers
-  console.log('authorisation:  ', authorization)
+  // console.log('authorisation:  ', authorization)
   if (!authorization) {
      res.status(401).json({message: 'Authorization token required'})
      return;
@@ -34,9 +34,9 @@ const requireAuth = async (req: ExtendedRequest, res: Response, next: NextFuncti
       res.status(401).json({ message: 'User not found' });
       return;
     }
-    console.log('tes!!!!', user._id)
+    // console.log('tes!!!!', user._id)
     req.user = { _id: user._id.toString() };
-    console.log(req.user._id)
+    // console.log(req.user._id)
     next() // the next function will have access to the req.user
   } catch (error) {
     console.log(error)
