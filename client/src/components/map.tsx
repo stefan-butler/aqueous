@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import MapUI  from './mapUI'
-mapboxgl.accessToken = 'pk.eyJ1IjoibWpzc2NvdHQiLCJhIjoiY20zeDlxcXUyMTh5dTJpcjB4Yjc1eW5nOSJ9.Nx_5dt3cM5eh78zPTxwmdw'; // replace with env file 
+mapboxgl.accessToken = 'pk.eyJ1IjoibWpzc2NvdHQiLCJhIjoiY200MmpxOHprMDFsNzJrc2JvY2J4MnoyaCJ9.Lh126FuRrcsE0jo3JGfO8A'; // replace with env file 
 
 const Map = () => {
   const [map, setMap] = useState<mapboxgl.Map | null>(null); 
@@ -147,6 +147,59 @@ const Map = () => {
           });
         })
         .catch(error => console.error('Error fetching geojson data: ', error));
+
+        fetch('http://localhost:3000/api/incidents/geojson')
+        .then((response) => response.json())
+        .then((data) => {
+          mapInstance.addSource('incidents', {
+            type: 'geojson',
+            data: data,
+            generateId: true,
+          });
+
+          mapInstance.addLayer({
+            id: 'incidents',
+            type: 'symbol',
+            source: 'incidents',
+            layout: {
+              'icon-image': 'mapbox-cross',
+              'icon-size': 1.2,
+            },
+            paint: {
+              'icon-color': '#0074D9',
+            },
+          });
+
+          mapInstance.on('click', 'incidents', (e) => {
+            if (!e.features || e.features.length === 0) return;
+            const feature = e.features[0];
+
+            if (feature.geometry.type === 'Point') {
+              const coordinates = feature.geometry.coordinates as [number, number];
+              const { title, severity, injuries,urgency, additionalComments, user_id } = feature.properties || {};
+
+              new mapboxgl.Popup()
+                .setLngLat(coordinates)
+                .setHTML(`
+                  <div>
+                    <h3><strong>Incident</strong></h3>
+                    <h3><strong>Title: </strong>${title || 'Incident'}</h3>
+                    <p><strong>Severity: </strong>${severity || ''}<p>
+                    <p><strong>Injuries: </strong>${injuries || ''}<p>
+                    <p><strong>Urgency: </strong>${urgency || ''}<p>
+                    <p><strong>Additional Comments: </strong>${additionalComments || ''}<p>
+                    <p><strong>User ID: </strong>${user_id || ''}<p>
+                  </div>
+                `)
+                .addTo(mapInstance);
+            } else {
+              console.warn('Clicked feature is not a point: ', feature);
+            }
+          });
+        })
+        .catch((error) => {
+          console.error('Error fetching geojson incidents: ', error);
+        });
     });
 
     setMap(mapInstance);
@@ -160,16 +213,15 @@ const Map = () => {
 
   return (
     <div className="flex">
-  <div ref={mapContainerRef} className="w-[50%] h-[800px] rounded-lg overflow-hidden"></div>
+      <div ref={mapContainerRef} className="w-[50%] h-[800px] rounded-lg overflow-hidden"></div>
 
-  {map && (
-    <div className="w-[50%] ml-4 bg-gray-800 p-4 rounded-lg shadow-lg self-start">
-      <h2 className="text-white text-lg font-bold mb-3">Map Controls</h2>
-      <MapUI map={map} />
+      {map && (
+        <div className="w-[50%] ml-4 bg-gray-800 p-4 rounded-lg shadow-lg self-start">
+          <h2 className="text-white text-lg font-bold mb-3">Map Controls</h2>
+          <MapUI map={map} />
+        </div>
+      )}
     </div>
-  )}
-</div>
-
   );
 };
 

@@ -1,4 +1,4 @@
-import {Request, Response} from 'express'
+import {Request, Response, NextFunction} from 'express'
 import Incident from "../models/incident";
 
 export interface ExtendedRequest extends Request {
@@ -51,6 +51,34 @@ const getAllIncidents = async (req: Request, res: Response) => {
   }
 }
 
+const convertIncidents = async (req: Request, res: Response) => {
+  try {
+    const incidents = await Incident.find();
+    const geoJSON = {
+      type: 'FeatureCollection',
+      features: incidents.map((incident: any) => ({
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [incident.location.longitude, incident.location.latitude],
+        },
+        properties: {
+          title: incident.title,
+          severity: incident.severity,
+          injuries: incident.injuries,
+          urgency: incident.urgency,
+          additionalComments: incident.additionalComments,
+          user_id: incident.user_id
+        },
+      })),
+    };
+    res.status(200).json(geoJSON);
+  } catch (error) {
+    console.error('Error converting incidents to geoJSON', error);
+    res.status(500).json({message:`Internal server issue: ${error}`})
+  }
+}
+
 const getIncidentsCreatedByUser = async (req: ExtendedRequest, res: Response) => {
   try {
     if (!req.user || !req.user._id) {
@@ -70,4 +98,4 @@ const getIncidentsCreatedByUser = async (req: ExtendedRequest, res: Response) =>
 
 
 
-export {createIncident, getAllIncidents, getIncidentsCreatedByUser}
+export {createIncident, getAllIncidents, convertIncidents, getIncidentsCreatedByUser}
