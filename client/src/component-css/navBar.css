@@ -25,6 +25,10 @@ border-bottom: 1px solid rgba(31 41 55);
   color: rgb(67, 123, 202);
 }
 
+.navOption:active {
+  color: rgb(0, 24, 69);
+}
+
 .login {
   display: flex;
   align-self: center;

@@ -35,7 +35,7 @@
 }
 
 input, select, textarea  {
-  background-color: rgb(201, 216, 221);
+  background-color: rgb(227, 237, 240);
   color: rgb(16, 27, 41);
   border-radius: 5px;
   font-family: roboto;
@@ -51,7 +51,7 @@ input[type="number"]::-webkit-outer-spin-button {
 #formTitle {
   color: white;
   font-size: 36px;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Roboto';
 }
 
 .submitButton {
@@ -61,7 +61,8 @@ input[type="number"]::-webkit-outer-spin-button {
   margin-right: 32px;
   height: 40px;
   font-family: roboto;
-  color: rgb(30, 47, 35);;
+  color: rgb(30, 47, 35);
+  font-family: 'Montserrat', sans-serif;
 }
 
 .submitButton:disabled {
@@ -71,15 +72,15 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .submitButton:not(:disabled):hover {
-  background-color: rgb(147, 172, 206);
+  background-color: rgb(67, 123, 202);
   transform: scale(1.05);  
-  font-weight: bold;
 }
 
 .submitButton:active {
-  background-color: rgb(147, 172, 206);
+  background-color: rgb(67, 123, 202);
   transform: scale(0.95); 
   font-weight: bold;
+  color: rgb(0, 24, 69);
 }
 
 #no {
