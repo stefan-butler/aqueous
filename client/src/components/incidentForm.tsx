@@ -180,7 +180,7 @@ function IncidentForm () {
         <textarea className="formElementInput" name="additionalComments" id="additionalComments" placeholder='Provide any other relevant information...' value={incident.additionalComments} onChange={handleChange}></textarea>
         </div>
 
-        <button type="submit" disabled={!isFormValid()}>Submit Incident</button>
+        <button className='submitButton' type="submit" disabled={!isFormValid()}>Submit Incident</button>
       </form>
       </div>
     </div>

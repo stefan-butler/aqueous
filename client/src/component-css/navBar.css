@@ -1,0 +1,47 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900");
+
+.navBarContainer {
+ display: flex;
+ justify-content: space-between;
+ gap: 24px;
+ background-color: rgb(31 41 55);
+ height: 70px;
+ padding: 0 20px;
+border-bottom: 1px solid rgba(31 41 55);
+}
+
+.navigationOptions {
+  margin-left: 300px;
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  font-size: 24px;
+  color: rgb(192, 206, 226);
+  font-weight: bold;
+  font-family: "Poppins", sans-serif;
+}
+
+.navOption:hover {
+  color: rgb(67, 123, 202);
+}
+
+.login {
+  display: flex;
+  align-self: center;
+}
+.loginButton {
+  border-radius: 5px;
+  background-color: rgb(147, 172, 206);
+  width: 75px;
+  height:50px;
+  font-weight: bold;
+  color: white;
+}
+
+.loginButton:hover {
+  background-color: rgb(67, 123, 202);
+}
+
+.loginButton:active {
+  color: rgb(0, 24, 69);
+}
