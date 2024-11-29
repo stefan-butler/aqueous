@@ -19,8 +19,10 @@ function Incidents () {
   const responderId = useSelector((state: RootState) => state.auth.user?.id);
   const handleChatIconClick = async (incidentId: string, responderId: string | undefined) => {
     try {
+
+      console.log('Alekos test', incidentId)
       // Find the incident from global.list
-      const incident = global.list.find((item) => item.user_id === incidentId);
+      const incident = global.list.find((item) => item._id === incidentId);
       if (!incident) {
         console.error('Incident not found');
         return;
@@ -44,8 +46,8 @@ function Incidents () {
           },
         }
       );
-      const existingChat = await chatCheckResponse.data;
-  
+      const existingChat = await chatCheckResponse.data.chat
+      console.log(existingChat)
       // if no existing chat, create one
       if (!existingChat) {
         console.log('No existing chat found, creating a new one.');
@@ -162,9 +164,9 @@ function Incidents () {
                 )
                 )}
           </div>
-          <div className='chatIcon'>
+          {/* <div className='chatIcon'>
                 <img onClick={() => handleChatIconClick(incident.user_id, responderId)} src="https://cdn-icons-png.flaticon.com/128/3621/3621438.png" alt="Venue icon" className="icon" />
-          </div> 
+          </div>  */}
         </div>
       </div>
   </div>

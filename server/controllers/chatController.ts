@@ -67,16 +67,16 @@ const chatController = {
   checkChatExists: async (req: Request, res: Response): Promise<void> => {
     try {
       const { incidentId } = req.query;
-  
+      
       if (!incidentId) {
         res.status(400).json({ message: 'Incident ID is required.' });
         return;
       }
   
       const chat = await Chat.findOne({ incidentId });
-  
+      
       if (!chat) {
-        res.status(404).json({ message: 'Chat not found for the given incident.' });
+        res.status(200).json({ message: 'No chat found for the given incident.', chat: null });
         return;
       }
   
