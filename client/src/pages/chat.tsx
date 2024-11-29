@@ -7,76 +7,60 @@ import { useLocation } from 'react-router';
 function Chat () {
   const [messages, setMessages] = useState<IMessage[] | null>(null);
   const [newMessage, setNewMessage] = useState('');
+  const [isAuthorised, setIsAuthorised] = useState(true);
   const senderId = useAppSelector((state) => state.auth.user?.id);
-  const [isAuthorised, setIsAuthorised] = useState(false);
   const location = useLocation();
-  const queryParams = new URLSearchParams(location.search); // this was a way I found to pass the chatId without using state
+  const queryParams = new URLSearchParams(location.search);
   const chatId = queryParams.get('chatId');
 
+  const handleSend = async () => {
+    if (!newMessage.trim()) return;
 
-  // async function fetchMessages(chatId: string) {
-  //   if (!chatId) return; 
-  //   try {
-  //     const response = await axios.get(`http://localhost:3000/api/chat/${chatId}/messages`);
-  //     setMessages(response.data);
-  //   } catch (error) {
-  //     console.error('Error fetching messages:', error);
-  //   }
-  // }
-
-  async function handleSend() {
-    if (!newMessage.trim()) return; // prevent sending empty messages
-  
     try {
-      const response = await axios.post(`http://localhost:3000/api/chat/${chatId}/messages`, {
-        senderId, 
-        text: newMessage,
-      });
-  
-      setMessages((prevMessages) => (prevMessages ? [...prevMessages, response.data] : [response.data]));
-      setNewMessage(''); 
+      const token = localStorage.getItem('token');
+      if (!token) throw new Error('Authorization token is missing');
+
+      const response = await axios.post(
+        `http://localhost:3000/api/chat/${chatId}/messages`,
+        { senderId, text: newMessage },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      setMessages((prev) => (prev ? [...prev, response.data] : [response.data]));
+      setNewMessage('');
     } catch (error) {
       console.error('Error sending message:', error);
     }
-  }
+  };
 
   useEffect(() => {
-    async function initialiseChat() {
-      if (!chatId || !senderId) return; 
+    const initialiseChat = async () => {
+      if (!chatId || !senderId) return;
+
       try {
-        const token = localStorage.getItem('token'); 
-        if (!token) {
-          console.error('Authorization token is missing');
-          return;
-        }
-  
+        const token = localStorage.getItem('token');
+        if (!token) throw new Error('Authorization token is missing');
+
         const response = await axios.get(`http://localhost:3000/api/chat/${chatId}/messages`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         });
-  
-        const chat = response.data;
-  
-        // check authorisation 
-        if (chat.reporterId === senderId || chat.responderId === senderId) {
-          setIsAuthorised(true);
-  
-          if (Array.isArray(chat.messages)) {
-            setMessages(chat.messages);
-          } else {
-            setMessages([]);
-          }
-        } else {
-          setIsAuthorised(false);
-        }
+
+        const chat = response.data || {};
+        setMessages(chat.messages || []);
+
+        // if (chat.reporterId === senderId || chat.responderId === senderId) {
+        //   setIsAuthorised(true);
+        // } else {
+        //   setIsAuthorised(false);
+        // }
       } catch (error) {
         console.error('Error initializing chat:', error);
+        setIsAuthorised(false);
       }
-    }
+    };
+
     initialiseChat();
   }, [chatId, senderId]);
-
   return (
     <div className="bg-dark h-screen p-2">
       {!isAuthorised ? (
@@ -84,7 +68,9 @@ function Chat () {
       ) : (
         <div className="bg-light m-auto w-[800px] h-[800px] p-4 rounded-lg shadow-2xl-neutral-100">
           <h1 className="text-gray-100">CHAT</h1>
-          {messages && messages.length > 0 ? (
+          {messages === null ? (
+            <div className="text-gray-100">Loading...</div>
+          ) : messages.length > 0 ? (
             messages.map((message: IMessage) => (
               <div
                 className="text-gray-100 p-2 bg-lighter w-[200px] my-2 rounded-sm shadow-neutral-100 mx-2"
@@ -96,7 +82,6 @@ function Chat () {
           ) : (
             <div className="text-gray-100">NO MESSAGES YET</div>
           )}
-  
           <label htmlFor="message-input"></label>
           <input
             type="text"

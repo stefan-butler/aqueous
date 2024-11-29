@@ -77,7 +77,7 @@ function Incidents () {
       } else {
         // chat already has a different responder
         console.error('Incident already has a responder');
-        alert('This incident already has a responder assigned.');
+        alert('This incident already has a responder assigned.'); // replace this alert when the feature works 
       }
     } catch (error) {
       console.error('Error handling chat icon click:', error);

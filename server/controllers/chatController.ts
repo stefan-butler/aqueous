@@ -1,6 +1,7 @@
 import { Request, Response} from 'express';
 import Chat from '../models/chat';
 import Message from '../models/message';
+import mongoose from 'mongoose';
 
 const chatController = {
 
@@ -33,10 +34,19 @@ const chatController = {
   // get messages for a chat 
   getMessages: async (req: Request, res: Response) => {
     try {
-      const messages = await Message.find({ chatId: req.params.chatId });
-      console.log('Chat ID from request params:', req.params.chatId);
+      const { chatId } = req.params;
+  
+      if (!chatId || !mongoose.isValidObjectId(chatId)) {
+        res.status(400).json({ message: 'Invalid or missing chat ID.' });
+        return;
+      }
+  
+      const messages = await Message.find({ chatId });
+      console.log('Chat ID from request params:', chatId);
+  
       res.status(200).json(messages);
     } catch (error) {
+      console.error('Error fetching messages:', error);
       res.status(500).json({ message: (error as Error).message });
     }
   },
