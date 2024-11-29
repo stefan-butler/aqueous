@@ -4,7 +4,7 @@ import { IMessage } from '../types/chat-types';
 import { useAppSelector } from '../redux/hooks';
 import { useLocation } from 'react-router';
 
-function Chat () {
+function Chat() {
   const [messages, setMessages] = useState<IMessage[] | null>(null);
   const [newMessage, setNewMessage] = useState('');
   const [isAuthorised, setIsAuthorised] = useState(true);
@@ -12,6 +12,11 @@ function Chat () {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const chatId = queryParams.get('chatId');
+
+  const formatTimestamp = (timestamp: string) => {
+    const date = new Date(timestamp);
+    return `${date.toLocaleDateString()} ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+  };
 
   const handleSend = async () => {
     if (!newMessage.trim()) return;
@@ -46,14 +51,7 @@ function Chat () {
         });
 
         const chat = response.data || {};
-        console.log(chat);
-        setMessages(chat|| []);
-
-        // if (chat.reporterId === senderId || chat.responderId === senderId) {
-        //   setIsAuthorised(true);
-        // } else {
-        //   setIsAuthorised(false);
-        // }
+        setMessages(chat || []);
       } catch (error) {
         console.error('Error initializing chat:', error);
         setIsAuthorised(false);
@@ -62,45 +60,67 @@ function Chat () {
 
     initialiseChat();
   }, [chatId, senderId]);
+
   return (
-    <div className="bg-dark h-screen p-2">
+    <div className="bg-dark h-screen p-2 flex flex-col">
       {!isAuthorised ? (
         <h1 className="text-gray-100">You are not authorized to participate in this chat.</h1>
       ) : (
-        <div className="bg-light m-auto w-[800px] h-[800px] p-4 rounded-lg shadow-2xl-neutral-100">
-          <h1 className="text-gray-100">CHAT</h1>
-          {messages === null ? (
-            <div className="text-gray-100">Loading...</div>
-          ) : messages.length > 0 ? (
-            messages.map((message: IMessage) => (
-              <div
-                className="text-gray-100 p-2 bg-lighter w-[200px] my-2 rounded-sm shadow-neutral-100 mx-2"
-                key={message._id}
-              >
-                {message.text}
-              </div>
-            ))
-          ) : (
-            <div className="text-gray-100">NO MESSAGES YET</div>
-          )}
-          <label htmlFor="message-input"></label>
-          <input
-            type="text"
-            id="message-input"
-            placeholder="your message here..."
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            className="m-2 p-2 w-[150px] bg-gray-100 rounded-sm"
-          />
-          <button
-            onClick={handleSend}
-            className="bg-dark hover:bg-gray-100 p-2 text-gray-100 hover:text-dark rounded-sm"
-          >
-            SEND
-          </button>
+        <div className="bg-light m-auto w-[800px] h-[800px] p-4 rounded-lg shadow-2xl-neutral-100 flex flex-col">
+          <h1 className="text-gray-100 font-bold text-center mb-4">INCIDENT CHAT</h1>
+
+          {/* Messages Container */}
+          <div className="flex-grow overflow-y-auto mb-4 p-2 space-y-2">
+            {messages === null ? (
+              <div className="text-gray-100">Loading...</div>
+            ) : messages.length > 0 ? (
+              messages.map((message: IMessage) => (
+                <div
+                  key={message._id}
+                  className={`flex ${
+                    message.senderId === senderId ? 'justify-end' : 'justify-start'
+                  }`}
+                >
+                  <div
+                    className={`p-2 rounded-lg shadow-md max-w-xs ${
+                      message.senderId === senderId
+                        ? 'bg-blue-500 text-white'
+                        : 'bg-gray-200 text-black'
+                    }`}
+                  >
+                    <p className="text-sm">{message.text}</p>
+                    <p className="text-xs text-gray-300 text-right mt-1">
+                      {formatTimestamp(message.createdAt)}
+                    </p>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="text-gray-100">NO MESSAGES YET</div>
+            )}
+          </div>
+
+          {/* Input Bar */}
+          <div className="flex items-center bg-gray-300 p-2 rounded-lg sticky bottom-0">
+            <input
+              type="text"
+              id="message-input"
+              placeholder="Your message here..."
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              className="flex-grow p-2 bg-white rounded-lg mr-2"
+            />
+            <button
+              onClick={handleSend}
+              className="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600"
+            >
+              SEND
+            </button>
+          </div>
         </div>
       )}
     </div>
-  )};
+  );
+}
 
 export default Chat;
