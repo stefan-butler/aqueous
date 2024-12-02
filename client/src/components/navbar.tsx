@@ -27,12 +27,18 @@ function Navbar () {
         <div className='navOption'>
           <Link to="/">HOME</Link>
         </div>
-        <div className='navOption'>
-          <Link to="/report">REPORT</Link>
-        </div>
-        <div className='navOption'>
-          <Link to="/incidents">INCIDENTS</Link>
-        </div>
+
+        {user && !isResponder && (
+          <div className='navOption'>
+            <Link to="/report">REPORT</Link>
+          </div>
+        )}
+     
+        {user && isResponder && (
+          <div className='navOption'>
+            <Link to="/incidents">INCIDENTS</Link>
+          </div>
+        )}
       </div>
       <div className='login'>
       {user ?

@@ -8,6 +8,7 @@ import Incidents from './pages/incidents';
 import Login from './pages/login';
 import Register from './pages/register';
 import ResponderRoute from './responderRoute';
+import UserRoute from './userRoute';
 
 function App() {
 
@@ -20,7 +21,6 @@ function App() {
 
         {/* PUBLIC ROUTES */}
         <Route path="/" element={<Home />} />
-        <Route path="/report" element={<Report/>} />
         <Route path="/chat" element={<Chat />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -29,6 +29,12 @@ function App() {
         <Route element={<ResponderRoute />}>
           <Route path="/incidents" element={<Incidents />}/>
         </Route>
+
+        {/* Non-Responder Protected Route */}
+        <Route element={<UserRoute/>}>
+          <Route path="/report" element={<Report/>} />
+        </Route>
+
       </Routes>
     </Router>
     </>
