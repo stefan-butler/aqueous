@@ -1,10 +1,14 @@
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import { Incident } from "../types/incident-types";
 import { createIncident } from "../redux/slices/incidentSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../redux/store";
 import '../component-css/incidentForm.css'
+import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
+
+mapboxgl.accessToken = 'pk.eyJ1IjoibWpzc2NvdHQiLCJhIjoiY200MmpxOHprMDFsNzJrc2JvY2J4MnoyaCJ9.Lh126FuRrcsE0jo3JGfO8A';
 //I have focused entirely on the functionality for the moment
 function IncidentForm () {
 
@@ -28,7 +32,71 @@ function IncidentForm () {
     user_id: ''
   })
 
-  
+  const mapContainerRef = useRef<HTMLDivElement | null>(null); 
+  const mapRef = useRef<mapboxgl.Map | null>(null);
+  const markerRef = useRef<mapboxgl.Marker | null>(null);
+
+  useEffect(() => {
+    if (mapContainerRef.current) {
+      const map = new mapboxgl.Map({
+        container: mapContainerRef.current,
+        style: 'mapbox://styles/mapbox/streets-v11', 
+        center: [-0.1278, 51.5074],
+        maxBounds: [
+          [-8.0, 49.0], 
+          [2.0, 60.0] 
+        ], 
+        zoom: 5, 
+      });
+
+
+      mapRef.current = map;
+      // Add navigation controls
+      map.addControl(new mapboxgl.NavigationControl());
+
+      if (incident.location.longitude && incident.location.latitude) {
+        const marker = new mapboxgl.Marker()
+          .setLngLat([incident.location.longitude, incident.location.latitude])
+          .addTo(map);
+
+        // Save the marker reference
+        markerRef.current = marker;
+      }
+
+      // Event listener for map click to set latitude and longitude
+      map.on('click', (event) => {
+        const { lng, lat } = event.lngLat; // Get clicked coordinates
+
+        setIncident(prevIncident => ({
+          ...prevIncident,
+          location: {
+            longitude: lng,
+            latitude: lat
+          }
+        }));
+
+        if (markerRef.current) {
+          markerRef.current.remove();
+        }
+
+        // Create a new marker at the clicked position
+        const marker = new mapboxgl.Marker()
+          .setLngLat([lng, lat])
+          .addTo(map);
+
+        // Save the marker in the ref for future updates
+        markerRef.current = marker;
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (markerRef.current && incident.location.latitude && incident.location.longitude) {
+      markerRef.current.setLngLat([incident.location.longitude, incident.location.latitude]);
+    }
+  }, [incident.location]);
+
+   console.log(incident.location)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const {name , value} = event.target;
@@ -106,6 +174,8 @@ function IncidentForm () {
           <input className="formElementInput"  type="datetime-local" name="incidentDate" id="incidentDate" value={incident.incidentDate} onChange={handleChange}/>
         </div>
 
+
+        
         <div className="formElement">
           <label htmlFor="longitude">Incident's Longitude:</label>
           <input className="formElementInput"  type="number" name="longitude" id="longitude" placeholder="e.g., -0.1276" value={incident.location.longitude} onChange={handleLocationChange}/>
@@ -115,6 +185,8 @@ function IncidentForm () {
           <label htmlFor="latitude">Incident's Latitude:</label>
           <input className="formElementInput"  type="number" name="latitude" id="latitude" placeholder="e.g., 51.5072" value={incident.location.latitude} onChange={handleLocationChange}/>
         </div>
+
+        <div id="map" ref={mapContainerRef} style={{ width: '100%', height: '400px' }}></div>
 
         <div className="formElement">
           <label htmlFor="severity">Severity of Flooding:</label>

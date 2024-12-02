@@ -87,3 +87,9 @@ input[type="number"]::-webkit-outer-spin-button {
 margin-left: 16px;
 }
 
+#map {
+  border-radius: 5px;
+  border-width: thin;
+  border: solid;
+  border-color: rgb(227, 237, 240);
+}
