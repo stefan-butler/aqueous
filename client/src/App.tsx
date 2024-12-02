@@ -5,6 +5,7 @@ import Home from './pages/home';
 import Report from './pages/report';
 import Chat from './pages/chat';
 import Incidents from './pages/incidents';
+import UserPage from './pages/responderPage';
 import Login from './pages/login';
 import Register from './pages/register';
 import ResponderRoute from './responderRoute';
@@ -24,15 +25,17 @@ function App() {
         <Route path="/chat" element={<Chat />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-
+        
         {/* PRIVATE ROUTES */}
         <Route element={<ResponderRoute />}>
           <Route path="/incidents" element={<Incidents />}/>
+          <Route path="/user/:userId" element={<UserPage/>} />
         </Route>
 
         {/* Non-Responder Protected Route */}
         <Route element={<UserRoute/>}>
           <Route path="/report" element={<Report/>} />
+          <Route path="/user/:userId" element={<UserPage/>} />
         </Route>
 
       </Routes>

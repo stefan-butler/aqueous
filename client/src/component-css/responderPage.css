@@ -1,0 +1,57 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900");
+
+.pageContainer {
+
+  height: 100vh;
+  display: flex;
+  margin: 32px;
+  gap: 16px;
+}
+
+.profileInfo {
+  padding-top:40px;
+  border: solid;
+  border-color: rgb(1, 12, 27);
+  border-width: thick;
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  border-radius: 5px;
+  background-color: rgb(223, 229, 238) ;
+}
+
+.profilePicture {
+  height: 200px;
+  border-radius: 50%;
+  padding: 0px;
+}
+
+.fullName {
+  font-size: 30px;
+  font-weight: bold;
+  font-family: "Poppins", sans-serif;
+  color: rgb(1, 12, 27);
+}
+
+.contactDetails {
+  font-size: 24px;
+  font-family: "Poppins", sans-serif;
+  color: rgb(1, 12, 27);
+}
+
+.responderType {
+  font-size: 24px;
+  font-family: "Poppins", sans-serif;
+  color: rgb(1, 12, 27);
+}
+
+.chatContainer {
+  border: solid;
+  border-color: rgb(1, 12, 27);
+  border-width: thick;
+  border-radius: 5px;
+  background-color: rgb(223, 229, 238) ;
+  width: 70%;
+}

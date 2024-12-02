@@ -51,7 +51,22 @@ border-bottom: 1px solid rgba(31 41 55);
   color: rgb(0, 24, 69);
 }
 
-.loginContainer {
+.profileContainer:hover {
+  cursor: pointer;
+}
+
+.profileContainer:hover p {
+  color: rgb(67, 123, 202);
+}
+
+ .loginContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap:16px;
+}
+
+.profileContainer {
   display: flex;
   flex-direction: row;
   align-items: center;

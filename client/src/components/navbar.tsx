@@ -7,10 +7,10 @@ import Logo from './logo';
 
 function Navbar () {
   const { user, isResponder } = useAppSelector((state: RootState) => state.auth);
-  // console.log(user);
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
- 
+
   function handleLogout () {
     dispatch(logoutUser());
     navigate('/')
@@ -18,6 +18,10 @@ function Navbar () {
 
   function handleLogin () {
     navigate('/login')
+  }
+
+  function handleProfileClick () {
+    navigate(`/user/${user.id}`)
   }
 
   return (
@@ -43,22 +47,24 @@ function Navbar () {
       <div className='login'>
       {user ?
           <div className='loginContainer'>
-          <p>Welcome {user.firstName}</p>
-          <img src='https://cdn-icons-png.flaticon.com/128/3899/3899618.png' alt='Profile icon' className='profileIcon'/>
-          <button
-            className='loginLogoutButton'
-            onClick={handleLogout}
-          >
+            <div onClick={() => handleProfileClick()} className='profileContainer'>
+              <p>Welcome {user.firstName}</p>
+              <img src='https://cdn-icons-png.flaticon.com/128/3899/3899618.png' alt='Profile icon' className='profileIcon'/>
+            </div>
+            <button
+              className='loginLogoutButton'
+              onClick={handleLogout}
+            >
             LOG OUT
-          </button>
+            </button>
           </div>
           :
           <div>
-          <button className='loginLogoutButton'
-            onClick={handleLogin}
-          >
+            <button className='loginLogoutButton'
+              onClick={handleLogin}
+            >
             LOG IN
-          </button>
+            </button>
           </div>
       }
       </div>
