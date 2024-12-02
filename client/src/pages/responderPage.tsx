@@ -10,9 +10,7 @@ function UserPage () {
   const chats = useSelector((state: RootState) => state.chat)
   console.log(user.id)
 
-  useEffect(() => {
-    dispatch(fetchGlobalChats(user?.id))
-  })
+ 
   return (
     <div className='pageContainer'>
       <div className='profileInfo'>
