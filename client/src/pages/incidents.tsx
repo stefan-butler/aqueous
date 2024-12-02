@@ -142,7 +142,7 @@ function Incidents () {
                     <p>{incident.name}</p>
                   </div>
                   <div>
-                    <img onClick={() => handleChatIconClick(incident._id, responderId)} src="https://cdn-icons-png.flaticon.com/128/724/724715.png" alt="Venue icon" className="icon" />
+                    <img onClick={() => handleChatIconClick(incident._id, userId)} src="https://cdn-icons-png.flaticon.com/128/724/724715.png" alt="Venue icon" className="icon" />
                   </div>
               </div>
               </div>
@@ -172,7 +172,7 @@ function Incidents () {
                     <p>{incident.name}</p>
                   </div>
                   <div>
-                    <img onClick={() => handleChatIconClick(incident._id, responderId)} src="https://cdn-icons-png.flaticon.com/128/724/724715.png" alt="Venue icon" className="icon" />
+                    <img onClick={() => handleChatIconClick(incident._id, userId)} src="https://cdn-icons-png.flaticon.com/128/724/724715.png" alt="Venue icon" className="icon" />
                   </div>
               </div>
               </div>
