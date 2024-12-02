@@ -10,7 +10,7 @@ function Navbar () {
   // console.log(user);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
+ 
   function handleLogout () {
     dispatch(logoutUser());
     navigate('/')
@@ -42,18 +42,24 @@ function Navbar () {
       </div>
       <div className='login'>
       {user ?
+          <div className='loginContainer'>
+          <p>Welcome {user.firstName}</p>
+          <img src='https://cdn-icons-png.flaticon.com/128/3899/3899618.png' alt='Profile icon' className='profileIcon'/>
           <button
-            className='loginButton'
+            className='loginLogoutButton'
             onClick={handleLogout}
           >
             LOG OUT
           </button>
+          </div>
           :
-          <button className='loginButton'
+          <div>
+          <button className='loginLogoutButton'
             onClick={handleLogin}
           >
             LOG IN
           </button>
+          </div>
       }
       </div>
     </nav>

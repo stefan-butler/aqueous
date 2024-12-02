@@ -33,19 +33,36 @@ border-bottom: 1px solid rgba(31 41 55);
   display: flex;
   align-self: center;
 }
-.loginButton {
+.loginLogoutButton {
   border-radius: 5px;
-  background-color: rgb(147, 172, 206);
-  width: 75px;
+  background-color: rgb(102, 131, 172);
+  width: 80px;
   height:50px;
   font-weight: bold;
   color: white;
+  font-size: 16px;
 }
 
-.loginButton:hover {
+.loginLogoutButton:hover {
   background-color: rgb(67, 123, 202);
 }
 
-.loginButton:active {
+.loginLogoutButton:active {
   color: rgb(0, 24, 69);
+}
+
+.loginContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap:16px;
+}
+
+.profileIcon {
+  height: 50px;
+}
+
+.login p {
+  font-family: "Poppins", sans-serif;
+  color:rgb(192, 206, 226);
 }
