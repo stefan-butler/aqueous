@@ -21,7 +21,7 @@ function Navbar () {
   }
 
   function handleProfileClick () {
-    navigate(`/user/${user.id}`)
+    navigate(`/user/${user?.id}`)
   }
 
   return (

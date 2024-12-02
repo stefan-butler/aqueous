@@ -6,3 +6,16 @@ export interface IMessage {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface IChat {
+  incidentId: string;
+  responderId: string;
+  reporterId: string;
+  messages: IMessage[];
+}
+
+export interface ChatState {
+  list: IChat[];
+  loading: boolean;
+  error: string | null;
+}

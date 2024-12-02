@@ -19,7 +19,7 @@ const initialState: IncidentState = {
 export const fetchGlobalIncidents = createAsyncThunk ('incidents/fetchGlobalIncidents', 
   async(_, thunkAPI) => {
   try{
-    const response = await axios.get('http://localhost:3000/get/incidents');
+    const response = await axios.get('http://localhost:3000/incidents');
     return response.data.incidents
   } catch (error) {
     console.error(error);

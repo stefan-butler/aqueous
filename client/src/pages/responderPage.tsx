@@ -1,10 +1,18 @@
-import { RootState } from '../redux/store';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { RootState, AppDispatch } from '../redux/store';
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import {fetchGlobalChats} from "../redux/slices/chatSlice";
 import '../component-css/responderPage.css'
 
 function UserPage () {
-  const { user, isResponder, responderType } = useAppSelector((state: RootState) => state.auth);
-  console.log(user)
+  const dispatch = useDispatch<AppDispatch>();
+  const { user, isResponder, responderType } = useSelector((state: RootState) => state.auth);
+  const chats = useSelector((state: RootState) => state.chat)
+  console.log(user.id)
+
+  useEffect(() => {
+    dispatch(fetchGlobalChats(user?.id))
+  })
   return (
     <div className='pageContainer'>
       <div className='profileInfo'>

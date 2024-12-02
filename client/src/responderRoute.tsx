@@ -12,7 +12,7 @@ function ResponderRoute () {
     return <Navigate to="/unauthorized" />;
   }
 
-  if (isResponder) {
+  if (user) {
     return <Outlet />;
   }
 
