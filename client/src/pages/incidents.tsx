@@ -16,7 +16,8 @@ function Incidents () {
     dispatch(fetchGlobalIncidents())
   },[])
 
-  const responderId = useSelector((state: RootState) => state.auth.user?.id);
+  const userId = useSelector((state: RootState) => state.auth.user?.id);
+  console.log(`userId: ${userId}`);
   const handleChatIconClick = async (incidentId: string, responderId: string | undefined) => {
     try {
 
@@ -34,9 +35,6 @@ function Incidents () {
         return;
       }
   
-      const reporterId = incident.user_id;
-      console.log(`reporterId: ${reporterId}`);
-  
       // check if there is already a chat with this incident ID
       const chatCheckResponse = await axios.get(
         `http://localhost:3000/api/chat/check?incidentId=${incidentId}`,
@@ -52,6 +50,7 @@ function Incidents () {
       // if no existing chat, create one
       if (!existingChat) {
         console.log('No existing chat found, creating a new one.');
+        const reporterId = incident.user_id;
         const createChatResponse = await axios.post(
           'http://localhost:3000/api/chat/',
           {
@@ -73,7 +72,7 @@ function Incidents () {
   
       // if chat exists, check if responderId or reporterId matches
       console.log('Existing chat found:', existingChat);
-      if ((existingChat.responderId === responderId) || (existingChat.reporterId === reporterId)) {
+      if ((existingChat.responderId === userId) || (existingChat.reporterId === userId)) {
         // open chat
         console.log('Credentials match. Opening chat.');
         navigate(`/chat?chatId=${existingChat._id}`);
@@ -112,7 +111,7 @@ function Incidents () {
                     <p>{incident.name}</p>
                   </div>
                   <div>
-                    <img onClick={() => handleChatIconClick(incident._id, responderId)} src="https://cdn-icons-png.flaticon.com/128/724/724715.png" alt="Venue icon" className="icon" />
+                    <img onClick={() => handleChatIconClick(incident._id, userId)} src="https://cdn-icons-png.flaticon.com/128/724/724715.png" alt="Venue icon" className="icon" />
                   </div>
               </div>
               </div>
