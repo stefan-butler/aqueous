@@ -28,8 +28,8 @@ function Login () {
 
   return (
     <div className="bg-dark h-screen">
-      <div className="flex flex-col mx-auto bg-lighter h-[400px] w-[300px] rounded-lg">
-        <h1>LOG IN</h1>
+      <div className="flex flex-col mx-auto bg-light h-[400px] w-[300px] rounded-lg">
+        <h1 className="text-center mt-2 font-bold text-dark">LOG IN</h1>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4" >
           {error && <p className="text-red-500">{error}</p>}
           <label htmlFor="email">Email:</label>
