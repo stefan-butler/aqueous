@@ -1,6 +1,8 @@
 import Map from "../components/map";
 
+
 function Home () {
+ 
   return (
     <div className="bg-primary h-screen">
       <div className="ml-8 mt-4">

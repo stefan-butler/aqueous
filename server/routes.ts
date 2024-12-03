@@ -14,7 +14,7 @@ router.post('/auth/login', loginUser)
 router.post('/auth/signup', signupUser)
 
 
-router.get('/incidents', getAllIncidents)
+router.get('/', getAllIncidents)
 router.post('/create/incident', requireAuth, createIncident) 
 router.get('/get/incidents/:userId', requireAuth, getIncidentsCreatedByUser)
 

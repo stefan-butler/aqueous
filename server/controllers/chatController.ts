@@ -9,8 +9,8 @@ const chatController = {
   getAllChats: async (req: Request, res: Response) => {
     try {
       const chats = await Chat.find({ responderId: req.params.responderId })
-          .populate('reporterId', 'name')
-          .populate('incidentId', 'title');
+          .populate('reporterId')
+          .populate('incidentId').populate('responderId').populate('messages');
       res.status(200).json(chats);  
     } catch (error) {
       res.status(500).json({ message: (error as Error).message });

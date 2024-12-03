@@ -11,7 +11,7 @@ function Incidents () {
   const dispatch = useDispatch<AppDispatch>();
   const global = useSelector((state: RootState) => state.incident.global)
   const navigate = useNavigate(); 
-
+  console.log(global)
   useEffect(() => {
     dispatch(fetchGlobalIncidents())
   },[])

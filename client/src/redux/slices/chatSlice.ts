@@ -11,9 +11,22 @@ const initialState: ChatState = {
 }
 
 export const fetchGlobalChats = createAsyncThunk ('chats/fetchGloablChats', 
-  async(responderid: string | undefined, thunkAPI) => {
+  async(responderid: string | undefined, thunkApi) => {
     try{
-      const response = await axios.get(`http://localhost:3000/${responderid}`);
+      const token = localStorage.getItem('token');
+      
+      if (!token) {
+        return thunkApi.rejectWithValue('No token provided');
+      }
+
+      const response = await axios.get(`http://localhost:3000/api/chat/${responderid}`,
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,  
+            'Content-Type': 'application/json',  
+          }
+        }
+      );
       return response.data
     } catch (error) {
       console.error(error);
