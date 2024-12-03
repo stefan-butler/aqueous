@@ -40,6 +40,7 @@ function UserPage () {
         }
       });
     }
+    console.log(chats.list)
   }, [chats.list]); 
 
   function dateTimeDisplay (chatDate) {
@@ -97,7 +98,7 @@ function UserPage () {
             </div> 
           </div>
         ))
-        }
+        } 
       </div>
     </div>
   )
