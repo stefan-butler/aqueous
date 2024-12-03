@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef } from "react";
 import {fetchGlobalChats} from "../redux/slices/chatSlice";
 import { format } from 'date-fns';
+import { useNavigate } from 'react-router';
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '../component-css/responderPage.css'
@@ -11,22 +12,14 @@ function UserPage () {
   const dispatch = useDispatch<AppDispatch>();
   const { user, isResponder, responderType } = useSelector((state: RootState) => state.auth);
   const chats = useSelector((state: RootState) => state.chat)
-  console.log(chats.list)
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     dispatch(fetchGlobalChats(user?.id))
   }, [])
 
-  function dateTimeDisplay (chatDate) {
-    const date =  format(new Date(chatDate), 'do, MMM yyyy')
-    const time = format(new Date(chatDate), 'HH:mm')
-    return `${date} at ${time}`
-  }
-
-
   const mapRefs = useRef<(HTMLDivElement | null)[]>([]);
   
-
   useEffect(() => {
     if (chats.list.length > 0) {
       chats.list.forEach((chat, index) => {
@@ -40,7 +33,7 @@ function UserPage () {
             zoom: 8, 
           });
 
-         
+          map.addControl(new mapboxgl.NavigationControl());
           new mapboxgl.Marker()
             .setLngLat([longitude, latitude])
             .addTo(map);
@@ -48,6 +41,16 @@ function UserPage () {
       });
     }
   }, [chats.list]); 
+
+  function dateTimeDisplay (chatDate) {
+    const date =  format(new Date(chatDate), 'do, MMM yyyy')
+    const time = format(new Date(chatDate), 'HH:mm')
+    return `${date} at ${time}`
+  }
+
+  function handleClick (chatId) {
+    navigate(`/chat?chatId=${chatId}`);
+  }
 
   return (
     <div className='pageContainer'>
@@ -69,23 +72,28 @@ function UserPage () {
 
       <div className='chatContainer'>
         <div className='title'>
-          <p>Open Incidents</p>
+          <p>Open Incidents:</p>
         </div>
         {chats.list.map((chat, index) => (
           <div className='openChat' key={index}>
+            <div className='incidentTitle'>
+              <p id='title'>{index + 1}. {chat.incidentId.title}</p>
+            </div>
             <div className='incidentInfo'>
-              <p>{chat.incidentId.title}</p>
-              <p>Reported by {chat.reporterId.firstName} {chat.reporterId.lastName}</p>
-              <p>Opened: {dateTimeDisplay(chat.createdAt)}</p>
+              <p><strong>Type</strong>: {chat.incidentId.floodType}</p>
+              <p><strong>Severity</strong>: {chat.incidentId.severity}</p>
+              <p><strong>Urgency</strong>: {chat.incidentId.urgency} </p>
+              <p>Reported by <strong>{chat.reporterId.firstName} {chat.reporterId.lastName}</strong></p>
+              <p>Reported on the <strong>{dateTimeDisplay(chat.incidentId.incidentDate)}</strong></p>
             </div>
             <div
-              id={`map-${index}`}
-              ref={(el) => (mapRefs.current[index] = el)} // Assign ref for this map
-              style={{ width: '250px', height: '250px' }}
+              id='map'
+              ref={(el) => (mapRefs.current[index] = el)} 
+              style={{ width: '400px', height: '300px' }}
             ></div>
             <div className='chat'>
-              <p>Jump back to chat</p> 
-              <img src='https://cdn-icons-png.flaticon.com/128/724/724715.png' alt='Chat Icon' className='chatIcon'/>
+              <p>Return to chat:</p> 
+              <img onClick={() => handleClick(chat._id)}src='https://cdn-icons-png.flaticon.com/128/724/724715.png' alt='Chat Icon' className='chatIcon'/>
             </div> 
           </div>
         ))
