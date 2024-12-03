@@ -1,7 +1,14 @@
 import { Request, Response} from 'express';
+import { Server } from 'socket.io';
 import Chat from '../models/chat';
 import Message from '../models/message';
 import mongoose from 'mongoose';
+
+let io: Server;
+
+export const setSocketIOInstance = (ioInstance: Server) => {
+  io = ioInstance;
+}
 
 const chatController = {
 
@@ -55,7 +62,15 @@ const chatController = {
   sendMessage: async (req: Request, res: Response) => {
     try {
       const { senderId, text } = req.body;
+      const { chatId } = req.params;
       const message = await Message.create({ chatId: req.params.chatId, senderId, text });
+
+      // emit the message to users in the chat
+      if (io) {
+        console.log('Emitting message:', message);
+        io.to(chatId).emit('chat message', message);
+      }
+
       res.status(201).json(message);  
     } catch (error) {
       res.status(500).json({ message: (error as Error).message });

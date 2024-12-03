@@ -3,6 +3,7 @@ import axios from 'axios';
 import { IMessage } from '../types/chat-types';
 import { useAppSelector } from '../redux/hooks';
 import { useLocation } from 'react-router';
+import { io, Socket } from 'socket.io-client';
 
 function Chat() {
   const [messages, setMessages] = useState<IMessage[] | null>(null);
@@ -12,6 +13,7 @@ function Chat() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const chatId = queryParams.get('chatId');
+  const [socket, setSocket] = useState<Socket | null>(null);
 
   const formatTimestamp = (timestamp: string) => {
     const date = new Date(timestamp);
@@ -19,46 +21,62 @@ function Chat() {
   };
 
   const handleSend = async () => {
-    if (!newMessage.trim()) return;
+    if (!newMessage.trim() || !socket || !chatId) return;
 
-    try {
-      const token = localStorage.getItem('token');
-      if (!token) throw new Error('Authorization token is missing');
-
-      const response = await axios.post(
-        `http://localhost:3000/api/chat/${chatId}/messages`,
-        { senderId, text: newMessage },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-
-      setMessages((prev) => (prev ? [...prev, response.data] : [response.data]));
-      setNewMessage('');
-    } catch (error) {
-      console.error('Error sending message:', error);
-    }
+    //emit the new message to the server
+    socket.emit('chat message', {
+      senderId,
+      chatId,
+      text: newMessage,
+    });
+    
+    setNewMessage('');
   };
 
   useEffect(() => {
-    const initialiseChat = async () => {
-      if (!chatId || !senderId) return;
+    const token = localStorage.getItem('token');
+    if(!token || !chatId || !senderId) {
+      setIsAuthorised(false);
+      return;
+    }
 
+    //initialise socket connection
+    const socketInstance = io('http://localhost:3000', {
+      query: { chatId },
+      auth: { token }, 
+    });
+
+    setSocket(socketInstance);
+
+      // Listen for incoming messages
+    const handleMessage = (message: IMessage) => {
+      console.log('Received message:', message);
+      setMessages((prev) => [...prev, message]);
+    };
+
+    socketInstance.on('chat message', handleMessage);
+
+    //fetch old messages using http 
+    const fetchChatHistory = async () => {
       try {
-        const token = localStorage.getItem('token');
-        if (!token) throw new Error('Authorization token is missing');
-
         const response = await axios.get(`http://localhost:3000/api/chat/${chatId}/messages`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-
-        const chat = response.data || {};
-        setMessages(chat || []);
+        setMessages(response.data || []);
       } catch (error) {
-        console.error('Error initializing chat:', error);
+        console.error('Error fetching chat history:', error);
         setIsAuthorised(false);
       }
     };
 
-    initialiseChat();
+    fetchChatHistory();
+
+    return () => {
+      // cleanup connection on unmount 
+      socketInstance.off('chat message')
+      socketInstance.disconnect();
+    }
+
   }, [chatId, senderId]);
 
   return (
