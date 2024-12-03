@@ -21,7 +21,11 @@ function Navbar () {
   }
 
   function handleProfileClick () {
-    navigate(`/user/${user?.id}`)
+    if(isResponder) {
+      navigate(`/responder/${user?.id}`)
+    } else {
+      navigate(`/reporter/${user?.id}`)
+    }
   }
 
   return (

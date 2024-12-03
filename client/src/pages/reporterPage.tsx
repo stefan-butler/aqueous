@@ -1,22 +1,25 @@
 import { RootState, AppDispatch } from '../redux/store';
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef } from "react";
-import {fetchResponderChats} from "../redux/slices/chatSlice";
+import {fetchReporterChats} from "../redux/slices/chatSlice";
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router';
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import '../component-css/responderPage.css'
 
-function UserPage () {
+
+function ReporterPage () {
   const dispatch = useDispatch<AppDispatch>();
   const { user, isResponder, responderType } = useSelector((state: RootState) => state.auth);
   const chats = useSelector((state: RootState) => state.chat)
   const navigate = useNavigate(); 
-  console.log(user)
+  console.log(user?.id)
+  console.log(chats)
+
   useEffect(() => {
-    dispatch(fetchResponderChats(user?.id))
+    dispatch(fetchReporterChats(user?.id))
   }, [])
+
 
   const mapRefs = useRef<(HTMLDivElement | null)[]>([]);
   
@@ -52,6 +55,7 @@ function UserPage () {
     navigate(`/chat?chatId=${chatId}`);
   }
 
+  
   return (
     <div className='pageContainer'>
       <div className='profileInfo'>
@@ -72,7 +76,7 @@ function UserPage () {
 
       <div className='chatContainer'>
         <div className='title'>
-          <p>Open Incidents:</p>
+          <p>Incidents Reported:</p>
         </div>
         {chats.list.map((chat, index) => (
           <div className='openChat' key={index}>
@@ -83,7 +87,7 @@ function UserPage () {
               <p><strong>Type</strong>: {chat.incidentId.floodType}</p>
               <p><strong>Severity</strong>: {chat.incidentId.severity}</p>
               <p><strong>Urgency</strong>: {chat.incidentId.urgency} </p>
-              <p>Reported by <strong>{chat.reporterId.firstName} {chat.reporterId.lastName}</strong></p>
+              <p>Assigned responder: <strong>{chat.responderId.firstName} {chat.responderId.lastName}</strong></p>
               <p>Reported on the <strong>{dateTimeDisplay(chat.incidentId.incidentDate)}</strong></p>
             </div>
             <div
@@ -100,7 +104,8 @@ function UserPage () {
         }
       </div>
     </div>
+
   )
 }
 
-export default UserPage
+export default ReporterPage
