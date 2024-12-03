@@ -10,6 +10,7 @@ import Login from './pages/login';
 import Register from './pages/register';
 import ResponderRoute from './responderRoute';
 import UserRoute from './userRoute';
+import ReporterPage from './pages/reporterPage';
 
 function App() {
 
@@ -29,13 +30,13 @@ function App() {
         {/* PRIVATE ROUTES */}
         <Route element={<ResponderRoute />}>
           <Route path="/incidents" element={<Incidents />}/>
-          <Route path="/user/:userId" element={<UserPage/>} />
+          <Route path="/responder/:userId" element={<UserPage/>} />
         </Route>
 
         {/* Non-Responder Protected Route */}
         <Route element={<UserRoute/>}>
           <Route path="/report" element={<Report/>} />
-          <Route path="/user/:userId" element={<UserPage/>} />
+          <Route path="/reporter/:userId" element={<ReporterPage/>} />
         </Route>
 
       </Routes>

@@ -20,6 +20,19 @@ const chatController = {
     }
   },
 
+  getReporterAllChats: async (req: Request, res: Response) => {
+    try {
+      const chats = await Chat.find({ reporterId: req.params.reporterId })
+          .populate('responderId')
+          .populate('incidentId').populate('reporterId').populate('messages');
+      res.status(200).json(chats);  
+    } catch (error) {
+      res.status(500).json({ message: (error as Error).message });
+      console.error(error);  
+    }
+  },
+
+
   // create a new chat for an incident 
   createChat: async (req: Request, res: Response) => {
     try {
