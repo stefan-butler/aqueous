@@ -89,7 +89,7 @@ const getIncidentsCreatedByUser = async (req: ExtendedRequest, res: Response) =>
     const userid = req.user._id
 
     const userIdIncidents = await Incident.find({user_id: userid});
-    res.status(200).json({message: 'Incidents creted by the user fetched successfully', userIdIncidents})
+    res.status(200).json(userIdIncidents)
   } catch (error) {
     console.error('Errors fetching user incidents', error)
     res.status(500).json({message:`Internal server issue: ${error}`})

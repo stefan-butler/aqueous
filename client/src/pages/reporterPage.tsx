@@ -1,7 +1,7 @@
 import { RootState, AppDispatch } from '../redux/store';
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef } from "react";
-import {fetchReporterChats} from "../redux/slices/chatSlice";
+import {fetchReporterIncidents} from "../redux/slices/incidentSlice";
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router';
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
@@ -11,24 +11,25 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 function ReporterPage () {
   const dispatch = useDispatch<AppDispatch>();
   const { user, isResponder, responderType } = useSelector((state: RootState) => state.auth);
-  const chats = useSelector((state: RootState) => state.chat)
+ 
+  const userIncidnets = useSelector((state: RootState) => state.incident.user)
   const navigate = useNavigate(); 
   console.log(user?.id)
-  console.log(chats)
+  console.log(userIncidnets)
 
   useEffect(() => {
-    dispatch(fetchReporterChats(user?.id))
+    dispatch(fetchReporterIncidents(user?.id))
   }, [])
 
 
   const mapRefs = useRef<(HTMLDivElement | null)[]>([]);
   
   useEffect(() => {
-    if (chats.list.length > 0) {
-      chats.list.forEach((chat, index) => {
+    if (userIncidnets.list.length > 0) {
+      userIncidnets.list.forEach((chat, index) => {
         const mapContainer = mapRefs.current[index];
-        if (mapContainer && chat.incidentId.location) {
-          const { longitude, latitude } = chat.incidentId.location;
+        if (mapContainer && chat.location) {
+          const { longitude, latitude } = chat.location;
           const map = new mapboxgl.Map({
             container: mapContainer,
             style: 'mapbox://styles/mapbox/streets-v11',
@@ -43,11 +44,11 @@ function ReporterPage () {
         }
       });
     }
-  }, [chats.list]); 
+  }, [userIncidnets.list]); 
 
-  function dateTimeDisplay (chatDate) {
-    const date =  format(new Date(chatDate), 'do, MMM yyyy')
-    const time = format(new Date(chatDate), 'HH:mm')
+  function dateTimeDisplay (incidentDate) {
+    const date =  format(new Date(incidentDate), 'do, MMM yyyy')
+    const time = format(new Date(incidentDate), 'HH:mm')
     return `${date} at ${time}`
   }
 
@@ -78,17 +79,17 @@ function ReporterPage () {
         <div className='title'>
           <p>Incidents Reported:</p>
         </div>
-        {chats.list.map((chat, index) => (
+        {userIncidnets.list.map((incident, index) => (
           <div className='openChat' key={index}>
             <div className='incidentTitle'>
-              <p id='incidentTitle'>{index + 1}. {chat.incidentId.title}</p>
+              <p id='incidentTitle'>{index + 1}. {incident.title}</p>
             </div>
             <div className='incidentInfo'>
-              <p><strong>Type</strong>: {chat.incidentId.floodType}</p>
-              <p><strong>Severity</strong>: {chat.incidentId.severity}</p>
-              <p><strong>Urgency</strong>: {chat.incidentId.urgency} </p>
-              <p>Assigned responder: <strong>{chat.responderId.firstName} {chat.responderId.lastName}</strong></p>
-              <p>Reported on the <strong>{dateTimeDisplay(chat.incidentId.incidentDate)}</strong></p>
+              <p><strong>Type</strong>: {incident.floodType}</p>
+              <p><strong>Severity</strong>: {incident.severity}</p>
+              <p><strong>Urgency</strong>: {incident.urgency} </p>
+              {/* <p>Assigned responder: <strong>{incident.responderId.firstName} {chat.responderId.lastName}</strong></p> */}
+              <p>Reported on the <strong>{dateTimeDisplay(incident.incidentDate)}</strong></p>
             </div>
             <div
               id='map'
@@ -97,7 +98,7 @@ function ReporterPage () {
             ></div>
             <div className='chat'>
               <p>Return to chat:</p> 
-              <img onClick={() => handleClick(chat._id)}src='https://cdn-icons-png.flaticon.com/128/724/724715.png' alt='Chat Icon' className='chatIcon'/>
+              <img onClick={() => handleClick(incident._id)}src='https://cdn-icons-png.flaticon.com/128/724/724715.png' alt='Chat Icon' className='chatIcon'/>
             </div> 
           </div>
         ))

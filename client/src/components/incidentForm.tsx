@@ -171,7 +171,7 @@ function IncidentForm () {
 
         <div className="formElement">
           <label htmlFor='incidentDate'>Date & Time of Incident:</label>
-          <input className="formElementInput"  type="datetime-local" name="incidentDate" id="incidentDate" value={incident.incidentDate} onChange={handleChange}/>
+          <input className="formElementInput"  type="datetime-local" name="incidentDate" id="incidentDate" max={new Date().toISOString().slice(0, 16)} value={incident.incidentDate} onChange={handleChange}/>
         </div>
 
 
@@ -194,7 +194,6 @@ function IncidentForm () {
             <option value=''>Specify incident's severity:</option>
             <option value='Minor'>Minor</option>
             <option value='Moderate'>Moderate</option>
-            <option value='Severe'>Severe</option>
             <option value='Critical'>Critical</option>
           </select>
         </div>

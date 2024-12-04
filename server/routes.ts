@@ -16,6 +16,6 @@ router.post('/auth/signup', signupUser)
 
 router.get('/', getAllIncidents)
 router.post('/create/incident', requireAuth, createIncident) 
-router.get('/get/incidents/:userId', requireAuth, getIncidentsCreatedByUser)
+router.get('/reporter/:userId', requireAuth, getIncidentsCreatedByUser)
 
 export default router;

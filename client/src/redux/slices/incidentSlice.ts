@@ -53,6 +53,32 @@ export const createIncident = createAsyncThunk ('incidents/createIncident',
   }
 )
 
+export const fetchReporterIncidents = createAsyncThunk ('incidents/fetchReporterIncidents',
+  async (reporterid: string | undefined, thunkApi) => {
+    try {
+      const token = localStorage.getItem('token');
+   
+
+      if (!token) {
+        return thunkApi.rejectWithValue('No token provided');
+      }
+
+      const response = await axios.get(`http://localhost:3000/reporter/${reporterid}`,
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,  
+            'Content-Type': 'application/json',  
+          }
+        }
+      )
+      return response.data
+    } catch (error) {
+      console.error(error);
+      return thunkApi.rejectWithValue('Failed to create incident')
+    }
+  }
+)
+
 const incidentSlice = createSlice({
   name: 'incidents',
   initialState,
@@ -70,6 +96,18 @@ const incidentSlice = createSlice({
       .addCase(fetchGlobalIncidents.rejected, (state, action) => {
         state.global.loading = false;
         state.global.error = action.payload as string
+      })
+      .addCase(fetchReporterIncidents.pending, (state) => {
+        state.user.loading = true;
+        state.user.error = null;
+      })
+      .addCase(fetchReporterIncidents.fulfilled, (state, action: PayloadAction<Incident[]>) => {
+        state.user.loading = false;
+        state.user.list = action.payload;
+      })
+      .addCase(fetchReporterIncidents.rejected, (state, action) => {
+        state.user.loading = false;
+        state.user.error = action.payload as string
       })
       .addCase(createIncident.pending, (state) => {
         state.global.loading = true;
