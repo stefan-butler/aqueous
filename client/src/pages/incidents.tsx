@@ -93,93 +93,87 @@ function Incidents () {
       <div className="criticalSeverity">
         <p id='criticaltitle'>Critical Incidents</p>
         <div className='criticalIncidents'>
-          <div className="incident">
             {global.list
             .filter((incident) => incident.severity === 'Critical')
             .map((incident, index) => (
               <div className="incidentDetails" key={index}>
-              <div className="incidentTitle">
-                <p className="titleInc">{incident.title}</p>
-                <p><strong>Reported at</strong>: {incident.incidentDate}</p>
-              </div>
-              <div className='floodType'>
-                <p><strong>Type</strong>: {incident.floodType}</p>
-              </div>
-              <div className="personDetails">
-              <div className="person">
+                <div className="incidentTitle">
+                  <p className="titleInc">{index +1}.{incident.title}</p>
+                  <p><strong>Reported at</strong>: {incident.incidentDate}</p>
+                </div>
+                <div className='floodType'>
+                  <p><strong>Type</strong>: {incident.floodType}</p>
+                </div>
+                <div className="personDetails">
+                  <div className="person">
                     <p><strong>Contact incident's reporter</strong>:</p>
                     <p>{incident.name}</p>
                   </div>
                   <div>
                     <img onClick={() => handleChatIconClick(incident._id, userId)} src="https://cdn-icons-png.flaticon.com/128/724/724715.png" alt="Venue icon" className="icon" />
                   </div>
-              </div>
+                </div>
               </div>
             )
             )}
-          </div>
         </div>
       </div>
 
       <div className="moderateSeverity">
         <p id='moderateltitle'>Moderate Incidents</p>
         <div className='moderateIncidents'>
-          <div className="incident">
             {global.list
               .filter((incident) => incident.severity === 'Moderate')
               .map((incident, index) => (
                 <div className="incidentDetails" key={index}>
-              <div className="incidentTitle">
-                <p className="titleInc">{incident.title}</p>
-                <p><strong>Reported at</strong>: {incident.incidentDate}</p>
-              </div>
-              <div className='floodType'>
-                <p><strong>Type</strong>: {incident.floodType}</p>
-              </div>
-              <div className="personDetails">
-              <div className="person">
-                    <p><strong>Contact incident's reporter</strong>:</p>
-                    <p>{incident.name}</p>
+                  <div className="incidentTitle">
+                    <p className="titleInc">{index +1}.{incident.title}</p>
+                    <p><strong>Reported at</strong>: {incident.incidentDate}</p>
                   </div>
-                  <div>
-                    <img onClick={() => handleChatIconClick(incident._id, userId)} src="https://cdn-icons-png.flaticon.com/128/724/724715.png" alt="Venue icon" className="icon" />
+                  <div className='floodType'>
+                    <p><strong>Type</strong>: {incident.floodType}</p>
                   </div>
-              </div>
-              </div>
+                  <div className="personDetails">
+                    <div className="person">
+                      <p><strong>Contact incident's reporter</strong>:</p>
+                      <p>{incident.name}</p>
+                    </div>
+                    <div>
+                      <img onClick={() => handleChatIconClick(incident._id, userId)} src="https://cdn-icons-png.flaticon.com/128/724/724715.png" alt="Venue icon" className="icon" />
+                    </div>
+                  </div>
+                </div>
               )
               )}
-          </div>
         </div>
       </div>
       <div className='minorSeverity'>
         <p id='minortitle'>Minor Incidents</p>
         <div className='minorIncidents'>
-          <div className="incident">
             {global.list
-                .filter((incident) => incident.severity === 'Minor')
-                .map((incident, index) => (
-                  <div className="incidentDetails" key={index}>
-              <div className="incidentTitle">
-                <p className="titleInc">{incident.title}</p>
-                <p><strong>Reported at</strong>: {incident.incidentDate}</p>
-              </div>
-              <div className='floodType'>
-                <p><strong>Type</strong>: {incident.floodType}</p>
-              </div>
-              <div className="personDetails">
-              <div className="person">
-                    <p><strong>Contact incident's reporter</strong>:</p>
-                    <p>{incident.name}</p>
+              .filter((incident) => incident.severity === 'Minor')
+              .map((incident, index) => (
+                <div className="incidentDetails" key={index}>
+                  <div className="incidentTitle">
+                    <p className="titleInc">{index +1}.{incident.title}</p>
+                    <p><strong>Reported at</strong>: {incident.incidentDate}</p>
                   </div>
-                  <div>
-                    <img onClick={() => handleChatIconClick(incident._id, userId)} src="https://cdn-icons-png.flaticon.com/128/724/724715.png" alt="Venue icon" className="icon" />
+                  <div className='floodType'>
+                    <p><strong>Type</strong>: {incident.floodType}</p>
                   </div>
-              </div>
-              </div>
+                  <div className="personDetails">
+                    <div className="person">
+                      <p><strong>Contact incident's reporter</strong>:</p>
+                      <p>{incident.name}</p>
+                    </div>
+                    <div>
+                      <img onClick={() => handleChatIconClick(incident._id, userId)} src="https://cdn-icons-png.flaticon.com/128/724/724715.png" alt="Venue icon" className="icon" />
+                    </div>
+                  </div>
+                </div>
                 )
-                )}
+              )}
           </div>
-        </div>
       </div>
   </div>
     

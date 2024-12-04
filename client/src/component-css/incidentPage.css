@@ -18,81 +18,46 @@ body {
 #criticaltitle {
   font-size: 45px;
   font-weight: bold;
-  color: white;
+  color: rgb(255, 3, 3);
+  background-color: rgb(31, 41, 55);
+  width: 425px;
+  border-radius:  5px;
 }
 
 #moderateltitle {
   font-size: 45px;
   font-weight: bold;
-  color: white;
+  color: rgb(255, 145, 2);
+  background-color: rgb(31, 41, 55);
+  width: 475px;
+  border-radius:  5px;
 }
 
 #minortitle {
   font-size: 45px;
   font-weight: bold;
-  color: white;
-}
-
-.incident {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  display: flex;
-  width: 50%;
-  margin: 4px;
-}
-
-.incidentDetails {
-  border-radius: 5px;
-  display: flex;
-  flex-direction: column;
-}
-
-.personDetails {
-  display: flex;
-  align-items: center;
-  gap:16px;
-}
-
-.person {
-  display: flex;
-  flex-direction: column;
-}
-
-.icon {
-  height: 35px;
+  color: rgb(255, 238, 2);
+  background-color: rgb(31, 41, 55);
+  width: 385px;
+  border-radius:  5px;
 }
 
 .criticalIncidents {
-  background-color: rgb(223, 229, 238) ;
-  width: 80%;
-  border-radius: 5px;
-  border: thin;
-  border-color: rgb(1, 12, 27);
-  border-style: solid;
-  min-height: 350px;
+  display: flex;
+  flex-direction: column;
 }
 
 .moderateIncidents {
-  background-color: rgb(223, 229, 238) ;
-  width: 80%;
-  border-radius: 5px;
-  border: thin;
-  border-color: rgb(1, 12, 27);
-  border-style: solid;
-  min-height: 350px;
+  display: flex;
+  flex-direction: column;
+  
 }
 
 .minorIncidents {
-  background-color: rgb(223, 229, 238) ;
-  width: 80%;
-  border-radius: 5px;
-  border: thin;
-  border-color: rgb(1, 12, 27);
-  border-style: solid;
-  min-height: 350px;
+  display: flex;
+  flex-direction: column;
 }
 
-.titleInc {
-  font-size:32px;
+.incidentDetails {
+  background-color: rgb(31, 41, 55);
 }
