@@ -103,7 +103,6 @@ function Incidents () {
             center: [longitude, latitude],
             zoom: 8, 
           });
-
           map.addControl(new mapboxgl.NavigationControl());
           new mapboxgl.Marker()
             .setLngLat([longitude, latitude])
