@@ -190,6 +190,7 @@ function IncidentForm () {
               type="datetime-local"
               name="incidentDate"
               id="incidentDate"
+              max={new Date().toISOString().slice(0, 16)} 
               value={incident.incidentDate}
               onChange={handleChange}
             />
@@ -207,45 +208,97 @@ function IncidentForm () {
             ></div>
           </div>
   
-          {/* Severity */}
-          <div>
-            <label htmlFor="severity" className="block text-sm font-semibold text-dark">
-              Severity of Flooding
-            </label>
-            <select
-              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              name="severity"
-              id="severity"
-              value={incident.severity}
-              onChange={handleChange}
-            >
-              <option value="">Select severity level</option>
-              <option value="Minor">Minor</option>
-              <option value="Moderate">Moderate</option>
-              <option value="Severe">Severe</option>
-              <option value="Critical">Critical</option>
-            </select>
+          {/* Severity and Flood Type */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="severity" className="block text-sm font-semibold text-dark">
+                Severity of Flooding
+              </label>
+              <select
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                name="severity"
+                id="severity"
+                value={incident.severity}
+                onChange={handleChange}
+              >
+                <option value="">Select severity level</option>
+                <option value="Minor">Minor</option>
+                <option value="Moderate">Moderate</option>
+                <option value="Severe">Severe</option>
+                <option value="Critical">Critical</option>
+              </select>
+            </div>
+  
+            <div>
+              <label htmlFor="floodType" className="block text-sm font-semibold text-dark">
+                Type of Flood
+              </label>
+              <select
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                name="floodType"
+                id="floodType"
+                value={incident.floodType}
+                onChange={handleChange}
+              >
+                <option value="">Select flood type</option>
+                <option value="River Flood">River Flood</option>
+                <option value="Urban Flood">Urban Flood</option>
+                <option value="Flash Flood">Flash Flood</option>
+                <option value="Coastal Flood">Coastal Flood</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
           </div>
   
-          {/* Flood Type */}
-          <div>
-            <label htmlFor="floodType" className="block text-sm font-semibold text-dark">
-              Type of Flood
-            </label>
-            <select
-              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              name="floodType"
-              id="floodType"
-              value={incident.floodType}
-              onChange={handleChange}
-            >
-              <option value="">Select flood type</option>
-              <option value="River Flood">River Flood</option>
-              <option value="Urban Flood">Urban Flood</option>
-              <option value="Flash Flood">Flash Flood</option>
-              <option value="Coastal Flood">Coastal Flood</option>
-              <option value="Other">Other</option>
-            </select>
+          {/* Urgency and Injuries */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="urgency" className="block text-sm font-semibold text-dark">
+                Urgency
+              </label>
+              <select
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                name="urgency"
+                id="urgency"
+                value={incident.urgency}
+                onChange={handleChange}
+              >
+                <option value="">Select urgency level</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+                <option value="Critical">Critical</option>
+              </select>
+            </div>
+  
+           
+            <div>
+              <label className="block text-sm font-semibold text-dark">Injuries</label>
+              <div className="flex items-center space-x-4 mt-2">
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    name="injuries"
+                    value="Yes"
+                    checked={incident.injuries === "Yes"}
+                    onChange={handleChange}
+                    className="w-4 h-4 text-blue-500 border-gray-300 focus:ring-blue-500"
+                  />
+                  <span className="ml-2 text-sm text-dark">Yes</span>
+                </label>
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    name="injuries"
+                    value="No"
+                    checked={incident.injuries === "No"}
+                    onChange={handleChange}
+                    className="w-4 h-4 text-blue-500 border-gray-300 focus:ring-blue-500"
+                  />
+                  <span className="ml-2 text-sm text-dark">No</span>
+                </label>
+              </div>
+            </div>
           </div>
   
           {/* Reporter Details */}
