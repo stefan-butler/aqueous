@@ -58,55 +58,88 @@ function ReporterPage () {
 
   
   return (
-    <div className='pageContainer'>
-      <div className='profileInfo'>
-        <div className='profilePicture'>
-          <img src='https://cdn-icons-png.flaticon.com/128/3899/3899618.png' alt='Profile Picture' className='profilePicture' />
-        </div>
-        <div className='fullName'>
-          <p>{user?.firstName} {user?.lastName}</p>
-        </div>
-        <div className='contactDetails'>
-          <p><strong>Email</strong>: {user?.email}</p>
-        </div>
-        {isResponder && 
-        <div className='responderType'>
-          <p><strong>Responder</strong>: {responderType}</p>
-        </div>}
-      </div>
-
-      <div className='chatContainer'>
-        <div className='title'>
-          <p>Incidents Reported:</p>
-        </div>
-        {userIncidnets.list.map((incident, index) => (
-          <div className='openChat' key={index}>
-            <div className='incidentTitle'>
-              <p id='incidentTitle'>{index + 1}. {incident.title}</p>
-            </div>
-            <div className='incidentInfo'>
-              <p><strong>Type</strong>: {incident.floodType}</p>
-              <p><strong>Severity</strong>: {incident.severity}</p>
-              <p><strong>Urgency</strong>: {incident.urgency} </p>
-              {/* <p>Assigned responder: <strong>{incident.responderId.firstName} {chat.responderId.lastName}</strong></p> */}
-              <p>Reported on the <strong>{dateTimeDisplay(incident.incidentDate)}</strong></p>
-            </div>
-            <div
-              id='map'
-              ref={(el) => (mapRefs.current[index] = el)} 
-              style={{ width: '400px', height: '300px' }}
-            ></div>
-            <div className='chat'>
-              <p>Return to chat:</p> 
-              <img onClick={() => handleClick(incident._id)}src='https://cdn-icons-png.flaticon.com/128/724/724715.png' alt='Chat Icon' className='chatIcon'/>
-            </div> 
+    <div className="bg-dark min-h-screen p-8 text-light">
+      {/* Profile Section */}
+      <div className="bg-primary p-6 rounded-lg shadow-lg mb-8">
+        <div className="flex items-center space-x-6">
+          {/* Profile Picture */}
+          <div className="w-24 h-24 rounded-full overflow-hidden">
+            <img
+              src="https://cdn-icons-png.flaticon.com/128/3899/3899618.png"
+              alt="Profile Picture"
+              className="w-full h-full object-cover"
+            />
           </div>
-        ))
-        }
+          {/* User Info */}
+          <div>
+            <p className="text-2xl font-bold">{user?.firstName} {user?.lastName}</p>
+            <p className="text-sm text-gray-300 mt-1">
+              <strong>Email:</strong> {user?.email}
+            </p>
+            {isResponder && (
+              <p className="text-sm text-gray-300 mt-1">
+                <strong>Responder:</strong> {responderType}
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+  
+      {/* Chats Section */}
+      <div>
+        <h2 className="text-2xl font-semibold mb-4 text-light">Incidents Reported</h2>
+        {userIncidnets.list.length === 0 ? (
+          <p className="text-center text-gray-400">No incidents reported yet.</p>
+        ) : (
+          <div className="space-y-8">
+            {userIncidnets.list.map((incident, index) => (
+              <div
+                key={index}
+                className="bg-primary p-6 rounded-lg shadow-md flex flex-col space-y-4"
+              >
+                {/* Incident Details */}
+                <div>
+                  <h3 className="text-lg font-bold text-light">
+                    {index + 1}. {incident.title}
+                  </h3>
+                  <p className="text-sm text-gray-300 mt-1">
+                    <strong>Type:</strong> {incident.floodType}
+                  </p>
+                  <p className="text-sm text-gray-300">
+                    <strong>Severity:</strong> {incident.severity}
+                  </p>
+                  <p className="text-sm text-gray-300">
+                    <strong>Urgency:</strong> {incident.urgency}
+                  </p>
+                  <p className="text-sm text-gray-300">
+                    Reported on: <strong>{dateTimeDisplay(incident.incidentDate)}</strong>
+                  </p>
+                </div>
+  
+                {/* Map */}
+                <div
+                  className="rounded-lg overflow-hidden border border-gray-700"
+                  ref={(el) => (mapRefs.current[index] = el)}
+                  style={{ width: "100%", height: "300px" }}
+                ></div>
+  
+                {/* Chat Icon */}
+                <div className="flex items-center space-x-4">
+                  <p className="text-sm text-light">Return to chat:</p>
+                  <img
+                    onClick={() => handleClick(chat._id)}
+                    src="https://cdn-icons-png.flaticon.com/128/724/724715.png"
+                    alt="Chat Icon"
+                    className="w-8 h-8 cursor-pointer hover:scale-110 transition transform"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
-
-  )
+  );
 }
 
 export default ReporterPage

@@ -157,105 +157,174 @@ function IncidentForm () {
   }
 
   return (
-    <div className="formContainer">
-      <div id="formTitle">
-        <p><strong>Speak Up, Stay Safe:</strong> Report Flooding to Shield Your Community!</p>
-      </div>
-
-      <div className="createIncident">
-      <form onSubmit={handleSubmit}>
-        <div className="formElement">
-          <label htmlFor='title' >Incident Title:</label>
-          <input className="formElementInput" type='text' name="title" id="title" placeholder="e.g., Flash Flood in Downtown" value={incident.title} onChange={handleChange}/>
-        </div>
-
-        <div className="formElement">
-          <label htmlFor='incidentDate'>Date & Time of Incident:</label>
-          <input className="formElementInput"  type="datetime-local" name="incidentDate" id="incidentDate" max={new Date().toISOString().slice(0, 16)} value={incident.incidentDate} onChange={handleChange}/>
-        </div>
-
-
-        
-        <div className="formElement">
-          <label htmlFor="longitude">Incident's Longitude:</label>
-          <input className="formElementInput"  type="number" name="longitude" id="longitude" placeholder="e.g., -0.1276" value={incident.location.longitude} onChange={handleLocationChange}/>
-        </div>
-
-        <div className="formElement">
-          <label htmlFor="latitude">Incident's Latitude:</label>
-          <input className="formElementInput"  type="number" name="latitude" id="latitude" placeholder="e.g., 51.5072" value={incident.location.latitude} onChange={handleLocationChange}/>
-        </div>
-
-        <div id="map" ref={mapContainerRef} style={{ width: '100%', height: '400px' }}></div>
-
-        <div className="formElement">
-          <label htmlFor="severity">Severity of Flooding:</label>
-          <select className="formElementInput"  name="severity" id="severity" value={incident.severity} onChange={handleChange}>
-            <option value=''>Specify incident's severity:</option>
-            <option value='Minor'>Minor</option>
-            <option value='Moderate'>Moderate</option>
-            <option value='Critical'>Critical</option>
-          </select>
-        </div>
-
-        <div className="formElement">
-          <label htmlFor="floodType">Type of Flood:</label>
-          <select className="formElementInput"  name="floodType" id="floodType" value={incident.floodType} onChange={handleChange}>
-            <option value=''>Please specify incident's type:</option>
-            <option value="River Flood">River Flood</option>
-            <option value="Urban Flood">Urban Flood</option>
-            <option value="Flash Flood">Flash Flood</option>
-            <option value="Coastal Flood">Coastal Flood</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-
-        <div className="formElement">
-          <label htmlFor="injuries">Injuries:</label>
+    <div className="bg-dark min-h-screen flex items-center justify-center">
+      <div className="bg-light p-8 rounded-lg shadow-lg w-full max-w-3xl">
+        <h1 className="text-2xl font-bold text-center mb-6 text-dark">
+          Speak Up, Stay Safe: Report Flooding to Shield Your Community!
+        </h1>
+  
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Incident Title */}
           <div>
-            <label id='yes' htmlFor="injuriesYes">Yes</label>
-            <input className="formElementInput"  type="radio" name="injuries" id="injuriesYes" value="Yes" checked={incident.injuries === "Yes"} onChange={handleChange}/>
-
-            <label id='no' htmlFor="injuriesNo">No</label>
-            <input  className="formElementInput" type="radio" name="injuries" id="injuriesNo" value="No" checked={incident.injuries === "No"} onChange={handleChange}/>
+            <label htmlFor="title" className="block text-sm font-semibold text-dark">
+              Incident Title
+            </label>
+            <input
+              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              type="text"
+              name="title"
+              id="title"
+              placeholder="e.g., Flash Flood in Downtown"
+              value={incident.title}
+              onChange={handleChange}
+            />
           </div>
-        </div>
-
-        <div className="formElement">
-        <label htmlFor="urgency">Urgency Level:</label>
-        <select className="formElementInput"  name="urgency" id="urgency" value={incident.urgency} onChange={handleChange}>
-          <option value=''>Please specicy incident's urgency:</option>
-          <option value="Immediate">Immediate</option>
-          <option value="Within 24 Hours">Within 24 Hours</option>
-          <option value="Low">Low</option>
-        </select>
-        </div>
-
-        <div className="formElement">
-        <label htmlFor="name">Reporting Person's Name:</label>
-        <input className="formElementInput"  type="text" name="name" id="name" placeholder='e.g., John Smith' value={incident.name} onChange={handleChange}/>
-        </div>
-
-        <div className="formElement">
-        <label htmlFor="phone">Phone Number:</label>
-        <input  className="formElementInput" type="tel" name="phone" id="phone" placeholder='e.g., +44 7123 456789'value={incident.phone} onChange={handleChange}/>
-        </div>
-
-        <div className="formElement">
-        <label htmlFor="email">Email Address:</label>
-        <input  className="formElementInput" type="email" name="email" id="email" placeholder='e.g., example@domain.com'value={incident.email} onChange={handleChange}/>
-        </div>
-
-        <div className="formElement">
-        <label htmlFor="additionalComments">Additional Comments:</label>
-        <textarea className="formElementInput" name="additionalComments" id="additionalComments" placeholder='Provide any other relevant information...' value={incident.additionalComments} onChange={handleChange}></textarea>
-        </div>
-
-        <button className='submitButton' type="submit" disabled={!isFormValid()}>Submit Incident</button>
-      </form>
+  
+          {/* Incident Date */}
+          <div>
+            <label htmlFor="incidentDate" className="block text-sm font-semibold text-dark">
+              Date & Time of Incident
+            </label>
+            <input
+              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              type="datetime-local"
+              name="incidentDate"
+              id="incidentDate"
+              value={incident.incidentDate}
+              onChange={handleChange}
+            />
+          </div>
+  
+          {/* Map Section */}
+          <div>
+            <label className="block text-sm font-semibold text-dark mb-2">
+              Select Location on Map
+            </label>
+            <div
+              id="map"
+              ref={mapContainerRef}
+              className="w-full h-64 rounded-lg border border-gray-300"
+            ></div>
+          </div>
+  
+          {/* Severity */}
+          <div>
+            <label htmlFor="severity" className="block text-sm font-semibold text-dark">
+              Severity of Flooding
+            </label>
+            <select
+              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              name="severity"
+              id="severity"
+              value={incident.severity}
+              onChange={handleChange}
+            >
+              <option value="">Select severity level</option>
+              <option value="Minor">Minor</option>
+              <option value="Moderate">Moderate</option>
+              <option value="Severe">Severe</option>
+              <option value="Critical">Critical</option>
+            </select>
+          </div>
+  
+          {/* Flood Type */}
+          <div>
+            <label htmlFor="floodType" className="block text-sm font-semibold text-dark">
+              Type of Flood
+            </label>
+            <select
+              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              name="floodType"
+              id="floodType"
+              value={incident.floodType}
+              onChange={handleChange}
+            >
+              <option value="">Select flood type</option>
+              <option value="River Flood">River Flood</option>
+              <option value="Urban Flood">Urban Flood</option>
+              <option value="Flash Flood">Flash Flood</option>
+              <option value="Coastal Flood">Coastal Flood</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+  
+          {/* Reporter Details */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="name" className="block text-sm font-semibold text-dark">
+                Reporting Person's Name
+              </label>
+              <input
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                type="text"
+                name="name"
+                id="name"
+                placeholder="e.g., John Smith"
+                value={incident.name}
+                onChange={handleChange}
+              />
+            </div>
+  
+            <div>
+              <label htmlFor="phone" className="block text-sm font-semibold text-dark">
+                Phone Number
+              </label>
+              <input
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                type="tel"
+                name="phone"
+                id="phone"
+                placeholder="e.g., +44 7123 456789"
+                value={incident.phone}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+  
+          <div>
+            <label htmlFor="email" className="block text-sm font-semibold text-dark">
+              Email Address
+            </label>
+            <input
+              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              type="email"
+              name="email"
+              id="email"
+              placeholder="e.g., example@domain.com"
+              value={incident.email}
+              onChange={handleChange}
+            />
+          </div>
+  
+          {/* Additional Comments */}
+          <div>
+            <label htmlFor="additionalComments" className="block text-sm font-semibold text-dark">
+              Additional Comments
+            </label>
+            <textarea
+              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              name="additionalComments"
+              id="additionalComments"
+              placeholder="Provide any other relevant information..."
+              value={incident.additionalComments}
+              onChange={handleChange}
+            ></textarea>
+          </div>
+  
+          {/* Submit Button */}
+          <button
+            type="submit"
+            className={`w-full py-2 px-4 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-600 transition duration-200 ${
+              !isFormValid() && "opacity-50 cursor-not-allowed"
+            }`}
+            disabled={!isFormValid()}
+          >
+            Submit Incident
+          </button>
+        </form>
       </div>
     </div>
-  )
+  );
 }
 
 export default IncidentForm

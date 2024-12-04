@@ -103,7 +103,6 @@ function Incidents () {
             center: [longitude, latitude],
             zoom: 8, 
           });
-
           map.addControl(new mapboxgl.NavigationControl());
           new mapboxgl.Marker()
             .setLngLat([longitude, latitude])
@@ -113,131 +112,151 @@ function Incidents () {
     }
   }, [global.list]);
   return (
-
-    <div className="incidentContainer">
-      <div className="criticalSeverity">
-        <p id='criticaltitle'>Critical Incidents</p>
-        <div className='criticalIncidents'>
+    <div className="bg-dark min-h-screen p-8 text-light">
+      <h1 className="text-3xl font-bold text-center mb-8 text-light">Incident Dashboard</h1>
+  
+      {/* Critical Incidents */}
+      {global.list.filter((incident) => incident.severity === 'Critical').length > 0 && (
+        <div className="mb-12">
+          <h2 className="text-2xl font-semibold text-red-500 mb-4">Critical Incidents</h2>
+          <div className="flex space-x-6 overflow-x-scroll scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-800">
             {global.list
-            .filter((incident) => incident.severity === 'Critical')
-            .map((incident, index) => (
-              <div className="incidentDetails" key={index}>
-                <div className="incidentTitle">
-                  <p className="titleInc">{index +1}. {incident.title}</p>
-                </div>
-                <div className='floodType'>
-                  <p><strong>Type</strong>: {incident.floodType}</p>
-                  <p><strong>Reported at</strong>: {incident.incidentDate}</p>
-                  <p><strong>Urgency</strong>: {incident.urgency}</p>
-                  <p><strong>Injuries Involved</strong>: {incident.injuries}</p>
-                </div>
+              .filter((incident) => incident.severity === 'Critical')
+              .map((incident, index) => (
                 <div
-              id='map'
-              ref={(el) => (mapRefs.current[incident._id] = el)} 
-              style={{ width: '400px', height: '300px' }}
-            ></div>
-                <div className="personDetails">
-                  <div className="person">
-                    <p><strong>Contact incident's reporter</strong>: {user?.firstName} {user?.lastName}</p>
-                  </div>
-                  <div className='incidentContactDetails'>
+                  key={incident._id}
+                  className="bg-primary flex-none w-80 p-4 rounded-lg shadow-md"
+                >
+                  <h3 className="text-xl font-bold text-light mb-2">{incident.title}</h3>
+                  <p className="text-sm text-light mb-2">
+                    <strong>Reported at:</strong> {incident.incidentDate}
+                  </p>
+                  <p className="text-sm text-light mb-4">
+                    <strong>Type:</strong> {incident.floodType}
+                  </p>
+                  {/* Map */}
+                  <div
+                    ref={(el) => (mapRefs.current[incident._id] = el)}
+                    className="w-full h-48 rounded-lg overflow-hidden border border-gray-300"
+                  ></div>
+                  <div className="flex items-center justify-between mt-4">
                     <div>
-                      <p>{incident.phone}</p>
-                      <p>{incident.email}</p>
+                      <p className="text-sm text-light">
+                        <strong>Contact:</strong> {incident.name}
+                      </p>
                     </div>
-                    <div>
-                      <p>OR</p>
-                    </div>
-                    <img onClick={() => handleChatIconClick(incident._id, userId)} src="https://cdn-icons-png.flaticon.com/128/724/724715.png" alt="Venue icon" className="icon" />
+                    <button
+                      onClick={() => handleChatIconClick(incident._id, userId)}
+                      className="bg-light text-primary p-2 rounded-lg shadow hover:bg-lighter hover:text-light transition"
+                    >
+                      <img
+                        src="https://cdn-icons-png.flaticon.com/128/724/724715.png"
+                        alt="Chat Icon"
+                        className="w-6 h-6"
+                      />
+                    </button>
                   </div>
                 </div>
-              </div>
-            )
-            )}
+              ))}
+          </div>
         </div>
-      </div>
-
-      <div className="moderateSeverity">
-        <p id='moderateltitle'>Moderate Incidents</p>
-        <div className='moderateIncidents'>
+      )}
+  
+      {/* Moderate Incidents */}
+      {global.list.filter((incident) => incident.severity === 'Moderate').length > 0 && (
+        <div className="mb-12">
+          <h2 className="text-2xl font-semibold text-yellow-400 mb-4">Moderate Incidents</h2>
+          <div className="flex space-x-6 overflow-x-scroll scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-800">
             {global.list
               .filter((incident) => incident.severity === 'Moderate')
               .map((incident, index) => (
-                <div className="incidentDetails" key={index}>
-                  <div className="incidentTitle">
-                    <p className="titleInc">{index +1}. {incident.title}</p>
-                  </div>
-                  <div className='floodType'>
-                    <p><strong>Type</strong>: {incident.floodType}</p>
-                    <p><strong>Reported at</strong>: {incident.incidentDate}</p>
-                  </div>
+                <div
+                  key={incident._id}
+                  className="bg-primary flex-none w-80 p-4 rounded-lg shadow-md"
+                >
+                  <h3 className="text-xl font-bold text-light mb-2">{incident.title}</h3>
+                  <p className="text-sm text-light mb-2">
+                    <strong>Reported at:</strong> {incident.incidentDate}
+                  </p>
+                  <p className="text-sm text-light mb-4">
+                    <strong>Type:</strong> {incident.floodType}
+                  </p>
+                  {/* Map */}
                   <div
-                id='map'
-                ref={(el) => (mapRefs.current[incident._id] = el)} 
-                style={{ width: '400px', height: '300px' }}
-              ></div>
-                  <div className="personDetails">
-                    <div className="person">
-                      <p><strong>Contact incident's reporter</strong>: {user?.firstName} {user?.lastName}</p>
+                    ref={(el) => (mapRefs.current[incident._id] = el)}
+                    className="w-full h-48 rounded-lg overflow-hidden border border-gray-300"
+                  ></div>
+                  <div className="flex items-center justify-between mt-4">
+                    <div>
+                      <p className="text-sm text-light">
+                        <strong>Contact:</strong> {incident.name}
+                      </p>
                     </div>
-                    <div className='incidentContactDetails'>
-                      <div>
-                        <p>{incident.phone}</p>
-                        <p>{incident.email}</p>
-                      </div>
-                      <div>
-                        <p>OR</p>
-                      </div>
-                      <img onClick={() => handleChatIconClick(incident._id, userId)} src="https://cdn-icons-png.flaticon.com/128/724/724715.png" alt="Venue icon" className="icon" />
-                    </div>
+                    <button
+                      onClick={() => handleChatIconClick(incident._id, userId)}
+                      className="bg-light text-primary p-2 rounded-lg shadow hover:bg-lighter hover:text-light transition"
+                    >
+                      <img
+                        src="https://cdn-icons-png.flaticon.com/128/724/724715.png"
+                        alt="Chat Icon"
+                        className="w-6 h-6"
+                      />
+                    </button>
                   </div>
                 </div>
-              )
-              )}
+              ))}
+          </div>
         </div>
-      </div>
-      <div className='minorSeverity'>
-        <p id='minortitle'>Minor Incidents</p>
-        <div className='minorIncidents'>
+      )}
+  
+      {/* Minor Incidents */}
+      {global.list.filter((incident) => incident.severity === 'Minor').length > 0 && (
+        <div>
+          <h2 className="text-2xl font-semibold text-green-400 mb-4">Minor Incidents</h2>
+          <div className="flex space-x-6 overflow-x-scroll scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-800">
             {global.list
               .filter((incident) => incident.severity === 'Minor')
               .map((incident, index) => (
-                <div className="incidentDetails" key={index}>
-                  <div className="incidentTitle">
-                    <p className="titleInc">{index +1}. {incident.title}</p>
-                  </div>
-                  <div className='floodType'>
-                    <p><strong>Type</strong>: {incident.floodType}</p>
-                    <p><strong>Reported at</strong>: {incident.incidentDate}</p>
-                  </div>
+                <div
+                  key={incident._id}
+                  className="bg-primary flex-none w-80 p-4 rounded-lg shadow-md"
+                >
+                  <h3 className="text-xl font-bold text-light mb-2">{incident.title}</h3>
+                  <p className="text-sm text-light mb-2">
+                    <strong>Reported at:</strong> {incident.incidentDate}
+                  </p>
+                  <p className="text-sm text-light mb-4">
+                    <strong>Type:</strong> {incident.floodType}
+                  </p>
+                  {/* Map */}
                   <div
-                id='map'
-                ref={(el) => (mapRefs.current[incident._id] = el)} 
-                style={{ width: '400px', height: '300px' }}
-              ></div>
-                  <div className="personDetails">
-                    <div className="person">
-                      <p><strong>Contact incident's reporter</strong>: {user?.firstName} {user?.lastName}</p>
+                    ref={(el) => (mapRefs.current[incident._id] = el)}
+                    className="w-full h-48 rounded-lg overflow-hidden border border-gray-300"
+                  ></div>
+                  <div className="flex items-center justify-between mt-4">
+                    <div>
+                      <p className="text-sm text-light">
+                        <strong>Contact:</strong> {incident.name}
+                      </p>
                     </div>
-                    <div className='incidentContactDetails'>
-                      <div>
-                        <p>{incident.phone}</p>
-                        <p>{incident.email}</p>
-                      </div>
-                      <div>
-                        <p>OR</p>
-                      </div>
-                      <img onClick={() => handleChatIconClick(incident._id, userId)} src="https://cdn-icons-png.flaticon.com/128/724/724715.png" alt="Venue icon" className="icon" />
-                    </div>
+                    <button
+                      onClick={() => handleChatIconClick(incident._id, userId)}
+                      className="bg-light text-primary p-2 rounded-lg shadow hover:bg-lighter hover:text-light transition"
+                    >
+                      <img
+                        src="https://cdn-icons-png.flaticon.com/128/724/724715.png"
+                        alt="Chat Icon"
+                        className="w-6 h-6"
+                      />
+                    </button>
                   </div>
                 </div>
-              )
-              )}
+              ))}
           </div>
-      </div>
-  </div>
-    
-  )
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default Incidents;

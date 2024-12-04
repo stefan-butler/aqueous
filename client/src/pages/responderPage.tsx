@@ -53,55 +53,90 @@ function UserPage () {
     navigate(`/chat?chatId=${chatId}`);
   }
 
-  return (
-    <div className='pageContainer'>
-      <div className='profileInfo'>
-        <div className='profilePicture'>
-          <img src='https://cdn-icons-png.flaticon.com/128/3899/3899618.png' alt='Profile Picture' className='profilePicture' />
+return (
+  <div className="bg-dark min-h-screen p-8 text-light">
+    {/* Profile Section */}
+    <div className="bg-primary p-6 rounded-lg shadow-lg mb-8">
+      <div className="flex items-center space-x-6">
+        {/* Profile Picture */}
+        <div className="w-24 h-24 rounded-full overflow-hidden">
+          <img
+            src="https://cdn-icons-png.flaticon.com/128/3899/3899618.png"
+            alt="Profile Picture"
+            className="w-full h-full object-cover"
+          />
         </div>
-        <div className='fullName'>
-          <p>{user?.firstName} {user?.lastName}</p>
+        {/* User Info */}
+        <div>
+          <p className="text-2xl font-bold">{user?.firstName} {user?.lastName}</p>
+          <p className="text-sm text-gray-300 mt-1">
+            <strong>Email:</strong> {user?.email}
+          </p>
+          {isResponder && (
+            <p className="text-sm text-gray-300 mt-1">
+              <strong>Responder:</strong> {responderType}
+            </p>
+          )}
         </div>
-        <div className='contactDetails'>
-          <p><strong>Email</strong>: {user?.email}</p>
-        </div>
-        {isResponder && 
-        <div className='responderType'>
-          <p><strong>Responder</strong>: {responderType}</p>
-        </div>}
-      </div>
-
-      <div className='chatContainer'>
-        <div className='title'>
-          <p>Open Incidents:</p>
-        </div>
-        {chats.list.map((chat, index) => (
-          <div className='openChat' key={index}>
-            <div className='incidentTitle'>
-              <p id='incidentTitle'>{index + 1}. {chat.incidentId.title}</p>
-            </div>
-            <div className='incidentInfo'>
-              <p><strong>Type</strong>: {chat.incidentId.floodType}</p>
-              <p><strong>Severity</strong>: {chat.incidentId.severity}</p>
-              <p><strong>Urgency</strong>: {chat.incidentId.urgency} </p>
-              <p>Reported by <strong>{chat.reporterId.firstName} {chat.reporterId.lastName}</strong></p>
-              <p>Reported on the <strong>{dateTimeDisplay(chat.incidentId.incidentDate)}</strong></p>
-            </div>
-            <div
-              id='map'
-              ref={(el) => (mapRefs.current[index] = el)} 
-              style={{ width: '400px', height: '300px' }}
-            ></div>
-            <div className='chat'>
-              <p>Return to chat:</p> 
-              <img onClick={() => handleClick(chat._id)}src='https://cdn-icons-png.flaticon.com/128/724/724715.png' alt='Chat Icon' className='chatIcon'/>
-            </div> 
-          </div>
-        ))
-        } 
       </div>
     </div>
-  )
+
+    {/* Chats Section */}
+    <div>
+      <h2 className="text-2xl font-semibold mb-4 text-light">Open Incidents</h2>
+      {chats.list.length === 0 ? (
+        <p className="text-center text-gray-400">No open incidents to display.</p>
+      ) : (
+        <div className="space-y-8">
+          {chats.list.map((chat, index) => (
+            <div
+              key={index}
+              className="bg-primary p-6 rounded-lg shadow-md flex flex-col space-y-4"
+            >
+              {/* Incident Details */}
+              <div>
+                <h3 className="text-lg font-bold text-light">{index + 1}. {chat.incidentId.title}</h3>
+                <p className="text-sm text-gray-300 mt-1">
+                  <strong>Type:</strong> {chat.incidentId.floodType}
+                </p>
+                <p className="text-sm text-gray-300">
+                  <strong>Severity:</strong> {chat.incidentId.severity}
+                </p>
+                <p className="text-sm text-gray-300">
+                  <strong>Urgency:</strong> {chat.incidentId.urgency}
+                </p>
+                <p className="text-sm text-gray-300">
+                  Reported by <strong>{chat.reporterId.firstName} {chat.reporterId.lastName}</strong>
+                </p>
+                <p className="text-sm text-gray-300">
+                  Reported on <strong>{dateTimeDisplay(chat.incidentId.incidentDate)}</strong>
+                </p>
+              </div>
+
+              {/* Map */}
+              <div
+                className="rounded-lg overflow-hidden border border-gray-700"
+                ref={(el) => (mapRefs.current[index] = el)}
+                style={{ width: '100%', height: '300px' }}
+              ></div>
+
+              {/* Chat Icon */}
+              <div className="flex items-center space-x-4">
+                <p className="text-sm text-light">Return to chat:</p>
+                <img
+                  onClick={() => handleClick(chat._id)}
+                  src="https://cdn-icons-png.flaticon.com/128/724/724715.png"
+                  alt="Chat Icon"
+                  className="w-8 h-8 cursor-pointer hover:scale-110 transition transform"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  </div>
+);
 }
 
 export default UserPage
