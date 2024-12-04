@@ -48,8 +48,8 @@ const MapUI: React.FC<MapUIProps> = ({ map }) => {
               onClick={() => handleToggleLayer(layer.layerId)}
               className={`py-1 px-4 rounded font-medium text-sm ${
                 layer.visibility
-                  ? 'bg-green-500 hover:bg-green-600 text-white'
-                  : 'bg-red-500 hover:bg-red-600 text-white'
+                  ? 'bg-gray-800 hover:bg-red-600 text-white'
+                  : 'bg-white hover:bg-green-600 text-gray-800'
               }`}
             >
               {layer.visibility ? 'Hide' : 'Show'}

@@ -1,10 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
+import { RootState } from '../redux/store';
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import MapUI  from './mapUI'
+import { useSelector } from 'react-redux';
 mapboxgl.accessToken = 'pk.eyJ1IjoibWpzc2NvdHQiLCJhIjoiY200MmpxOHprMDFsNzJrc2JvY2J4MnoyaCJ9.Lh126FuRrcsE0jo3JGfO8A'; // replace with env file 
 
 const Map = () => {
+  const layers = useSelector((state: RootState) => state.mapLayers.layers)
+
   const [map, setMap] = useState<mapboxgl.Map | null>(null); 
   const mapContainerRef = useRef<HTMLDivElement>(null); 
 
@@ -28,8 +32,8 @@ const Map = () => {
     const mapInstance = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: 'mapbox://styles/mjsscott/cm3y9f5y300js01sdao5g8w2l',
-      center: [-1.5, 54.0], // Longitude, Latitude for the UK
-      zoom: 5,
+      center: [-2, 53.0], // Longitude, Latitude for the UK
+      zoom: 5.7,
     });
 
     mapInstance.on('load', () => {
@@ -46,6 +50,11 @@ const Map = () => {
             id: 'heatmap',
             type: 'heatmap',
             source: 'active-warnings',
+            layout: { 
+              visibility: layers.find((layer) => layer.layerId === 'heatmap')?.visibility
+              ? 'visible'
+              : 'none',              
+            },
             paint: {
               'heatmap-intensity': [
                 'interpolate',
@@ -86,6 +95,11 @@ const Map = () => {
             id: 'active-warnings',
             type: 'circle',
             source: 'active-warnings',
+            layout: { 
+              visibility: layers.find((layer) => layer.layerId === 'active-warnings')?.visibility
+              ? 'visible'
+              : 'none',              
+            },
             paint: {
               "circle-radius": [
                 'interpolate',
@@ -164,6 +178,9 @@ const Map = () => {
             layout: {
               'icon-image': 'mapbox-cross',
               'icon-size': 1.2,
+              visibility: layers.find((layer) => layer.layerId === 'incidents')?.visibility
+              ? 'visible'
+              : 'none', 
             },
             paint: {
               'icon-color': '#0074D9',
@@ -210,6 +227,8 @@ const Map = () => {
       }
     };
   }, []);
+
+  
 
   return (
   <div className="flex">
