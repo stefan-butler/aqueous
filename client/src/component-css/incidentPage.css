@@ -45,6 +45,7 @@ body {
 .criticalIncidents {
   display: flex;
   flex-direction: column;
+  gap: 32px;
 }
 
 .moderateIncidents {
@@ -60,4 +61,40 @@ body {
 
 .incidentDetails {
   background-color: rgb(31, 41, 55);
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-top:16px;
+  padding-bottom: 16px;
+}
+
+.personDetails {
+  display:flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 50px;
+  font-size: 24px;
+}
+
+.floodType {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  font-size: 24px;
+}
+
+.incidentContactDetails {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.icon {
+  height: 100px;
+}
+
+.titleInc {
+  font-size: 50px;
 }

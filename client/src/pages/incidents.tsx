@@ -1,9 +1,11 @@
 import { fetchGlobalIncidents } from "../redux/slices/incidentSlice";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../redux/store";
 import { useNavigate } from "react-router";
 import axios from "axios";
+import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
+import 'mapbox-gl/dist/mapbox-gl.css';
 import '../component-css/incidentPage.css'
 
 function Incidents () {
@@ -11,13 +13,14 @@ function Incidents () {
   const dispatch = useDispatch<AppDispatch>();
   const global = useSelector((state: RootState) => state.incident.global)
   const navigate = useNavigate(); 
-  console.log(global)
   useEffect(() => {
     dispatch(fetchGlobalIncidents())
   },[])
 
   const userId = useSelector((state: RootState) => state.auth.user?.id);
+  const user = useSelector((state: RootState) => state.auth.user);
   console.log(`userId: ${userId}`);
+  console.log(user)
   const handleChatIconClick = async (incidentId: string, responderId: string | undefined) => {
     try {
 
@@ -87,6 +90,28 @@ function Incidents () {
   };
 
   console.log(global)
+  const mapRefs = useRef<(HTMLDivElement | null)[]>([]);
+  useEffect(() => {
+    if (global.list.length > 0) {
+      global.list.forEach((incident) => {
+        const mapContainer = mapRefs.current[incident._id];
+        if (mapContainer && incident.location) {
+          const { longitude, latitude } = incident.location;
+          const map = new mapboxgl.Map({
+            container: mapContainer,
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [longitude, latitude],
+            zoom: 8, 
+          });
+
+          map.addControl(new mapboxgl.NavigationControl());
+          new mapboxgl.Marker()
+            .setLngLat([longitude, latitude])
+            .addTo(map);
+        }
+      });
+    }
+  }, [global.list]);
   return (
 
     <div className="incidentContainer">
@@ -98,18 +123,31 @@ function Incidents () {
             .map((incident, index) => (
               <div className="incidentDetails" key={index}>
                 <div className="incidentTitle">
-                  <p className="titleInc">{index +1}.{incident.title}</p>
-                  <p><strong>Reported at</strong>: {incident.incidentDate}</p>
+                  <p className="titleInc">{index +1}. {incident.title}</p>
                 </div>
                 <div className='floodType'>
                   <p><strong>Type</strong>: {incident.floodType}</p>
+                  <p><strong>Reported at</strong>: {incident.incidentDate}</p>
+                  <p><strong>Urgency</strong>: {incident.urgency}</p>
+                  <p><strong>Injuries Involved</strong>: {incident.injuries}</p>
                 </div>
+                <div
+              id='map'
+              ref={(el) => (mapRefs.current[incident._id] = el)} 
+              style={{ width: '400px', height: '300px' }}
+            ></div>
                 <div className="personDetails">
                   <div className="person">
-                    <p><strong>Contact incident's reporter</strong>:</p>
-                    <p>{incident.name}</p>
+                    <p><strong>Contact incident's reporter</strong>: {user?.firstName} {user?.lastName}</p>
                   </div>
-                  <div>
+                  <div className='incidentContactDetails'>
+                    <div>
+                      <p>{incident.phone}</p>
+                      <p>{incident.email}</p>
+                    </div>
+                    <div>
+                      <p>OR</p>
+                    </div>
                     <img onClick={() => handleChatIconClick(incident._id, userId)} src="https://cdn-icons-png.flaticon.com/128/724/724715.png" alt="Venue icon" className="icon" />
                   </div>
                 </div>
@@ -127,18 +165,29 @@ function Incidents () {
               .map((incident, index) => (
                 <div className="incidentDetails" key={index}>
                   <div className="incidentTitle">
-                    <p className="titleInc">{index +1}.{incident.title}</p>
-                    <p><strong>Reported at</strong>: {incident.incidentDate}</p>
+                    <p className="titleInc">{index +1}. {incident.title}</p>
                   </div>
                   <div className='floodType'>
                     <p><strong>Type</strong>: {incident.floodType}</p>
+                    <p><strong>Reported at</strong>: {incident.incidentDate}</p>
                   </div>
+                  <div
+                id='map'
+                ref={(el) => (mapRefs.current[incident._id] = el)} 
+                style={{ width: '400px', height: '300px' }}
+              ></div>
                   <div className="personDetails">
                     <div className="person">
-                      <p><strong>Contact incident's reporter</strong>:</p>
-                      <p>{incident.name}</p>
+                      <p><strong>Contact incident's reporter</strong>: {user?.firstName} {user?.lastName}</p>
                     </div>
-                    <div>
+                    <div className='incidentContactDetails'>
+                      <div>
+                        <p>{incident.phone}</p>
+                        <p>{incident.email}</p>
+                      </div>
+                      <div>
+                        <p>OR</p>
+                      </div>
                       <img onClick={() => handleChatIconClick(incident._id, userId)} src="https://cdn-icons-png.flaticon.com/128/724/724715.png" alt="Venue icon" className="icon" />
                     </div>
                   </div>
@@ -155,23 +204,34 @@ function Incidents () {
               .map((incident, index) => (
                 <div className="incidentDetails" key={index}>
                   <div className="incidentTitle">
-                    <p className="titleInc">{index +1}.{incident.title}</p>
-                    <p><strong>Reported at</strong>: {incident.incidentDate}</p>
+                    <p className="titleInc">{index +1}. {incident.title}</p>
                   </div>
                   <div className='floodType'>
                     <p><strong>Type</strong>: {incident.floodType}</p>
+                    <p><strong>Reported at</strong>: {incident.incidentDate}</p>
                   </div>
+                  <div
+                id='map'
+                ref={(el) => (mapRefs.current[incident._id] = el)} 
+                style={{ width: '400px', height: '300px' }}
+              ></div>
                   <div className="personDetails">
                     <div className="person">
-                      <p><strong>Contact incident's reporter</strong>:</p>
-                      <p>{incident.name}</p>
+                      <p><strong>Contact incident's reporter</strong>: {user?.firstName} {user?.lastName}</p>
                     </div>
-                    <div>
+                    <div className='incidentContactDetails'>
+                      <div>
+                        <p>{incident.phone}</p>
+                        <p>{incident.email}</p>
+                      </div>
+                      <div>
+                        <p>OR</p>
+                      </div>
                       <img onClick={() => handleChatIconClick(incident._id, userId)} src="https://cdn-icons-png.flaticon.com/128/724/724715.png" alt="Venue icon" className="icon" />
                     </div>
                   </div>
                 </div>
-                )
+              )
               )}
           </div>
       </div>
