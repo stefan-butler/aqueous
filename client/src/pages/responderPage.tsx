@@ -29,13 +29,13 @@ function UserPage () {
           const map = new mapboxgl.Map({
             container: mapContainer,
             style: 'mapbox://styles/mapbox/streets-v11',
-            center: [longitude, latitude],
+            center: [longitude as number, latitude as number],
             zoom: 8, 
           });
 
           map.addControl(new mapboxgl.NavigationControl());
           new mapboxgl.Marker()
-            .setLngLat([longitude, latitude])
+            .setLngLat([longitude as number, latitude as number])
             .addTo(map);
         }
       });
@@ -43,13 +43,13 @@ function UserPage () {
     console.log(chats.list)
   }, [chats.list]); 
 
-  function dateTimeDisplay (chatDate) {
+  function dateTimeDisplay (chatDate : string) {
     const date =  format(new Date(chatDate), 'do, MMM yyyy')
     const time = format(new Date(chatDate), 'HH:mm')
     return `${date} at ${time}`
   }
 
-  function handleClick (chatId) {
+  function handleClick (chatId : string) {
     navigate(`/chat?chatId=${chatId}`);
   }
 

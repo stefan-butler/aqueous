@@ -33,26 +33,26 @@ function ReporterPage () {
           const map = new mapboxgl.Map({
             container: mapContainer,
             style: 'mapbox://styles/mapbox/streets-v11',
-            center: [longitude, latitude],
+            center: [longitude as number, latitude as number],
             zoom: 8, 
           });
 
           map.addControl(new mapboxgl.NavigationControl());
           new mapboxgl.Marker()
-            .setLngLat([longitude, latitude])
+            .setLngLat([longitude as number, latitude as number])
             .addTo(map);
         }
       });
     }
   }, [userIncidnets.list]); 
 
-  function dateTimeDisplay (incidentDate) {
+  function dateTimeDisplay (incidentDate: string) {
     const date =  format(new Date(incidentDate), 'do, MMM yyyy')
     const time = format(new Date(incidentDate), 'HH:mm')
     return `${date} at ${time}`
   }
 
-  function handleClick (chatId) {
+  function handleClick (chatId: string) {
     navigate(`/chat?chatId=${chatId}`);
   }
 
@@ -127,7 +127,7 @@ function ReporterPage () {
                 <div className="flex items-center space-x-4">
                   <p className="text-sm text-light">Return to chat:</p>
                   <img
-                    onClick={() => handleClick(chat._id)}
+                    onClick={() => handleClick(incident._id as string)}
                     src="https://cdn-icons-png.flaticon.com/128/724/724715.png"
                     alt="Chat Icon"
                     className="w-8 h-8 cursor-pointer hover:scale-110 transition transform"

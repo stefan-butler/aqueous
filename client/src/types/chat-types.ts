@@ -1,3 +1,5 @@
+import {User} from './user-types'
+import {Incident} from './incident-types'
 export interface IMessage {
   _id: string;
   chatId: string;
@@ -8,10 +10,11 @@ export interface IMessage {
 }
 
 export interface IChat {
-  incidentId: string;
-  responderId: string;
-  reporterId: string;
+  incidentId: Incident;
+  responderId: User;
+  reporterId: User;
   messages: IMessage[];
+  _id: string;
 }
 
 export interface ChatState {

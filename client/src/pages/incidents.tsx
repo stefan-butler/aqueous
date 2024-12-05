@@ -102,12 +102,12 @@ function Incidents () {
           const map = new mapboxgl.Map({
             container: mapContainer,
             style: 'mapbox://styles/mapbox/streets-v11',
-            center: [longitude, latitude],
+            center: [longitude as number, latitude as number],
             zoom: 8, 
           });
           map.addControl(new mapboxgl.NavigationControl());
           new mapboxgl.Marker()
-            .setLngLat([longitude, latitude])
+            .setLngLat([longitude as number, latitude as number])
             .addTo(map);
         }
       });
