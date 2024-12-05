@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from "react"
 import { Incident } from "../types/incident-types";
 import { createIncident } from "../redux/slices/incidentSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState, AppDispatch } from "../redux/store";
+import { useDispatch} from "react-redux";
+import {AppDispatch} from "../redux/store";
 import '../component-css/incidentForm.css'
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -88,7 +88,7 @@ function IncidentForm () {
         markerRef.current = marker;
       });
     }
-  }, []);
+  },[]);
 
   useEffect(() => {
     if (markerRef.current && incident.location.latitude && incident.location.longitude) {
@@ -104,25 +104,6 @@ function IncidentForm () {
     setIncident ({...incident,
       [name]: value
     })
-  }
-
-  const handleLocationChange =  (event: React.ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = event.target;
-
-    if (name === 'longitude') {
-      setIncident({...incident,
-        location: {
-          ...incident.location,
-          [name] : parseFloat(value),
-      }})
-    } else {
-      setIncident({...incident,
-        location: {
-          ...incident.location,
-          [name] : parseFloat(value)
-        }
-      })
-    }
   }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -224,7 +205,6 @@ function IncidentForm () {
                 <option value="">Select severity level</option>
                 <option value="Minor">Minor</option>
                 <option value="Moderate">Moderate</option>
-                <option value="Severe">Severe</option>
                 <option value="Critical">Critical</option>
               </select>
             </div>

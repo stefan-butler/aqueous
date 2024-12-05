@@ -3,8 +3,8 @@ export interface Incident {
   title: string;
   incidentDate: string;
   location: {
-    longitude: number | undefined,
-    latitude: number | undefined,
+    longitude: number,
+    latitude: number,
   }; 
   severity: string;
   floodType: string;
@@ -15,6 +15,7 @@ export interface Incident {
   email:string;
   additionalComments: string;
   user_id: string;
+  _id: string;
 }
 
 export interface IncidentState {

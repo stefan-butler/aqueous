@@ -8,6 +8,9 @@ import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '../component-css/incidentPage.css'
 
+
+
+
 function Incidents () {
 //I have focused entirely on the functionality for the moment
   const dispatch = useDispatch<AppDispatch>();
@@ -89,7 +92,6 @@ function Incidents () {
     }
   };
 
-  console.log(global)
   const mapRefs = useRef<(HTMLDivElement | null)[]>([]);
   useEffect(() => {
     if (global.list.length > 0) {
@@ -122,7 +124,7 @@ function Incidents () {
           <div className="flex space-x-6 overflow-x-scroll scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-800">
             {global.list
               .filter((incident) => incident.severity === 'Critical')
-              .map((incident, index) => (
+              .map((incident) => (
                 <div
                   key={incident._id}
                   className="bg-primary flex-none w-80 p-4 rounded-lg shadow-md"
@@ -169,7 +171,7 @@ function Incidents () {
           <div className="flex space-x-6 overflow-x-scroll scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-800">
             {global.list
               .filter((incident) => incident.severity === 'Moderate')
-              .map((incident, index) => (
+              .map((incident) => (
                 <div
                   key={incident._id}
                   className="bg-primary flex-none w-80 p-4 rounded-lg shadow-md"
@@ -216,7 +218,7 @@ function Incidents () {
           <div className="flex space-x-6 overflow-x-scroll scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-800">
             {global.list
               .filter((incident) => incident.severity === 'Minor')
-              .map((incident, index) => (
+              .map((incident) => (
                 <div
                   key={incident._id}
                   className="bg-primary flex-none w-80 p-4 rounded-lg shadow-md"

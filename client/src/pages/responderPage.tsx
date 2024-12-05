@@ -13,7 +13,7 @@ function UserPage () {
   const { user, isResponder, responderType } = useSelector((state: RootState) => state.auth);
   const chats = useSelector((state: RootState) => state.chat)
   const navigate = useNavigate(); 
-  console.log(user)
+  console.log(chats)
   useEffect(() => {
     dispatch(fetchResponderChats(user?.id))
   }, [])
