@@ -28,15 +28,15 @@
 
 A special thanks to the following contributors for their hard work and dedication to the project:
 
-- **[Stefan Butler]**
+- **Stefan Butler**
   - **GitHub:** [stefan-butler](https://github.com/stefan-butler)
   - **Email:** stefan@butler.com
 
-- **[Alekos Christodoulides]**
+- **Alekos Christodoulides**
   - **GitHub:** [Alekos94](https://github.com/Alekos94)
   - **Email:** alex.christodoulides94@gmail.com
 
-- **[Michael Scott]**
+- **Michael Scott**
   - **GitHub:** [mjsscott](https://github.com/mjsscott)
   - **Email:** mjsscottcodes@gmail.com
 
