@@ -33,7 +33,7 @@ A special thanks to the following contributors for their hard work and dedicatio
   - **Email:** stefan@butler.com
 
 - **[Alekos Christodoulides]**
-  - **GitHub:** [Member2GitHub](https://github.com/Alekos94)
+  - **GitHub:** [Alekos94](https://github.com/Alekos94)
   - **Email:** alex.christodoulides94@gmail.com
 
 - **[Michael Scott]**
