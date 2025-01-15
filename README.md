@@ -30,7 +30,7 @@ A special thanks to the following contributors for their hard work and dedicatio
 
 - **Stefan Butler**
   - **GitHub:** [stefan-butler](https://github.com/stefan-butler)
-  - **Email:** stefan@butler.com
+  - **Email:** stefanbutler@icloud.com
 
 - **Alekos Christodoulides**
   - **GitHub:** [Alekos94](https://github.com/Alekos94)
